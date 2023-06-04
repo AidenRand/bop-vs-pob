@@ -8,6 +8,6 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "Bop vs Pob");
 	window.setFramerateLimit(60);
 
-	game(window);
+	game(window, screen_width, screen_height);
 
 }
