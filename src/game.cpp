@@ -18,6 +18,8 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 
 		window.clear();
 		menu.draw(window);
+		menu.moveUp();
+		menu.moveDown();
 		window.display();
 	}
 }

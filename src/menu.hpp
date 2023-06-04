@@ -17,6 +17,9 @@ private:
 	int selectedItemIndex;
 	sf::Text menu_text[MAX_NUMBER_OF_ITEMS];
 	sf::Font font;
+
+	bool move_up = false;
+	bool move_down = false;
 };
 
 #endif
