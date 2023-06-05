@@ -103,6 +103,7 @@ void Menu::animateTitle(int row, float dt)
 	current_image.y = row;
 	total_time += dt;
 
+	// Loop through sprite sheet
 	if (total_time >= switch_time)
 	{
 		total_time -= switch_time;
@@ -113,6 +114,7 @@ void Menu::animateTitle(int row, float dt)
 		}
 	}
 
+	// Set texture to current image
 	title_uv_rect.left = current_image.x * title_uv_rect.width;
 	title_uv_rect.top = current_image.y * title_uv_rect.height;
 
