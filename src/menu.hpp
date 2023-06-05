@@ -14,7 +14,9 @@ public:
 	void moveDown();
 	void closeGame(sf::RenderWindow& window);
 	void playGame(bool& game_running);
+	void createTitle(float title_x, float title_y);
 	void animateTitle(int row, float dt);
+	void drawTitle(sf::RenderWindow& window);
 
 private:
 	int selectedItemIndex;
@@ -24,9 +26,11 @@ private:
 	bool move_up = false;
 	bool move_down = false;
 
+	sf::Sprite title;
+	sf::Texture title_texture;
 	sf::IntRect title_uv_rect;
 	float total_time;
-	float switch_time = 0.5f;
+	float switch_time = 0.1f;
 	sf::Vector2u image_count = sf::Vector2u(8, 1);
 	sf::Vector2u current_image;
 };

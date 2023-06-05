@@ -23,6 +23,16 @@ Menu::Menu(float screen_width, float screen_height)
 	menu_text[1].setPosition(sf::Vector2f(screen_width / 2.2, screen_height / (MAX_NUMBER_OF_ITEMS + 2) * 3));
 
 	selectedItemIndex = 0;
+
+
+	if (!title_texture.loadFromFile("content/bop-vs-pob-title.png"))
+	{
+		std::cout << "ERROR::Cannot load title texture from file" << "\n";
+	}
+	total_time = 0.0f;
+	current_image.x = 0;
+	title_uv_rect.width = title_texture.getSize().x / float(image_count.x);
+	title_uv_rect.height = title_texture.getSize().y / float(image_count.y);
 }
 
 Menu::~Menu()
@@ -82,6 +92,12 @@ void Menu::playGame(bool& game_running)
 	std::cout << game_running;
 }
 
+void Menu::createTitle(float title_x, float title_y)
+{
+	title.setPosition(sf::Vector2f(title_x, title_y));
+	title.setTexture(title_texture, true);
+}
+
 void Menu::animateTitle(int row, float dt)
 {
 	current_image.y = row;
@@ -93,10 +109,17 @@ void Menu::animateTitle(int row, float dt)
 		current_image.x++;
 		if (current_image.x >= image_count.x)
 		{
-			current_image.x--;
+			current_image.x = 0;
 		}
 	}
 
 	title_uv_rect.left = current_image.x * title_uv_rect.width;
 	title_uv_rect.top = current_image.y * title_uv_rect.height;
+
+	title.setTextureRect(title_uv_rect);
+}
+
+void Menu::drawTitle(sf::RenderWindow& window)
+{
+	window.draw(title);
 }

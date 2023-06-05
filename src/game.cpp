@@ -20,6 +20,8 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 	// Create menu
 	Menu menu(screen_width, screen_height);
 	bool game_running = false;
+	float title_x = 230;
+	float title_y = -130;
 
 	// Make delta time
 	float dt;
@@ -46,7 +48,9 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 		menu.moveDown();
 		menu.closeGame(window);
 		menu.playGame(game_running);
+		menu.createTitle(title_x, title_y);
 		menu.animateTitle(0, dt);
+		menu.drawTitle(window);
 		window.display();
 	}
 }
