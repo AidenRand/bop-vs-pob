@@ -81,3 +81,22 @@ void Menu::playGame(bool& game_running)
 {
 	std::cout << game_running;
 }
+
+void Menu::animateTitle(int row, float dt)
+{
+	current_image.y = row;
+	total_time += dt;
+
+	if (total_time >= switch_time)
+	{
+		total_time -= switch_time;
+		current_image.x++;
+		if (current_image.x >= image_count.x)
+		{
+			current_image.x--;
+		}
+	}
+
+	title_uv_rect.left = current_image.x * title_uv_rect.width;
+	title_uv_rect.top = current_image.y * title_uv_rect.height;
+}

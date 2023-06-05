@@ -4,6 +4,7 @@
 
 void game(sf::RenderWindow& window, float screen_width, float screen_height)
 {
+	// Add background texture
 	sf::Texture background_texture;
 	sf::Sprite background;
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
@@ -16,11 +17,19 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 	float background_y = 0;
 	background.setPosition(sf::Vector2f(background_x, background_y));
 
+	// Create menu
 	Menu menu(screen_width, screen_height);
 	bool game_running = false;
 
+	// Make delta time
+	float dt;
+	sf::Clock clock;
+
 	while (window.isOpen())
 	{
+		// Get delta time
+		dt = clock.restart().asSeconds();
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -37,6 +46,7 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 		menu.moveDown();
 		menu.closeGame(window);
 		menu.playGame(game_running);
+		menu.animateTitle(0, dt);
 		window.display();
 	}
 }
