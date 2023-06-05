@@ -39,10 +39,24 @@ void Menu::draw(sf::RenderWindow& window)
 
 void Menu::moveUp()
 {
+	// Move menu select down if item index is less than max index size
+	if (selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			menu_text[selectedItemIndex].setFillColor(sf::Color(181, 35, 35));
+			selectedItemIndex++;
+			menu_text[selectedItemIndex].setFillColor(sf::Color(134, 16, 16));
+		}
+	}
+}
+
+void Menu::moveDown()
+{
 	// Move menu select up if item index is greater than zero
 	if (selectedItemIndex - 1 >= 0)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
 			menu_text[selectedItemIndex].setFillColor(sf::Color(181, 35, 35));
 			selectedItemIndex--;
@@ -51,16 +65,19 @@ void Menu::moveUp()
 	}
 }
 
-void Menu::moveDown()
+void Menu::closeGame(sf::RenderWindow& window)
 {
-	// Move menu select down if item index is less than max index size
-	if (selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
+	// If Quit is being hovered and enter is pressed, close window
+	if (selectedItemIndex == 0)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
-			menu_text[selectedItemIndex].setFillColor(sf::Color(181, 35, 35));
-			selectedItemIndex++;
-			menu_text[selectedItemIndex].setFillColor(sf::Color(134, 16, 16));
+			window.close();
 		}
 	}
+}
+
+void Menu::playGame(bool& game_running)
+{
+	std::cout << game_running;
 }

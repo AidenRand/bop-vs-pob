@@ -12,6 +12,8 @@ public:
 	void draw(sf::RenderWindow& window);
 	void moveUp();
 	void moveDown();
+	void closeGame(sf::RenderWindow& window);
+	void playGame(bool& game_running);
 
 private:
 	int selectedItemIndex;
