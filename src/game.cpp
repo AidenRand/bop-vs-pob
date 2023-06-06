@@ -1,21 +1,17 @@
 #include "game.hpp"
 #include "menu.hpp"
+#include "background.hpp"
 #include <SFML/Graphics.hpp>
 
 void game(sf::RenderWindow& window, float screen_width, float screen_height)
 {
 	// Add background texture
-	sf::Texture background_texture;
-	sf::Sprite background;
-	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
-	{
-		std::cout << "ERROR::Could not load background from file" << "\n";
-	}
-
-	background.setTexture(background_texture);
 	float background_x = 0;
 	float background_y = 0;
-	background.setPosition(sf::Vector2f(background_x, background_y));
+	std::vector<Background> background_vector;
+	// int scroll = 1;
+	Background background_tile(background_x, background_y, screen_width, screen_height);
+	int i = 0;
 
 	// Create menu
 	Menu menu;
@@ -45,7 +41,11 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 		}
 
 		window.clear();
-		window.draw(background);
+
+		if (i < 2)
+		{
+			background_vector.push_back(background_tile);
+		}
 		menu.draw(window);
 		menu.moveUp();
 		menu.moveDown();
