@@ -6,9 +6,10 @@
 class Menu
 {
 public:
-	Menu(float screen_height, float screen_width);
+	Menu();
 	~Menu();
 
+	void createButtons(float screen_width, float screen_height, int font_size);
 	void draw(sf::RenderWindow& window);
 	void moveUp();
 	void moveDown();

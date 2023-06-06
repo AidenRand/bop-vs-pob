@@ -18,10 +18,13 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 	background.setPosition(sf::Vector2f(background_x, background_y));
 
 	// Create menu
-	Menu menu(screen_width, screen_height);
+	Menu menu;
 	bool game_running = false;
+	int menu_font_size = 30;
 	float title_x = 230;
 	float title_y = -130;
+	menu.createButtons(screen_width, screen_height, menu_font_size);
+	menu.createTitle(title_x, title_y);
 
 	// Make delta time
 	float dt;
@@ -48,7 +51,6 @@ void game(sf::RenderWindow& window, float screen_width, float screen_height)
 		menu.moveDown();
 		menu.closeGame(window);
 		menu.playGame(game_running);
-		menu.createTitle(title_x, title_y);
 		menu.animateTitle(0, dt);
 		menu.drawTitle(window);
 		window.display();

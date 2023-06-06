@@ -1,42 +1,36 @@
 #include "menu.hpp"
 
-Menu::Menu(float screen_width, float screen_height)
+Menu::Menu()
 {
+	// Load font
 	if (!font.loadFromFile("content/pixelfaceonfire.ttf"))
 	{
 		std::cout << "ERROR:: Cannot load menu font from file" << "\n";
 	}
-
-	// Set menu text variables
-	for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
-	{
-		menu_text[i].setFont(font);
-		menu_text[i].setCharacterSize(20);
-		menu_text[i].setFillColor(sf::Color(181, 35, 35));
-	}
-
-	menu_text[0].setString("PLAY");
-	menu_text[0].setPosition(sf::Vector2f(screen_width / 2.2, screen_height / (MAX_NUMBER_OF_ITEMS + 1.5) * 2));
-	menu_text[0].setFillColor(sf::Color(134, 16, 16));
-
-	menu_text[1].setString("QUIT");
-	menu_text[1].setPosition(sf::Vector2f(screen_width / 2.2, screen_height / (MAX_NUMBER_OF_ITEMS + 2) * 3));
-
-	selectedItemIndex = 0;
-
-
-	if (!title_texture.loadFromFile("content/bop-vs-pob-title.png"))
-	{
-		std::cout << "ERROR::Cannot load title texture from file" << "\n";
-	}
-	total_time = 0.0f;
-	current_image.x = 0;
-	title_uv_rect.width = title_texture.getSize().x / float(image_count.x);
-	title_uv_rect.height = title_texture.getSize().y / float(image_count.y);
 }
 
 Menu::~Menu()
 {
+}
+
+void Menu::createButtons(float screen_width, float screen_height, int font_size)
+{
+	// Set menu text variables
+	for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
+	{
+		menu_text[i].setFont(font);
+		menu_text[i].setCharacterSize(font_size);
+	}
+
+	menu_text[0].setString("PLAY");
+	menu_text[0].setPosition(sf::Vector2f(screen_width / 2.2, screen_height / (MAX_NUMBER_OF_ITEMS + 1.5) * 2));
+	menu_text[0].setFillColor(sf::Color(255, 243, 0));
+
+	menu_text[1].setString("QUIT");
+	menu_text[1].setPosition(sf::Vector2f(screen_width / 2.2, screen_height / (MAX_NUMBER_OF_ITEMS + 2) * 3));
+	menu_text[1].setFillColor(sf::Color(250, 0, 0));
+
+	selectedItemIndex = 1;
 }
 
 void Menu::draw(sf::RenderWindow& window)
@@ -54,9 +48,9 @@ void Menu::moveUp()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			menu_text[selectedItemIndex].setFillColor(sf::Color(181, 35, 35));
+			menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
 			selectedItemIndex++;
-			menu_text[selectedItemIndex].setFillColor(sf::Color(134, 16, 16));
+			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
 		}
 	}
 }
@@ -68,9 +62,9 @@ void Menu::moveDown()
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			menu_text[selectedItemIndex].setFillColor(sf::Color(181, 35, 35));
+			menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
 			selectedItemIndex--;
-			menu_text[selectedItemIndex].setFillColor(sf::Color(134, 16, 16));
+			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
 		}
 	}
 }
@@ -94,6 +88,16 @@ void Menu::playGame(bool& game_running)
 
 void Menu::createTitle(float title_x, float title_y)
 {
+	// Load title texture
+	if (!title_texture.loadFromFile("content/bop-vs-pob-title.png"))
+	{
+		std::cout << "ERROR::Cannot load title texture from file" << "\n";
+	}
+	// Create title texture variables
+	total_time = 0.0f;
+	current_image.x = 0;
+	title_uv_rect.width = title_texture.getSize().x / float(image_count.x);
+	title_uv_rect.height = title_texture.getSize().y / float(image_count.y);
 	title.setPosition(sf::Vector2f(title_x, title_y));
 	title.setTexture(title_texture, true);
 }
