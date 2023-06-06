@@ -4,10 +4,14 @@
 class Background
 {
 public:
-	Background(float background_x, float background_y, float screen_width, float screen_height);
+	Background();
+	void setPos(float background_x, float background_y, float screen_width);
+	void drawTo(sf::RenderWindow& window);
+	void moveTiles();
+	float returnX();
+	sf::Sprite background;
 
 private:
-	sf::Sprite background;
 	sf::Texture background_texture;
 };
 
