@@ -2,6 +2,7 @@
 #include "menu.hpp"
 #include "clouds.hpp"
 #include <SFML/Graphics.hpp>
+#include "world.hpp"
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
@@ -26,6 +27,24 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		std::cout << "ERROR::Could not load background from file" << "\n";
 	}
 	background.setTexture(background_texture);
+
+	const int level[] =
+	{
+		4, 4, 4, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
+		1, 1, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,
+		0, 1, 0, 0, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0,
+		0, 1, 1, 0, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0,
+		0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0,
+		2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1,
+		0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1,
+	};
+
+	TileMap map;
+	if (!map.loadTiles("content/ground-tileset.png", sf::Vector2u(32, 32), level, 40, 3))
+	{
+		std::cout << "ERROR:: Could not load tilemap" << "\n";
+	}
 
 
 	// Create menu
@@ -90,6 +109,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.animateTitle(0, dt);
 			menu.drawTitle(window);
 		}
+
+		window.draw(map);
 
 		window.display();
 	}
