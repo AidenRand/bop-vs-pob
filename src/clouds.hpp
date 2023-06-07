@@ -1,6 +1,8 @@
 #ifndef BACKGROUND_HPP
 #define BACKGROUND_HPP
 
+#include <SFML/Graphics.hpp>
+
 class Clouds
 {
 public:

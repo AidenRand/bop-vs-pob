@@ -1,4 +1,5 @@
 #include "menu.hpp"
+#include <SFML/Graphics.hpp>
 
 Menu::Menu()
 {

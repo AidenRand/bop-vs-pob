@@ -1,4 +1,5 @@
 #include "clouds.hpp"
+#include <SFML/Graphics.hpp>
 
 Clouds::Clouds()
 {
@@ -10,9 +11,7 @@ Clouds::Clouds()
 
 void Clouds::setPos(float clouds_x, float clouds_y)
 {
-
 	back_clouds.setTexture(back_clouds_texture);
-
 	back_clouds.setPosition(sf::Vector2f(clouds_x, clouds_y));
 }
 
