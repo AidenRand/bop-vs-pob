@@ -36,6 +36,30 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	menu.createButtons(screen_width, screen_height, menu_font_size);
 	menu.createTitle(title_x, title_y);
 
+	// Create map
+	const int level[] =
+	{
+		-5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+	};
+
+	int tile_width = 32;
+	int tile_height = 32;
+	int desired_width = 16;
+	int desired_height = 9;
+	World world_map;
+	if (!world_map.loadTiles("content/ground-tileset.png", sf::Vector2u(tile_width, tile_height), level, desired_width, desired_height))
+	{
+		std::cout << "ERROR:: Cannot load tile map from file" << "\n";
+	}
+
 	// Make delta time
 	float dt;
 	sf::Clock clock;
@@ -91,7 +115,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.drawTitle(window);
 		}
 
-		window.draw(map);
+		window.draw(world_map);
 
 		window.display();
 	}

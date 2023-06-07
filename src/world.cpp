@@ -42,3 +42,12 @@ bool World::loadTiles(const std::string& tile_set, sf::Vector2u tile_size, const
 	}
 	return true;
 }
+
+void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	states.transform *= getTransform();
+
+	states.texture = &m_tileset;
+
+	target.draw(m_vertices, states);
+}
