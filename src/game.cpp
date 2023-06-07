@@ -18,6 +18,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	cloud_tile.setPos(clouds_x, clouds_y);
 	cloud_tile2.setPos(clouds_x - screen_width, clouds_y);
 
+	// Set background
 	sf::Sprite background;
 	sf::Texture background_texture;
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
@@ -77,13 +78,19 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		cloud_tile2.moveTiles(cloud_scroll_speed, dt);
 		cloud_tile.drawTo(window);
 		cloud_tile2.drawTo(window);
-		menu.drawButtons(window, game_running);
-		menu.moveUp();
-		menu.moveDown();
-		menu.closeGame(window);
-		menu.playGame(game_running);
-		menu.animateTitle(0, dt);
-		menu.drawTitle(window, game_running);
+
+		menu.backToMenu(game_running);
+		if (!game_running)
+		{
+			menu.drawButtons(window);
+			menu.moveUp();
+			menu.moveDown();
+			menu.closeGame(window);
+			menu.playGame(game_running);
+			menu.animateTitle(0, dt);
+			menu.drawTitle(window);
+		}
+
 		window.display();
 	}
 }

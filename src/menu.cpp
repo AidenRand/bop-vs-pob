@@ -34,14 +34,11 @@ void Menu::createButtons(float screen_width, float screen_height, int font_size)
 
 }
 
-void Menu::drawButtons(sf::RenderWindow& window, bool& game_running)
+void Menu::drawButtons(sf::RenderWindow& window)
 {
-	if (!game_running)
+	for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
 	{
-		for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
-		{
-			window.draw(menu_text[i]);
-		}
+		window.draw(menu_text[i]);
 	}
 }
 
@@ -135,10 +132,16 @@ void Menu::animateTitle(int row, float dt)
 	title.setTextureRect(title_uv_rect);
 }
 
-void Menu::drawTitle(sf::RenderWindow& window, bool& game_running)
+void Menu::drawTitle(sf::RenderWindow& window)
 {
-	if (!game_running)
+	window.draw(title);
+}
+
+void Menu::backToMenu(bool& game_running)
+{
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
-		window.draw(title);
+		game_running = false;
 	}
 }

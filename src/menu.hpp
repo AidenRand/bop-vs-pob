@@ -10,14 +10,15 @@ public:
 	~Menu();
 
 	void createButtons(float screen_width, float screen_height, int font_size);
-	void drawButtons(sf::RenderWindow& window, bool& game_running);
+	void drawButtons(sf::RenderWindow& window);
 	void moveUp();
 	void moveDown();
 	void closeGame(sf::RenderWindow& window);
 	void playGame(bool& game_running);
 	void createTitle(float title_x, float title_y);
 	void animateTitle(int row, float dt);
-	void drawTitle(sf::RenderWindow& window, bool& game_running);
+	void drawTitle(sf::RenderWindow& window);
+	void backToMenu(bool& game_running);
 
 private:
 	int selectedItemIndex;
