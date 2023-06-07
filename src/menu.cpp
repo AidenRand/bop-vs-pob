@@ -23,21 +23,25 @@ void Menu::createButtons(float screen_width, float screen_height, int font_size)
 	}
 
 	menu_text[0].setString("PLAY");
-	menu_text[0].setPosition(sf::Vector2f(screen_width / 2.2, screen_height / (MAX_NUMBER_OF_ITEMS + 1.5) * 2));
+	menu_text[0].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 1.5) * 2));
 	menu_text[0].setFillColor(sf::Color(255, 243, 0));
 
 	menu_text[1].setString("QUIT");
-	menu_text[1].setPosition(sf::Vector2f(screen_width / 2.2, screen_height / (MAX_NUMBER_OF_ITEMS + 2) * 3));
+	menu_text[1].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 2) * 3));
 	menu_text[1].setFillColor(sf::Color(250, 0, 0));
 
 	selectedItemIndex = 1;
+
 }
 
-void Menu::draw(sf::RenderWindow& window)
+void Menu::drawButtons(sf::RenderWindow& window, bool& game_running)
 {
-	for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
+	if (!game_running)
 	{
-		window.draw(menu_text[i]);
+		for (int i = 0; i < MAX_NUMBER_OF_ITEMS; i++)
+		{
+			window.draw(menu_text[i]);
+		}
 	}
 }
 
@@ -83,7 +87,13 @@ void Menu::closeGame(sf::RenderWindow& window)
 
 void Menu::playGame(bool& game_running)
 {
-	std::cout << game_running;
+	if (selectedItemIndex == 1)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		{
+			game_running = true;
+		}
+	}
 }
 
 void Menu::createTitle(float title_x, float title_y)
@@ -125,7 +135,10 @@ void Menu::animateTitle(int row, float dt)
 	title.setTextureRect(title_uv_rect);
 }
 
-void Menu::drawTitle(sf::RenderWindow& window)
+void Menu::drawTitle(sf::RenderWindow& window, bool& game_running)
 {
-	window.draw(title);
+	if (!game_running)
+	{
+		window.draw(title);
+	}
 }

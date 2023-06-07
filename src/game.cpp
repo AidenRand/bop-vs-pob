@@ -5,6 +5,8 @@
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
+	bool game_running = false;
+
 	// Create clouds texture
 	Clouds cloud_tile;
 	Clouds cloud_tile2;
@@ -27,7 +29,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	// Create menu
 	Menu menu;
-	bool game_running = false;
 	int menu_font_size = 30;
 	float title_x = 230;
 	float title_y = -130;
@@ -65,18 +66,24 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			cloud_tile.moveTiles(cloud_scroll_speed, dt);
 		}
 
+		if (cloud_tile2.returnX() > screen_width)
+		{
+			cloud_tile2.setPos(clouds_x - screen_width, clouds_y);
+			cloud_tile2.moveTiles(cloud_scroll_speed, dt);
+		}
+
 		window.draw(background);
 		cloud_tile.moveTiles(cloud_scroll_speed, dt);
 		cloud_tile2.moveTiles(cloud_scroll_speed, dt);
 		cloud_tile.drawTo(window);
 		cloud_tile2.drawTo(window);
-		menu.draw(window);
+		menu.drawButtons(window, game_running);
 		menu.moveUp();
 		menu.moveDown();
 		menu.closeGame(window);
 		menu.playGame(game_running);
 		menu.animateTitle(0, dt);
-		menu.drawTitle(window);
+		menu.drawTitle(window, game_running);
 		window.display();
 	}
 }
