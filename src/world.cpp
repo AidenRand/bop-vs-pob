@@ -3,28 +3,29 @@
 #include <string>
 #include <iostream>
 
-bool TileMap::loadTiles(const std::string& tile_set, sf::Vector2u tile_size, const int* tiles, unsigned int width, unsigned int height)
+bool World::loadTiles(const std::string& tile_set, sf::Vector2u tile_size, const int* tiles, unsigned int desired_width, unsigned int desired_height)
 {
 	if (!m_tileset.loadFromFile(tile_set))
 	{
+		std::cout << "ERROR:: Cannot load tileset from file" << "\n";
 		return false;
 	}
 
 	m_vertices.setPrimitiveType(sf::Quads);
-	m_vertices.resize(width * height * 4);
+	m_vertices.resize(desired_width * desired_height * 4);
 
-	for (unsigned int i = 0; i < width; ++i)
+	for (unsigned int i = 0; i < desired_width; ++i)
 	{
-		for (unsigned int j = 0; j < height; ++j)
+		for (unsigned int j = 0; j < desired_height; ++j)
 		{
-			int tile_number = tiles[i + j * width];
+			int tile_number = tiles[i + j * desired_width];
 
-			// Find tile position in tileset image
+			// Find tile position in tileset
 			int tu = tile_number % (m_tileset.getSize().x / tile_size.x);
 			int tv = tile_number / (m_tileset.getSize().x / tile_size.x);
 
 			// Get pointer to current tile quad
-			sf::Vertex* quad = &m_vertices[(i + j * width) * 4];
+			sf::Vertex* quad = &m_vertices[(i + j * desired_width) * 4];
 
 			// Define four corners of tile
 			quad[0].position = sf::Vector2f(i * tile_size.x, j * tile_size.y);
@@ -40,13 +41,4 @@ bool TileMap::loadTiles(const std::string& tile_set, sf::Vector2u tile_size, con
 		}
 	}
 	return true;
-}
-
-void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	states.transform *= getTransform();
-
-	states.texture = &m_tileset;
-
-	target.draw(m_vertices, states);
 }
