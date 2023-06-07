@@ -1,21 +1,28 @@
 #include "game.hpp"
 #include "menu.hpp"
-#include "background.hpp"
+#include "clouds.hpp"
 #include <SFML/Graphics.hpp>
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
-	// Add background texture
-	float background_x = 0;
-	float background_y = 0;
-	std::vector<Background> background_vector;
-	// int scroll = 1;
-	Background background_tile;
-	Background background_tile2;
-	int i = 0;
-	background_tile.setPos(background_x, background_y, screen_width);
-	background_tile2.setPos(background_x - screen_width, background_y, screen_width);
+	// Create clouds texture
+	Clouds cloud_tile;
+	Clouds cloud_tile2;
+	std::vector<Clouds> cloud_vector;
+	long unsigned int max_cloud_tiles = 2;
+	int cloud_scroll_speed = 20;
+	float clouds_x = 0;
+	float clouds_y = -100;
+	cloud_tile.setPos(clouds_x, clouds_y);
+	cloud_tile2.setPos(clouds_x - screen_width, clouds_y);
 
+	sf::Sprite background;
+	sf::Texture background_texture;
+	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
+	{
+		std::cout << "ERROR::Could not load background from file" << "\n";
+	}
+	background.setTexture(background_texture);
 
 
 	// Create menu
@@ -47,28 +54,22 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 		window.clear();
 
-		if (i < 2)
+		if (cloud_vector.size() < max_cloud_tiles)
 		{
-			background_vector.push_back(background_tile);
-			i++;
+			cloud_vector.push_back(cloud_tile);
 		}
 
-		if (background_tile.returnX() > screen_width - 5)
+		if (cloud_tile.returnX() > screen_width)
 		{
-			background_tile.setPos(background_x - screen_width, background_y, screen_width);
-			background_tile.moveTiles();
+			cloud_tile.setPos(clouds_x - screen_width, clouds_y);
+			cloud_tile.moveTiles(cloud_scroll_speed, dt);
 		}
 
-		if (background_tile2.returnX() > screen_width - 5)
-		{
-			background_tile2.setPos(background_x - screen_width, background_y, screen_width);
-			background_tile2.moveTiles();
-		}
-
-		background_tile.moveTiles();
-		background_tile2.moveTiles();
-		background_tile.drawTo(window);
-		background_tile2.drawTo(window);
+		window.draw(background);
+		cloud_tile.moveTiles(cloud_scroll_speed, dt);
+		cloud_tile2.moveTiles(cloud_scroll_speed, dt);
+		cloud_tile.drawTo(window);
+		cloud_tile2.drawTo(window);
 		menu.draw(window);
 		menu.moveUp();
 		menu.moveDown();
