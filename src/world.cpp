@@ -49,5 +49,7 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 	states.texture = &m_tileset;
 
-	target.draw(m_vertices, states);
+	if (m_vertices.getBounds().intersects(m_vertices.getBounds()))
+
+		target.draw(m_vertices, states);
 }
