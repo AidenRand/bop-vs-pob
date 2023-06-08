@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
+#include "players.hpp"
 
 bool World::loadTiles(const std::string& tile_set, sf::Vector2u tile_size, const int* tiles, unsigned int desired_width, unsigned int desired_height)
 {
@@ -49,7 +50,15 @@ void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 	states.texture = &m_tileset;
 
-	if (m_vertices.getBounds().intersects(m_vertices.getBounds()))
+	target.draw(m_vertices, states);
+}
 
-		target.draw(m_vertices, states);
+void World::collision(Players& players)
+{
+	auto player = players.player;
+
+	if (m_vertices.getBounds().intersects(player.getGlobalBounds()))
+	{
+		std::cout << "collision" << "\n";
+	}
 }

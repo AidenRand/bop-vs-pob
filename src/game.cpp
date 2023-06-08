@@ -3,6 +3,7 @@
 #include "clouds.hpp"
 #include <SFML/Graphics.hpp>
 #include "world.hpp"
+#include "players.hpp"
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
@@ -35,6 +36,9 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float title_y = -130;
 	menu.createButtons(screen_width, screen_height, menu_font_size);
 	menu.createTitle(title_x, title_y);
+
+	// Create players
+	Players player_1(50, 50, 100, 100);
 
 
 	int x = -1;
@@ -126,6 +130,10 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.drawTitle(window);
 		}
 
+		world_map.collision(player_1);
+
+		player_1.movePlayers();
+		player_1.drawTo(window);
 		window.draw(world_map);
 
 		window.display();
