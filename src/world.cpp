@@ -15,6 +15,7 @@ bool World::loadTiles(const std::string& tile_set, sf::Vector2u tile_size, const
 	m_vertices.setPrimitiveType(sf::Quads);
 	m_vertices.resize(desired_width * desired_height * 4);
 
+
 	for (unsigned int i = 0; i < desired_width; ++i)
 	{
 		for (unsigned int j = 0; j < desired_height; ++j)
@@ -47,6 +48,7 @@ bool World::loadTiles(const std::string& tile_set, sf::Vector2u tile_size, const
 void World::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
+	states.transform.translate(0, 460);
 
 	states.texture = &m_tileset;
 
