@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "world.hpp"
 #include "players.hpp"
+#include "foreground.hpp"
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
@@ -29,7 +30,18 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	}
 	background.setTexture(background_texture);
 
-	// Create foregound
+	// Create left foregound
+	float left_foreground_x = 0;
+	float left_foreground_y = 412;
+	std::string left_foreground_texture = "content/left-foreground.png";
+	Foreground left_foreground(left_foreground_texture, left_foreground_x, left_foreground_y);
+
+	// Create right foreground
+	std::string right_foreground_texture = "content/right-foreground.png";
+	float right_foreground_x = 704;
+	float right_foreground_y = 412;
+	Foreground right_foreground(right_foreground_texture, right_foreground_x, right_foreground_y);
+
 
 	// Create menu
 	Menu menu;
@@ -114,7 +126,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		cloud_tile.drawTo(window);
 		cloud_tile2.drawTo(window);
 
-		// Create game menu
+		// Draw game menu
 		menu.backToMenu(game_running);
 		if (!game_running)
 		{
@@ -126,15 +138,18 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.animateTitle(0, dt);
 			menu.drawTitle(window);
 		}
+		else {
 
-		// Create player 1
-		player_1.movePlayers();
-		player_1.drawTo(window);
-
-		// Draw tile map if game is running
-		if (game_running)
-		{
+			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1);
+
+			// Draw player 1
+			player_1.movePlayers();
+			player_1.drawTo(window);
+
+			// Draw foreground
+			left_foreground.drawTo(window);
+			right_foreground.drawTo(window);
 		}
 
 		window.display();
