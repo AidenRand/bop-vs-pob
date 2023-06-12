@@ -41,18 +41,32 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	Players player_1(50, 50, 100, 100);
 
 	// Create map
-	const int map_height = 4;
-	const int map_width = 26;
+	const int map_height = 17;
+	const int map_width = 30;
 
 	sf::String tile_map[map_height] =
 	{
-			"               MM                ",
-			"                                 ",
-			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
-			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"                                     ",
+			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+			"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
 	};
 
 	World world_map;
+	std::vector<World> tile_vector;
 
 	// Make delta time
 	float dt;
@@ -112,7 +126,15 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		player_1.movePlayers();
 		player_1.drawTo(window);
 
-		world_map.createMap(tile_map, map_width, map_height);
+		if (tile_vector.size() < 5)
+		{
+
+		}
+
+		if (game_running)
+		{
+			world_map.createMap(tile_map, map_width, map_height, window, player_1);
+		}
 
 		window.display();
 	}

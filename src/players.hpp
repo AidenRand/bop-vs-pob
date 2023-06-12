@@ -10,8 +10,6 @@ public:
 	void drawTo(sf::RenderWindow& window);
 	void movePlayers();
 	sf::RectangleShape player;
-
-private:
 };
 
 #endif
