@@ -20,7 +20,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	cloud_tile.setPos(clouds_x, clouds_y);
 	cloud_tile2.setPos(clouds_x - screen_width, clouds_y);
 
-	// Set background
+	// create background
 	sf::Sprite background;
 	sf::Texture background_texture;
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
@@ -28,6 +28,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		std::cout << "ERROR::Could not load background from file" << "\n";
 	}
 	background.setTexture(background_texture);
+
+	// Create foregound
 
 	// Create menu
 	Menu menu;
@@ -89,6 +91,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		window.clear();
 		window.draw(background);
 
+		// Draw moving clouds
 		if (cloud_vector.size() < max_cloud_tiles)
 		{
 			cloud_vector.push_back(cloud_tile);
@@ -111,6 +114,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		cloud_tile.drawTo(window);
 		cloud_tile2.drawTo(window);
 
+		// Create game menu
 		menu.backToMenu(game_running);
 		if (!game_running)
 		{
