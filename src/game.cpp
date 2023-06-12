@@ -40,43 +40,19 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	// Create players
 	Players player_1(50, 50, 100, 100);
 
-	// int x = 1;
 	// Create map
-	const int H = 10;
-	const int W = 50;
+	const int map_height = 4;
+	const int map_width = 26;
 
-	sf::String tileMap[H] =
+	sf::String tile_map[map_height] =
 	{
-			"00000000000000000000000000000000000000000000000000",
-			"0                                                0",
-			"0                                                0",
-			"0                                                0",
-			"0                                                0",
-			"0               MMM                              0",
-			"0                                                0",
-			"0                                                0",
-			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
-			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+			"               MM                ",
+			"                                 ",
+			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
 	};
 
-	sf::Texture tileset;
-	if (!tileset.loadFromFile("content/ground-tileset.png"))
-	{
-		system("pause");
-	}
-
-	sf::Sprite tile;
-	tile.setTexture(tileset);
-
-	// int tile_width = 32;
-	// int tile_height = 32;
-	// int tile_map_width = 32;
-	// int tile_map_height = 11;
-	// World world_map;
-	// if (!world_map.loadTiles("content/ground-tileset.png", sf::Vector2u(tile_width, tile_height), level, tile_map_width, tile_map_height))
-	// {
-	// 	std::cout << "ERROR:: Cannot load tile map from file" << "\n";
-	// }
+	World world_map;
 
 	// Make delta time
 	float dt;
@@ -97,6 +73,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		}
 
 		window.clear();
+		window.draw(background);
 
 		if (cloud_vector.size() < max_cloud_tiles)
 		{
@@ -115,7 +92,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			cloud_tile2.moveTiles(cloud_scroll_speed, dt);
 		}
 
-		window.draw(background);
 		cloud_tile.moveTiles(cloud_scroll_speed, dt);
 		cloud_tile2.moveTiles(cloud_scroll_speed, dt);
 		cloud_tile.drawTo(window);
@@ -133,29 +109,10 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.drawTitle(window);
 		}
 
-		// world_map.collision(player_1);
-
 		player_1.movePlayers();
 		player_1.drawTo(window);
-		// window.draw(world_map);
 
-		for (int i = 0; i < H; i++)
-		{
-			for (int j = 0; j < W; j++)
-			{
-				if (tileMap[i][j] == 'G')
-					tile.setTextureRect(sf::IntRect(0 * 32, 0 * 32, 32, 32));
-
-				if (tileMap[i][j] == 'M')
-					tile.setTextureRect(sf::IntRect(1 * 32, 0 * 32, 32, 32));
-
-				if (tileMap[i][j] == '0' || tileMap[i][j] == ' ')
-					continue;
-
-				tile.setPosition(sf::Vector2f(j * 32, i * 32));
-				window.draw(tile);
-			}
-		}
+		world_map.createMap(tile_map, map_width, map_height);
 
 		window.display();
 	}

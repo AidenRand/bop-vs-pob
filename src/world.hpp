@@ -8,10 +8,10 @@ class World
 {
 public:
 	World();
+	void createMap(sf::String tile_map[], const int map_width, const int map_height);
 private:
 	sf::Sprite tile;
 	sf::Texture tile_set;
-
 };
 
 #endif
