@@ -12,28 +12,29 @@ void Players::drawTo(sf::RenderWindow& window)
 	window.draw(player);
 }
 
-void Players::movePlayers()
+void Players::movePlayers(int player_speed)
 {
-	sf::Vector2f velocity;
+	velocity.x = 0;
+	velocity.y = 0;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		velocity.y = 5;
+		velocity.y -= player_speed;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		velocity.y += player_speed;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		velocity.y = -5;
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		velocity.x = 5;
+		velocity.x = player_speed;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		velocity.x = -5;
+		velocity.x = -player_speed;
 	}
 
 	player.move(velocity);

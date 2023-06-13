@@ -45,9 +45,9 @@ void World::createMap(sf::String tile_map[], const int map_width, const int map_
 
 void World::playerCollision(Players& player_rect)
 {
+	auto player = player_rect.player;
 	// Detect collision between player and tile
-	if (player_rect.player.getGlobalBounds().intersects(tile.getGlobalBounds()))
+	if (player.getGlobalBounds().intersects(tile.getGlobalBounds()))
 	{
-		std::cout << player_rect.player.getPosition().x << "\n";
 	}
 }
