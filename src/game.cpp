@@ -42,7 +42,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float right_foreground_y = 412;
 	Foreground right_foreground(right_foreground_texture, right_foreground_x, right_foreground_y);
 
-
 	// Create menu
 	Menu menu;
 	int menu_font_size = 30;
@@ -56,6 +55,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float player_x = 100;
 	float player_y = 100;
 	Players player_1(50, 50, player_x, player_y);
+	bool player_tile_collision = false;
 
 	// Create map
 	const int map_height = 17;
@@ -144,15 +144,18 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		else {
 
 			// Draw tile map if game is running
-			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1);
+			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_tile_collision);
 
 			// Draw player 1
-			player_1.movePlayers(player_speed);
+			player_1.movePlayers(player_speed, player_tile_collision);
 			player_1.drawTo(window);
+			player_1.tileCollision(player_tile_collision);
 
 			// Draw foreground
 			left_foreground.drawTo(window);
 			right_foreground.drawTo(window);
+
+			std::cout << player_tile_collision << "\n";
 		}
 
 		window.display();
