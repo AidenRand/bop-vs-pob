@@ -46,15 +46,22 @@ void World::createMap(sf::String tile_map[], const int map_width, const int map_
 
 void World::playerCollision(Players& player_rect, bool& player_tile_collision)
 {
-	auto player_bottom = player_rect.player_bottom;
+	// auto player_bottom = player_rect.player_bottom;
+	// auto player_velocity_y = player_rect.velocity.y;
 	tile_top = tile.getPosition().y;
-	tile_bottom = tile.getPosition().y + tile.getTextureRect().height;
-	tile_left = tile.getPosition().x;
-	tile_right = tile.getPosition().x + tile.getTextureRect().width;
 	// Detect collision between player and tile
-	if (player_bottom > tile_top)
+	if (player_rect.player.getGlobalBounds().intersects(tile.getGlobalBounds()))
 	{
 		player_tile_collision = true;
-		std::cout << "collision" << "\n";
+		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 50));
+		player_rect.gravity = 0;
 	}
+	else
+	{
+		player_rect.gravity = 20;
+	}
+	std::cout << player_tile_collision << "\n";
+	std::cout << player_rect.velocity.x << "\n";
+
+
 }

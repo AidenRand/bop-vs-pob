@@ -13,10 +13,8 @@ public:
 	sf::Sprite tile;
 private:
 	sf::Texture tile_set;
-	float tile_bottom;
-	float tile_left;
-	float tile_right;
 	float tile_top;
+	bool collision;
 };
 
 #endif

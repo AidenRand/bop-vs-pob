@@ -142,20 +142,17 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.drawTitle(window);
 		}
 		else {
-
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_tile_collision);
 
 			// Draw player 1
-			player_1.movePlayers(player_speed, player_tile_collision);
+			player_1.movePlayers(player_speed);
 			player_1.drawTo(window);
-			player_1.tileCollision(player_tile_collision);
+			player_1.tileCollision();
 
 			// Draw foreground
 			left_foreground.drawTo(window);
 			right_foreground.drawTo(window);
-
-			std::cout << player_tile_collision << "\n";
 		}
 
 		window.display();

@@ -12,45 +12,39 @@ void Players::drawTo(sf::RenderWindow& window)
 	window.draw(player);
 }
 
-void Players::movePlayers(int player_speed, bool& player_tile_collision)
+void Players::movePlayers(int player_speed)
 {
-	sf::Vector2f velocity;
+	velocity.x = 0;
+	velocity.y = 0;
 
-	std::cout << player_speed;
+	velocity.y += gravity;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		velocity.y -= step_y;
+		velocity.y = -player_speed * 2;
 	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	else
 	{
-		velocity.y += step_y;
-		tileCollision(player_tile_collision);
+		velocity.y = player_speed * 2;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		velocity.x = step_x;
+		velocity.x = player_speed;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
-		velocity.x = -step_x;
+		velocity.x = -player_speed;
 	}
 
 	player.move(velocity);
 }
 
-void Players::tileCollision(bool& player_tile_collision)
+void Players::tileCollision()
 {
 	player_top = player.getPosition().y;
 	player_bottom = player.getPosition().y + 50;
 	player_left = player.getPosition().x;
 	player_right = player.getPosition().x + player.getTextureRect().width;
-
-	if (player_tile_collision)
-	{
-		step_y *= -1;
-	}
 }
