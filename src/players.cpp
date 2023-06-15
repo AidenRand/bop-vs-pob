@@ -12,20 +12,18 @@ void Players::drawTo(sf::RenderWindow& window)
 	window.draw(player);
 }
 
-void Players::movePlayers(int player_speed)
+void Players::movePlayers(int player_speed, bool& player_tile_collision)
 {
 	velocity.x = 0;
 	velocity.y = 0;
 
 	velocity.y += gravity;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if (player_tile_collision)
 	{
-		velocity.y = -player_speed * 2;
-	}
-	else
-	{
-		velocity.y = player_speed * 2;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			velocity.y -= gravity;
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
