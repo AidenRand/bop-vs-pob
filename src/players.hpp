@@ -8,7 +8,7 @@ class Players
 public:
 	Players(float player_width, float player_height, float player_x, float player_y);
 	void drawTo(sf::RenderWindow& window);
-	void movePlayers(int player_speed, bool& player_tile_collision);
+	void movePlayers(int player_speed, bool& player_tile_collision, float& dt);
 	void tileCollision();
 	sf::RectangleShape player;
 	float player_top;
@@ -18,10 +18,7 @@ public:
 
 	sf::Vector2f position;
 	sf::Vector2f velocity;
-	float gravity = 1.0f;
-
-private:
-	// sf::Vector2f velocity;
+	float gravity = 50.0f;
 };
 
 #endif

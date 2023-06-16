@@ -12,7 +12,7 @@ void Players::drawTo(sf::RenderWindow& window)
 	window.draw(player);
 }
 
-void Players::movePlayers(int player_speed, bool& player_tile_collision)
+void Players::movePlayers(int player_speed, bool& player_tile_collision, float& dt)
 {
 	velocity.x = 0;
 
@@ -22,7 +22,7 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision)
 		velocity.y = 0;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			velocity.y -= 15;
+			velocity.y -= 800;
 		}
 	}
 	else
@@ -30,7 +30,7 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision)
 		velocity.y += gravity;
 	}
 
-	std::cout << velocity.y << "\n";
+	std::cout << gravity << "\n";
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
@@ -42,7 +42,7 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision)
 		velocity.x = -player_speed;
 	}
 
-	player.move(velocity);
+	player.move(velocity * dt);
 }
 
 void Players::tileCollision()

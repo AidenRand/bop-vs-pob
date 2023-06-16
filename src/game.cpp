@@ -51,7 +51,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	menu.createTitle(title_x, title_y);
 
 	// Create players
-	int player_speed = 5;
+	int player_speed = 400;
 	float player_x = 100;
 	float player_y = 300;
 	Players player_1(50, 50, player_x, player_y);
@@ -147,8 +147,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_tile_collision);
 
 			// Draw player 1
-			player_1.movePlayers(player_speed, player_tile_collision);
 			player_1.drawTo(window);
+			player_1.movePlayers(player_speed, player_tile_collision, dt);
 			player_1.tileCollision();
 
 			// Draw foreground
