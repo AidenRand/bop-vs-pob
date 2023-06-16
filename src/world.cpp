@@ -46,13 +46,13 @@ void World::createMap(sf::String tile_map[], const int map_width, const int map_
 
 void World::playerCollision(Players& player_rect, bool& player_tile_collision)
 {
-	// auto player_bottom = player_rect.player_bottom;
+	auto player_bottom = player_rect.player_bottom;
 	tile_top = tile.getPosition().y;
 
 	// Detect collision between player and tile
-	if (player_rect.player.getGlobalBounds().intersects(tile.getGlobalBounds()))
+	if (player_bottom > tile_top)
 	{
-		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 50));
 		player_tile_collision = true;
+		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 49));
 	}
 }
