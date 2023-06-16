@@ -18,7 +18,7 @@ public:
 
 	sf::Vector2f position;
 	sf::Vector2f velocity;
-	float gravity = 5.0f;
+	float gravity = 1.0f;
 
 private:
 	// sf::Vector2f velocity;

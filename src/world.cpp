@@ -16,7 +16,7 @@ World::World()
 void World::createMap(sf::String tile_map[], const int map_width, const int map_height, int tile_width, int tile_height, sf::RenderWindow& window, Players& player_rect, bool& player_tile_collision)
 {
 	// Loop through tile_map and assign tile texture to tile
-	// according to what string is
+	// according to what string it is assigned to
 	for (int i = 0; i < map_height; i++)
 	{
 		for (int j = 0; j != map_width; j++)
@@ -46,14 +46,13 @@ void World::createMap(sf::String tile_map[], const int map_width, const int map_
 
 void World::playerCollision(Players& player_rect, bool& player_tile_collision)
 {
-	auto player_bottom = player_rect.player_bottom;
+	// auto player_bottom = player_rect.player_bottom;
 	tile_top = tile.getPosition().y;
-	// Detect collision between player and tile
-	if (player_bottom > tile_top)
-	{
-		player_tile_collision = true;
-		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 50));
-	}
 
-	std::cout << player_tile_collision << "\n";
+	// Detect collision between player and tile
+	if (player_rect.player.getGlobalBounds().intersects(tile.getGlobalBounds()))
+	{
+		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 50));
+		player_tile_collision = true;
+	}
 }
