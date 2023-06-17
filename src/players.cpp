@@ -45,10 +45,22 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision, float& 
 	player.move(velocity * dt);
 }
 
-void Players::tileCollision()
+void Players::collision(float screen_width, int player_width)
 {
+
 	player_top = player.getPosition().y;
-	player_bottom = player.getPosition().y + 50;
+	player_bottom = player.getPosition().y + player_width;
 	player_left = player.getPosition().x;
 	player_right = player.getPosition().x + player.getTextureRect().width;
+
+	//  If player goes beyond screen borders, set player position
+	// to just before screen border
+	if (player_right > screen_width - player_width)
+	{
+		player.setPosition(screen_width - player_width, player.getPosition().y);
+	}
+	else if (player_left < 0)
+	{
+		player.setPosition(0, player.getPosition().y);
+	}
 }

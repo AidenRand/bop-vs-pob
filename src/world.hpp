@@ -14,7 +14,6 @@ public:
 private:
 	sf::Texture tile_set;
 	float tile_top;
-	bool collision;
 };
 
 #endif

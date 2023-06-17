@@ -9,7 +9,7 @@ public:
 	Players(float player_width, float player_height, float player_x, float player_y);
 	void drawTo(sf::RenderWindow& window);
 	void movePlayers(int player_speed, bool& player_tile_collision, float& dt);
-	void tileCollision();
+	void collision(float screen_width, int player_width);
 	sf::RectangleShape player;
 	float player_top;
 	float player_bottom;
