@@ -2,9 +2,20 @@
 
 Players::Players(float player_width, float player_height, float player_x, float player_y)
 {
-	player.setFillColor(sf::Color::White);
-	player.setSize(sf::Vector2f(player_width, player_height));
+	std::cout << player_width << player_height;
 	player.setPosition(sf::Vector2f(player_x, player_y));
+
+	if (!bop_texture.loadFromFile("content/bop-tilesheet.png"))
+	{
+		std::cout << "ERROR:: Cannot load bop tileset from file" << "\n";
+	}
+
+	total_time = 0.0f;
+	current_image.x = 0;
+
+	bop_uv_rect.width = bop_texture.getSize().x / float(image_count.x);
+	bop_uv_rect.height = (96) / float(image_count.y);
+	player.setTexture(bop_texture, true);
 }
 
 void Players::drawTo(sf::RenderWindow& window)
@@ -22,15 +33,13 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision, float& 
 		velocity.y = 0;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			velocity.y -= 800;
+			velocity.y -= jump_power;
 		}
 	}
 	else
 	{
 		velocity.y += gravity;
 	}
-
-	std::cout << gravity << "\n";
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
@@ -63,4 +72,25 @@ void Players::collision(float screen_width, int player_width)
 	{
 		player.setPosition(0, player.getPosition().y);
 	}
+}
+
+void Players::animateBop(int row, float& dt)
+{
+	current_image.y = row;
+	total_time += dt;
+
+	if (total_time >= switch_time)
+	{
+		total_time -= switch_time;
+		current_image.x++;
+		if (current_image.x >= image_count.x)
+		{
+			current_image.x = 0;
+		}
+	}
+
+	bop_uv_rect.left = current_image.x * bop_uv_rect.width;
+	bop_uv_rect.top = current_image.y * bop_uv_rect.height;
+
+	player.setTextureRect(bop_uv_rect);
 }

@@ -52,10 +52,10 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	// Create players
 	int player_speed = 400;
-	float player_x = 100;
+	float player_x = 150;
 	float player_y = 300;
-	int player_width = 50;
-	int player_height = 50;
+	int player_width = 96;
+	int player_height = 96;
 	Players player_1(player_height, player_width, player_x, player_y);
 
 	// Create map
@@ -152,6 +152,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_1.drawTo(window);
 			player_1.movePlayers(player_speed, player_tile_collision, dt);
 			player_1.collision(screen_width, player_width);
+			player_1.animateBop(0, dt);
 
 			// Draw foreground
 			left_foreground.drawTo(window);

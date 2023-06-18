@@ -10,7 +10,9 @@ public:
 	void drawTo(sf::RenderWindow& window);
 	void movePlayers(int player_speed, bool& player_tile_collision, float& dt);
 	void collision(float screen_width, int player_width);
-	sf::RectangleShape player;
+	void animateBop(int row, float& dt);
+	sf::Sprite player;
+
 	float player_top;
 	float player_bottom;
 	float player_left;
@@ -19,6 +21,15 @@ public:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 	float gravity = 50.0f;
+
+private:
+	sf::Texture bop_texture;
+	sf::IntRect bop_uv_rect;
+	float total_time;
+	float switch_time = 0.05f;
+	sf::Vector2u image_count = sf::Vector2u(8, 1);
+	sf::Vector2u current_image;
+	int jump_power = 800;
 };
 
 #endif
