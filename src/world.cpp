@@ -53,6 +53,6 @@ void World::playerCollision(Players& player_rect, bool& player_tile_collision)
 	if (player_bottom > tile_top)
 	{
 		player_tile_collision = true;
-		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 49));
+		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 96));
 	}
 }
