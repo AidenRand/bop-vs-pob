@@ -3,6 +3,7 @@
 Players::Players(float player_width, float player_height, float player_x, float player_y)
 {
 	std::cout << player_width << player_height;
+	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
 
 	if (!bop_texture.loadFromFile("content/bop-tilesheet.png"))
@@ -23,11 +24,12 @@ void Players::drawTo(sf::RenderWindow& window)
 	window.draw(player);
 }
 
-void Players::movePlayers(int player_speed, bool& player_tile_collision, float& dt)
+void Players::movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row)
 {
 	velocity.x = 0;
+	player_tile_row = 0;
 
-	// velocity.y += gravity;
+	// If player is colliding with tile set gravity to zero
 	if (player_tile_collision)
 	{
 		velocity.y = 0;
@@ -44,33 +46,38 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision, float& 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		velocity.x = player_speed;
+		player_tile_row = 1;
+		player.setScale(1, 1);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		velocity.x = -player_speed;
+		player_tile_row = 1;
+		player.setScale(-1, 1);
 	}
 
 	player.move(velocity * dt);
 }
 
-void Players::collision(float screen_width, int player_width)
+void Players::collision(float screen_width, int player_width, int player_height)
 {
 
+	// Get sides of player
 	player_top = player.getPosition().y;
-	player_bottom = player.getPosition().y + 96;
+	player_bottom = player.getPosition().y + player_height / 2;
 	player_left = player.getPosition().x;
-	player_right = player.getPosition().x + 96;
+	player_right = player.getPosition().x + player_width / 2;
 
 	//  If player goes beyond screen borders, set player position
 	// to just before screen border
 	if (player_right > screen_width)
 	{
-		player.setPosition(screen_width - player_width, player.getPosition().y);
+		player.setPosition(screen_width - player_width / 2, player.getPosition().y);
 	}
-	else if (player_left < 0)
+	else if (player_left < 0 + player_width / 2)
 	{
-		player.setPosition(0, player.getPosition().y);
+		player.setPosition(0 + player_width / 2, player.getPosition().y);
 	}
 }
 
