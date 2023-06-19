@@ -57,6 +57,11 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision, float& 
 		player.setScale(-1, 1);
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+	{
+		player_tile_row = 6;
+	}
+
 	player.move(velocity * dt);
 }
 
@@ -90,7 +95,7 @@ void Players::attack(int& player_tile_row)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
-		player_tile_row = 2;
+		player_tile_row = 4;
 	}
 }
 
