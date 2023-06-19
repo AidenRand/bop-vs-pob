@@ -53,7 +53,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	// Create players
 	int player_speed = 400;
 	float player_x = 100;
-	float player_y = 100;
+	float player_y = 300;
 	int player_width = 96;
 	int player_height = 96;
 	int player_tile_row = 0;

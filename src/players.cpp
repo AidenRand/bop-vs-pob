@@ -75,9 +75,9 @@ void Players::collision(float screen_width, int player_width, int player_height)
 	{
 		player.setPosition(screen_width - player_width / 2, player.getPosition().y);
 	}
-	else if (player_left < 0 + player_width / 2)
+	else if (player_left < player_width / 2)
 	{
-		player.setPosition(0 + player_width / 2, player.getPosition().y);
+		player.setPosition(player_width / 2, player.getPosition().y);
 	}
 }
 
@@ -86,7 +86,11 @@ void Players::attack(int& player_tile_row)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 	{
 		player_tile_row = 3;
-		velocity.x = 0;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	{
+		player_tile_row = 2;
 	}
 }
 
