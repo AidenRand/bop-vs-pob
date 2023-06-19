@@ -81,6 +81,15 @@ void Players::collision(float screen_width, int player_width, int player_height)
 	}
 }
 
+void Players::attack(int& player_tile_row)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+	{
+		player_tile_row = 3;
+		velocity.x = 0;
+	}
+}
+
 void Players::animateBop(int row, float& dt)
 {
 	current_image.y = row;

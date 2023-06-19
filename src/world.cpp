@@ -13,7 +13,7 @@ World::World()
 	tile.setTexture(tile_set);
 }
 
-void World::createMap(sf::String tile_map[], const int map_width, const int map_height, int tile_width, int tile_height, sf::RenderWindow& window, Players& player_rect, bool& player_tile_collision)
+void World::createMap(sf::String tile_map[], const int map_width, const int map_height, int tile_width, int tile_height, sf::RenderWindow& window, Players& player_rect, bool& player_tile_collision, int player_width)
 {
 	// Loop through tile_map and assign tile texture to tile
 	// according to what string it is assigned to
@@ -38,13 +38,13 @@ void World::createMap(sf::String tile_map[], const int map_width, const int map_
 
 			// Set tile position
 			tile.setPosition(sf::Vector2f(j * tile_width, i * tile_height));
-			playerCollision(player_rect, player_tile_collision);
+			playerCollision(player_rect, player_tile_collision, player_width);
 			window.draw(tile);
 		}
 	}
 }
 
-void World::playerCollision(Players& player_rect, bool& player_tile_collision)
+void World::playerCollision(Players& player_rect, bool& player_tile_collision, int player_width)
 {
 	auto player_bottom = player_rect.player_bottom;
 	tile_top = tile.getPosition().y;
@@ -53,6 +53,6 @@ void World::playerCollision(Players& player_rect, bool& player_tile_collision)
 	if (player_bottom > tile_top)
 	{
 		player_tile_collision = true;
-		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - 96 / 2));
+		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - player_width / 2));
 	}
 }

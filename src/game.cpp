@@ -147,12 +147,13 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			bool player_tile_collision = false;
 
 			// Draw tile map if game is running
-			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_tile_collision);
+			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_tile_collision, player_width);
 
 			// Draw player 1
 			player_1.drawTo(window);
 			player_1.movePlayers(player_speed, player_tile_collision, dt, player_tile_row);
 			player_1.collision(screen_width, player_width, player_height);
+			player_1.attack(player_tile_row);
 			player_1.animateBop(player_tile_row, dt);
 
 			// Draw foreground
