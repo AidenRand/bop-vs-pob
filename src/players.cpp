@@ -86,16 +86,26 @@ void Players::collision(float screen_width, int player_width, int player_height)
 	}
 }
 
-void Players::attack(int& player_tile_row)
+void Players::attack(int& player_tile_row, int& reload_timer)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+	if (reload_timer <= 50)
 	{
-		player_tile_row = 3;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+		{
+			player_tile_row = 3;
+			switch_time = 0.2f;
+			reload_timer += 100;
+		}
+	}
+	else
+	{
+		reload_timer--;
+		switch_time = 0.08f;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
-		player_tile_row = 4;
+		player_tile_row = 2;
 	}
 }
 
