@@ -86,34 +86,52 @@ void Players::collision(float screen_width, int player_width, int player_height)
 	}
 }
 
-void Players::attack(int& player_tile_row, int& reload_timer)
+void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer)
 {
-	if (reload_timer <= total_time)
+	// If reload timer equals zero, allow attack
+	if (weak_reload_timer == 0)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 		{
-			switch_time = 0.08f;
-			reload_timer += 100;
-			play = 10;
-			std::cout << "fired" << "\n";
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+			{
+				switch_time = 0.03f;
+				weak_reload_timer += 100;
+				play_weak = 20;
+			}
 		}
 	}
 	else
 	{
-		reload_timer--;
 		switch_time = 0.08f;
+		weak_reload_timer--;
 	}
 
-	if (play > 0)
+	// Play complete weak animation
+	if (play_weak > 0)
 	{
-		play--;
+		play_weak--;
 		player_tile_row = 3;
 	}
 
-	std::cout << play << "\n";
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+	// If strong attack reload timer equals zero, allow attack
+	if (strong_reload_timer == 0)
 	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			strong_reload_timer += 100;
+			play_strong = 20;
+		}
+	}
+	else
+	{
+		strong_reload_timer--;
+	}
+
+	// Play complete strong animation
+	if (play_strong > 0)
+	{
+		play_strong--;
 		player_tile_row = 2;
 	}
 }

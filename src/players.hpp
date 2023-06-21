@@ -10,7 +10,7 @@ public:
 	void drawTo(sf::RenderWindow& window);
 	void movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row);
 	void collision(float screen_width, int player_width, int player_height);
-	void attack(int& player_tile_row, int& reload_timer);
+	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer);
 	void animateBop(int row, float& dt);
 	sf::Sprite player;
 
@@ -31,7 +31,8 @@ private:
 	sf::Vector2u image_count = sf::Vector2u(8, 1);
 	sf::Vector2u current_image;
 	int jump_power = 800;
-	int play;
+	int play_weak;
+	int play_strong;
 };
 
 #endif
