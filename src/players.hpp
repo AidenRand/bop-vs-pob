@@ -31,6 +31,7 @@ private:
 	sf::Vector2u image_count = sf::Vector2u(8, 1);
 	sf::Vector2u current_image;
 	int jump_power = 800;
+	int play;
 };
 
 #endif

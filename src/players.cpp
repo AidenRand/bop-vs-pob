@@ -88,13 +88,14 @@ void Players::collision(float screen_width, int player_width, int player_height)
 
 void Players::attack(int& player_tile_row, int& reload_timer)
 {
-	if (reload_timer <= 50)
+	if (reload_timer <= total_time)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 		{
-			player_tile_row = 3;
-			switch_time = 0.2f;
+			switch_time = 0.08f;
 			reload_timer += 100;
+			play = 10;
+			std::cout << "fired" << "\n";
 		}
 	}
 	else
@@ -102,6 +103,14 @@ void Players::attack(int& player_tile_row, int& reload_timer)
 		reload_timer--;
 		switch_time = 0.08f;
 	}
+
+	if (play > 0)
+	{
+		play--;
+		player_tile_row = 3;
+	}
+
+	std::cout << play << "\n";
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 	{
