@@ -139,6 +139,7 @@ void Players::crouchAnimation(int& player_tile_row)
 	{
 		player_tile_row = 6;
 	}
+	std::cout << player_tile_row;
 }
 
 
