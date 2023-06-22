@@ -11,7 +11,8 @@ public:
 	void movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row);
 	void collision(float screen_width, int player_width, int player_height);
 	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer);
-	void animateBop(int row, float& dt);
+	void crouchAnimation(int& player_tile_row);
+	void animatePlayer(int row, float& dt);
 	sf::Sprite player;
 
 	float player_top;
@@ -24,8 +25,9 @@ public:
 	float gravity = 50.0f;
 
 private:
-	sf::Texture bop_texture;
-	sf::IntRect bop_uv_rect;
+	sf::Texture crouch_texture;
+	sf::Texture player_texture;
+	sf::IntRect player_uv_rect;
 	float total_time;
 	float switch_time = 0.08f;
 	sf::Vector2u image_count = sf::Vector2u(8, 1);

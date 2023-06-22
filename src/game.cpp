@@ -156,7 +156,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_1.movePlayers(player_speed, player_tile_collision, dt, player_tile_row);
 			player_1.collision(screen_width, player_width, player_height);
 			player_1.attack(player_tile_row, weak_reload_timer, strong_reload_timer);
-			player_1.animateBop(player_tile_row, dt);
+			player_1.crouchAnimation(player_tile_row);
+			player_1.animatePlayer(player_tile_row, dt);
 
 			// Draw foreground
 			left_foreground.drawTo(window);

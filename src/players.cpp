@@ -6,22 +6,27 @@ Players::Players(float player_width, float player_height, float player_x, float 
 	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
 
-	if (!bop_texture.loadFromFile("content/bop-tilesheet.png"))
+	if (!player_texture.loadFromFile("content/bop-tilesheet.png"))
 	{
-		std::cout << "ERROR:: Cannot load bop tileset from file" << "\n";
+		std::cout << "ERROR:: Cannot load player tileset from file" << "\n";
+	}
+
+	if (!crouch_texture.loadFromFile("content/bop-crouch.png"))
+	{
+		std::cout << "ERROR:: Cannot load crouch texture from file" << "\n";
 	}
 
 	total_time = 0.0f;
 	current_image.x = 0;
 
-	bop_uv_rect.width = bop_texture.getSize().x / float(image_count.x);
-	bop_uv_rect.height = (96) / float(image_count.y);
-	player.setTexture(bop_texture, true);
+	player_uv_rect.width = player_texture.getSize().x / float(image_count.x);
+	player_uv_rect.height = (96) / float(image_count.y);
 }
 
 void Players::drawTo(sf::RenderWindow& window)
 {
 	window.draw(player);
+	player.setTexture(player_texture, true);
 }
 
 void Players::movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row)
@@ -57,11 +62,6 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision, float& 
 		player.setScale(-1, 1);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-	{
-		player_tile_row = 6;
-	}
-
 	player.move(velocity * dt);
 }
 
@@ -95,48 +95,54 @@ void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_r
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 			{
-				switch_time = 0.03f;
 				weak_reload_timer += 100;
 				play_weak = 20;
 			}
 		}
 	}
-	else
-	{
-		switch_time = 0.08f;
-		weak_reload_timer--;
-	}
-
-	// Play complete weak animation
-	if (play_weak > 0)
+	else if (play_weak >= 0)
 	{
 		play_weak--;
 		player_tile_row = 3;
+	}
+	else
+	{
+		weak_reload_timer--;
 	}
 
 	// If strong attack reload timer equals zero, allow attack
 	if (strong_reload_timer == 0)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-		{
-			strong_reload_timer += 100;
-			play_strong = 20;
-		}
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+			{
+				strong_reload_timer += 100;
+				play_strong = 20;
+			}
 	}
+	else if (play_strong > 0)
+	{
+		play_strong--;
+		player_tile_row = 2;
+	}
+
 	else
 	{
 		strong_reload_timer--;
 	}
 
-	// Play complete strong animation
-	if (play_strong > 0)
+}
+
+void Players::crouchAnimation(int& player_tile_row)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
-		play_strong--;
-		player_tile_row = 2;
+		player_tile_row = 6;
 	}
 }
 
-void Players::animateBop(int row, float& dt)
+
+void Players::animatePlayer(int row, float& dt)
 {
 	current_image.y = row;
 	total_time += dt;
@@ -151,8 +157,8 @@ void Players::animateBop(int row, float& dt)
 		}
 	}
 
-	bop_uv_rect.left = current_image.x * bop_uv_rect.width;
-	bop_uv_rect.top = current_image.y * bop_uv_rect.height;
+	player_uv_rect.left = current_image.x * player_uv_rect.width;
+	player_uv_rect.top = current_image.y * player_uv_rect.height;
 
-	player.setTextureRect(bop_uv_rect);
+	player.setTextureRect(player_uv_rect);
 }
