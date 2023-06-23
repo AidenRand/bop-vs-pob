@@ -10,7 +10,7 @@ public:
 	void drawTo(sf::RenderWindow& window);
 	void movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row);
 	void collision(float screen_width, int player_width, int player_height);
-	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer);
+	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack);
 	void crouchAnimation(int& player_tile_row);
 	void animatePlayer(int row, float& dt);
 	sf::Sprite player;
@@ -25,7 +25,6 @@ public:
 	float gravity = 50.0f;
 
 private:
-	sf::Texture crouch_texture;
 	sf::Texture player_texture;
 	sf::IntRect player_uv_rect;
 	float total_time;

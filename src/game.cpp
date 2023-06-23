@@ -50,16 +50,19 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	menu.createButtons(screen_width, screen_height, menu_font_size);
 	menu.createTitle(title_x, title_y);
 
-	// Create players
+	// Create player one
 	int player_speed = 400;
-	float player_x = 100;
-	float player_y = 300;
+	float p1_x = 100;
+	float p1_y = 300;
+	bool p1_weak_attack = false;
+	bool p1_strong_attack = false;
 	int player_width = 96;
 	int player_height = 96;
 	int player_tile_row = 0;
 	int weak_reload_timer = 0;
 	int strong_reload_timer = 0;
-	Players player_1(player_height, player_width, player_x, player_y);
+
+	Players player_1(player_height, player_width, p1_x, p1_y);
 
 	// Create map
 	const int map_height = 17;
@@ -155,7 +158,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_1.drawTo(window);
 			player_1.movePlayers(player_speed, player_tile_collision, dt, player_tile_row);
 			player_1.collision(screen_width, player_width, player_height);
-			player_1.attack(player_tile_row, weak_reload_timer, strong_reload_timer);
+			player_1.attack(player_tile_row, weak_reload_timer, strong_reload_timer, p1_weak_attack, p1_strong_attack);
 			player_1.crouchAnimation(player_tile_row);
 			player_1.animatePlayer(player_tile_row, dt);
 

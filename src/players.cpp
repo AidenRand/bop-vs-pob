@@ -11,11 +11,6 @@ Players::Players(float player_width, float player_height, float player_x, float 
 		std::cout << "ERROR:: Cannot load player tileset from file" << "\n";
 	}
 
-	if (!crouch_texture.loadFromFile("content/bop-crouch.png"))
-	{
-		std::cout << "ERROR:: Cannot load crouch texture from file" << "\n";
-	}
-
 	total_time = 0.0f;
 	current_image.x = 0;
 
@@ -35,31 +30,34 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision, float& 
 	player_tile_row = 0;
 
 	// If player is colliding with tile set gravity to zero
-	if (player_tile_collision)
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
-		velocity.y = 0;
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		if (player_tile_collision)
 		{
-			velocity.y -= jump_power;
+			velocity.y = 0;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				velocity.y -= jump_power;
+			}
 		}
-	}
-	else
-	{
-		velocity.y += gravity;
-	}
+		else
+		{
+			velocity.y += gravity;
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		velocity.x = player_speed;
-		player_tile_row = 1;
-		player.setScale(1, 1);
-	}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			velocity.x = player_speed;
+			player_tile_row = 1;
+			player.setScale(1, 1);
+		}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		velocity.x = -player_speed;
-		player_tile_row = 1;
-		player.setScale(-1, 1);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			velocity.x = -player_speed;
+			player_tile_row = 1;
+			player.setScale(-1, 1);
+		}
 	}
 
 	player.move(velocity * dt);
@@ -86,17 +84,18 @@ void Players::collision(float screen_width, int player_width, int player_height)
 	}
 }
 
-void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer)
+void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack)
 {
 	// If reload timer equals zero, allow attack
 	if (weak_reload_timer == 0)
 	{
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		if (strong_attack == false)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 			{
-				weak_reload_timer += 100;
+				weak_reload_timer += 30;
 				play_weak = 20;
+				weak_attack = true;
 			}
 		}
 	}
@@ -108,16 +107,18 @@ void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_r
 	else
 	{
 		weak_reload_timer--;
+		weak_attack = false;
 	}
 
 	// If strong attack reload timer equals zero, allow attack
 	if (strong_reload_timer == 0)
 	{
-		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+		if (weak_attack == false)
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
 			{
 				strong_reload_timer += 100;
 				play_strong = 20;
+				strong_attack = true;
 			}
 	}
 	else if (play_strong > 0)
@@ -125,10 +126,10 @@ void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_r
 		play_strong--;
 		player_tile_row = 2;
 	}
-
 	else
 	{
 		strong_reload_timer--;
+		strong_attack = false;
 	}
 
 }
@@ -139,7 +140,6 @@ void Players::crouchAnimation(int& player_tile_row)
 	{
 		player_tile_row = 6;
 	}
-	std::cout << player_tile_row;
 }
 
 
