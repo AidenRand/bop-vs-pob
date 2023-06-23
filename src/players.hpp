@@ -8,10 +8,11 @@ class Players
 public:
 	Players(float player_width, float player_height, float player_x, float player_y);
 	void drawTo(sf::RenderWindow& window);
-	void movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row);
+	void movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health);
 	void collision(float screen_width, int player_width, int player_height);
 	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack);
 	void crouchAnimation(int& player_tile_row);
+	void knockoutAnimation(int& player_tile_row, int& player_health);
 	void animatePlayer(int row, float& dt);
 	sf::Sprite player;
 

@@ -24,13 +24,13 @@ void Players::drawTo(sf::RenderWindow& window)
 	player.setTexture(player_texture, true);
 }
 
-void Players::movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row)
+void Players::movePlayers(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health)
 {
 	velocity.x = 0;
 	player_tile_row = 0;
 
 	// If player is colliding with tile set gravity to zero
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && player_health > 0)
 	{
 		if (player_tile_collision)
 		{
@@ -139,6 +139,14 @@ void Players::crouchAnimation(int& player_tile_row)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
 		player_tile_row = 6;
+	}
+}
+
+void Players::knockoutAnimation(int& player_tile_row, int& player_health)
+{
+	if (player_health == 0)
+	{
+		player_tile_row = 4;
 	}
 }
 
