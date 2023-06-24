@@ -134,11 +134,16 @@ void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_r
 
 }
 
-void Players::crouchAnimation(int& player_tile_row)
+void Players::crouchAnimation(int& player_tile_row, bool& player_tile_collision)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
-		player_tile_row = 6;
+		player_tile_row = 4;
+		velocity.y += gravity;
+		if (player_tile_collision)
+		{
+			velocity.y = 0;
+		}
 	}
 }
 
@@ -147,9 +152,9 @@ void Players::knockoutAnimation(int& player_tile_row, int& player_health)
 	if (player_health == 0)
 	{
 		player_tile_row = 4;
+
 	}
 }
-
 
 void Players::animatePlayer(int row, float& dt)
 {
