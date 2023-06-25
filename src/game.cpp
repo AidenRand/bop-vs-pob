@@ -57,13 +57,14 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p1_weak_attack = false;
 	bool p1_strong_attack = false;
 	int p1_health = 5;
-	int player_width = 96;
-	int player_height = 96;
+	float player_width = 96;
+	float player_height = 96;
 	int player_tile_row = 0;
 	int weak_reload_timer = 0;
 	int strong_reload_timer = 0;
-
-	Players player_1(player_height, player_width, p1_x, p1_y);
+	std::string bop_tileset = "content/bop-tilesheet.png";
+	std::string bop_crouch = "content/bop-crouch.png";
+	Players player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
 
 	// Create map
 	const int map_height = 17;
