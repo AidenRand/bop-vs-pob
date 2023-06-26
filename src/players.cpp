@@ -1,10 +1,10 @@
 #include "players.hpp"
 
-Players::Players(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y)
+Players::Players(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, float& hitbox_x, float& hitbox_y)
 {
 	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
-	player.setHitbox({ 0, 0, player_width, player_height });
+	player.setHitbox({ hitbox_x, hitbox_y, player_width, player_height });
 
 	// Load texture from file
 	if (!player_texture.loadFromFile(player_tileset))
@@ -140,13 +140,17 @@ void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_r
 
 }
 
-void Players::crouchAnimation(int& player_tile_row, bool& player_tile_collision)
+void Players::crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height)
 {
 	// When left shift is pressed crouch and don't allow to jump
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
 		player_tile_row = 6;
 		velocity.y += gravity;
+
+		// Change hitbox size when crouching
+		player_height /= 2;
+		hitbox_y += player_height;
 
 		// When player collides with ground, set y vel to zero
 		if (player_tile_collision)

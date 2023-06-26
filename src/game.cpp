@@ -59,12 +59,14 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int p1_health = 5;
 	float player_width = 96;
 	float player_height = 96;
+	float hitbox_x = 0;
+	float hitbox_y = 0;
 	int player_tile_row = 0;
 	int weak_reload_timer = 0;
 	int strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
 	std::string bop_crouch = "content/bop-crouch.png";
-	Players player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
+	Players player_1(bop_tileset, player_height, player_width, p1_x, p1_y, hitbox_x, hitbox_y);
 
 	// Create map
 	const int map_height = 17;
@@ -161,7 +163,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_1.movePlayers(player_speed, player_tile_collision, dt, player_tile_row, p1_health);
 			player_1.collision(screen_width, player_width, player_height);
 			player_1.attack(player_tile_row, weak_reload_timer, strong_reload_timer, p1_weak_attack, p1_strong_attack);
-			player_1.crouchAnimation(player_tile_row, player_tile_collision);
+			player_1.crouchAnimation(player_tile_row, player_tile_collision, hitbox_y, player_height);
 			player_1.knockoutAnimation(player_tile_row, p1_health);
 			player_1.animatePlayer(player_tile_row, dt);
 
