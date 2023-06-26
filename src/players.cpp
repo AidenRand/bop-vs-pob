@@ -4,8 +4,7 @@ Players::Players(std::string player_tileset, float player_width, float& player_h
 {
 	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
-
-	player.setHitbox({ player_x, player_y, player_width, player_height });
+	player.setHitbox({ 0, 0, player_width, player_height });
 
 	// Load texture from file
 	if (!player_texture.loadFromFile(player_tileset))
