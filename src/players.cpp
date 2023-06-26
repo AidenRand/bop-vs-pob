@@ -1,10 +1,9 @@
 #include "players.hpp"
 
-Players::Players(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, float& hitbox_x, float& hitbox_y)
+Players::Players(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y)
 {
 	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
-	player.setHitbox({ hitbox_x, hitbox_y, player_width, player_height });
 
 	// Load texture from file
 	if (!player_texture.loadFromFile(player_tileset))
@@ -70,13 +69,15 @@ void Players::movePlayers(int player_speed, bool& player_tile_collision, float& 
 	player.move(velocity * dt);
 }
 
-void Players::collision(float screen_width, float player_width, float player_height)
+void Players::collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y)
 {
 	// Get sides of player
 	player_top = player.getPosition().y;
 	player_bottom = player.getPosition().y + player_height / 2;
 	player_left = player.getPosition().x;
 	player_right = player.getPosition().x + player_width / 2;
+
+	player.setHitbox({ hitbox_x, hitbox_y, player_width, player_height });
 
 	//  If player goes beyond screen borders, set player position
 	// to just before screen border
@@ -142,22 +143,24 @@ void Players::attack(int& player_tile_row, int& weak_reload_timer, int& strong_r
 
 void Players::crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height)
 {
+	player_height = 96;
+	hitbox_y = 0;
 	// When left shift is pressed crouch and don't allow to jump
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 	{
 		player_tile_row = 6;
 		velocity.y += gravity;
 
-		// Change hitbox size when crouching
-		player_height /= 2;
-		hitbox_y += player_height;
-
 		// When player collides with ground, set y vel to zero
 		if (player_tile_collision)
 		{
 			velocity.y = 0;
+			// Change hitbox size when crouching
+			player_height = player_height / 2;
+			hitbox_y += player_height / 2;
 		}
 	}
+	std::cout << player_height << "\n";
 }
 
 void Players::knockoutAnimation(int& player_tile_row, int& player_health)
