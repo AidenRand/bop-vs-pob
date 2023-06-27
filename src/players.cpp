@@ -151,13 +151,14 @@ void Players::crouchAnimation(int& player_tile_row, bool& player_tile_collision,
 		player_tile_row = 6;
 		velocity.y += gravity;
 
+		player_height = player_height / 2;
+		hitbox_y = player_height;
+
 		// When player collides with ground, set y vel to zero
 		if (player_tile_collision)
 		{
 			velocity.y = 0;
 			// Change hitbox size when crouching
-			player_height = player_height / 2;
-			hitbox_y += player_height / 2;
 		}
 	}
 	std::cout << player_height << "\n";
