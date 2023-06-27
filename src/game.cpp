@@ -3,7 +3,7 @@
 #include "clouds.hpp"
 #include <SFML/Graphics.hpp>
 #include "world.hpp"
-#include "players.hpp"
+#include "player1.hpp"
 #include "foreground.hpp"
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
@@ -66,7 +66,10 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
 	std::string bop_crouch = "content/bop-crouch.png";
-	Players player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
+	Player1 player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
+
+	// Create player 1 projectile
+	bool p1_projectile_fired = false;
 
 	// Create map
 	const int map_height = 17;
@@ -160,7 +163,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw player 1
 			player_1.drawTo(window);
-			player_1.movePlayers(player_speed, player_tile_collision, dt, player_tile_row, p1_health);
+			player_1.movePlayer(player_speed, player_tile_collision, dt, player_tile_row, p1_health);
 			player_1.collision(screen_width, player_width, player_height, hitbox_x, hitbox_y);
 			player_1.attack(player_tile_row, weak_reload_timer, strong_reload_timer, p1_weak_attack, p1_strong_attack);
 			player_1.crouchAnimation(player_tile_row, player_tile_collision, hitbox_y, player_height);

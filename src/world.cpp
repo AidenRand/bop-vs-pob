@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
-#include "players.hpp"
+#include "player1.hpp"
 
 World::World()
 {
@@ -13,7 +13,7 @@ World::World()
 	tile.setTexture(tile_set);
 }
 
-void World::createMap(sf::String tile_map[], const int map_width, const int map_height, int tile_width, int tile_height, sf::RenderWindow& window, Players& player_rect, bool& player_tile_collision, int player_width)
+void World::createMap(sf::String tile_map[], const int map_width, const int map_height, int tile_width, int tile_height, sf::RenderWindow& window, Player1& player_rect, bool& player_tile_collision, int player_width)
 {
 	// Loop through tile_map and assign tile texture to tile
 	// according to what string it is assigned to
@@ -44,15 +44,15 @@ void World::createMap(sf::String tile_map[], const int map_width, const int map_
 	}
 }
 
-void World::playerCollision(Players& player_rect, bool& player_tile_collision, int player_width)
+void World::playerCollision(Player1& player_rect, bool& player_tile_collision, int player_width)
 {
 	tile_top = tile.getPosition().y;
-	auto player = player_rect.player;
+	auto player1 = player_rect.player1;
 
 	// Detect collision between player and tile
-	if (player.getGlobalHitbox().intersects(tile.getGlobalBounds()))
+	if (player1.getGlobalHitbox().intersects(tile.getGlobalBounds()))
 	{
 		player_tile_collision = true;
-		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - player_width / 2));
+		player_rect.player1.setPosition(sf::Vector2f(player_rect.player1.getPosition().x, tile.getPosition().y - player_width / 2));
 	}
 }
