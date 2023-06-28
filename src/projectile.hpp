@@ -6,16 +6,18 @@
 class Projectile
 {
 public:
-	Projectile(int proj_width, int proj_height, sf::Color proj_color);
+	Projectile(std::string proj_texture_file);
 	void setPos(float proj_x, float proj_y);
 	void drawTo(sf::RenderWindow& window);
 	void spawnProj(int player_direction);
 	void fireProj();
+	void killProj(bool& proj_dead, float& screen_width);
 
 private:
-	sf::RectangleShape projectile;
+	sf::Sprite projectile;
+	sf::Texture proj_texture;
 	sf::Vector2f direction;
-	float proj_speed = 5;
+	float proj_speed = 10;
 };
 
 #endif

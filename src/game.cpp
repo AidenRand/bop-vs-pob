@@ -70,10 +70,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	Player1 player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
 
 	// Create player 1 projectile
-	// bool p1_proj_fired = false;
-	sf::Color brown = sf::Color(73, 46, 0);
-	int proj_width = 50;
-	int proj_height = 10;
+	bool proj_dead = false;
+	std::string proj_texture_file = "content/bop-poop.png";
 	std::vector<Projectile> p1_proj_vector;
 
 	// Create map
@@ -167,7 +165,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_tile_collision, player_width);
 
 			// Draw player 1 projectile
-			Projectile p1_proj(proj_width, proj_height, brown);
+			Projectile p1_proj(proj_texture_file);
 			if (p1_strong_attack)
 			{
 				p1_proj.spawnProj(player_1.returnScale());
@@ -180,7 +178,17 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			{
 				p1_proj_vector[i].fireProj();
 				p1_proj_vector[i].drawTo(window);
+				p1_proj_vector[i].killProj(proj_dead, screen_width);
+
+
+				if (proj_dead)
+				{
+					p1_proj_vector.erase(p1_proj_vector.begin() + i);
+					proj_dead = false;
+				}
 			}
+
+			std::cout << p1_proj_vector.size() << "\n";
 
 			// Draw player 1
 			player_1.drawTo(window);
