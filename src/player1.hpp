@@ -15,6 +15,9 @@ public:
 	void crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height);
 	void knockoutAnimation(int& player_tile_row, int& player_health);
 	void animatePlayer(int row, float& dt);
+	float returnX();
+	float returnY();
+	int returnScale();
 	HitboxSprite player1;
 
 	float player1_top;

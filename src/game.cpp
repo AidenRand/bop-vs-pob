@@ -5,6 +5,7 @@
 #include "world.hpp"
 #include "player1.hpp"
 #include "foreground.hpp"
+#include "projectile.hpp"
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
@@ -69,7 +70,11 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	Player1 player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
 
 	// Create player 1 projectile
-	bool p1_projectile_fired = false;
+	// bool p1_proj_fired = false;
+	sf::Color brown = sf::Color(73, 46, 0);
+	int proj_width = 50;
+	int proj_height = 10;
+	std::vector<Projectile> p1_proj_vector;
 
 	// Create map
 	const int map_height = 17;
@@ -160,6 +165,22 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_tile_collision, player_width);
+
+			// Draw player 1 projectile
+			Projectile p1_proj(proj_width, proj_height, brown);
+			if (p1_strong_attack)
+			{
+				p1_proj.spawnProj(player_1.returnScale());
+				p1_proj.setPos(player_1.returnX(), player_1.returnY());
+				p1_strong_attack = false;
+				p1_proj_vector.push_back(p1_proj);
+			}
+
+			for (long unsigned int i = 0; i < p1_proj_vector.size(); i++)
+			{
+				p1_proj_vector[i].fireProj();
+				p1_proj_vector[i].drawTo(window);
+			}
 
 			// Draw player 1
 			player_1.drawTo(window);

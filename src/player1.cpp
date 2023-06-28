@@ -136,7 +136,6 @@ void Player1::attack(int& player1_tile_row, int& weak_reload_timer, int& strong_
 	else
 	{
 		strong_reload_timer--;
-		strong_attack = false;
 	}
 
 }
@@ -193,4 +192,19 @@ void Player1::animatePlayer(int row, float& dt)
 	player1_uv_rect.top = current_image.y * player1_uv_rect.height;
 
 	player1.setTextureRect(player1_uv_rect);
+}
+
+float Player1::returnX()
+{
+	return player1.getPosition().x;
+}
+
+float Player1::returnY()
+{
+	return player1.getPosition().y;
+}
+
+int Player1::returnScale()
+{
+	return player1.getScale().x;
 }
