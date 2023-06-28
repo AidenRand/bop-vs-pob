@@ -17,6 +17,7 @@ void Projectile::drawTo(sf::RenderWindow& window)
 
 void Projectile::spawnProj(int player_direction)
 {
+	// Shoot the projectile in the direction the player is facing
 	if (player_direction == -1)
 	{
 		direction.x -= proj_speed;
@@ -32,17 +33,18 @@ void Projectile::spawnProj(int player_direction)
 
 void Projectile::fireProj()
 {
-
 	projectile.move(direction);
 }
 
 void Projectile::setPos(float proj_x, float proj_y)
 {
+	// Set projectile position to player position
 	projectile.setPosition(sf::Vector2f(proj_x, proj_y));
 }
 
 void Projectile::killProj(bool& proj_dead, float& screen_width)
 {
+	// If projectile goes beyond screen, kill it
 	if (projectile.getPosition().x > screen_width || projectile.getPosition().x < 0)
 	{
 		proj_dead = true;
