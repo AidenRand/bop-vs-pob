@@ -24,8 +24,6 @@ void Player1::drawTo(sf::RenderWindow& window)
 {
 	window.draw(player1);
 	player1.setTexture(player1_texture, true);
-
-	std::cout << player1.getPosition().y << "\n";
 }
 
 void Player1::movePlayer(int player1_speed, bool& player1_tile_collision, float& dt, int& player1_tile_row, int& player1_health)
@@ -160,7 +158,6 @@ void Player1::crouchAnimation(int& player1_tile_row, bool& player1_tile_collisio
 			// Change hitbox size when crouching
 		}
 	}
-	std::cout << player1_height << "\n";
 }
 
 void Player1::knockoutAnimation(int& player1_tile_row, int& player1_health)

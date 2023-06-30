@@ -1,5 +1,5 @@
-#ifndef PLAYERS_HPP
-#define PLAYERS_HPP
+#ifndef PLAYER1_HPP
+#define PLAYER1_HPP
 
 #include <SFML/Graphics.hpp>
 #include "hitbox.hpp"

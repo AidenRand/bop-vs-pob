@@ -6,6 +6,7 @@
 #include "player1.hpp"
 #include "foreground.hpp"
 #include "projectile.hpp"
+#include "player2.hpp"
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
@@ -51,23 +52,36 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	menu.createButtons(screen_width, screen_height, menu_font_size);
 	menu.createTitle(title_x, title_y);
 
-	// Create player one
+	// Universal player variables
 	int player_speed = 400;
+	float player_width = 96;
+	float player_height = 96;
+	float hitbox_x = 0;
+	float hitbox_y = 0;
+
+	// Create player one
 	float p1_x = 100;
 	float p1_y = 300;
 	bool p1_weak_attack = false;
 	bool p1_strong_attack = false;
 	int p1_health = 5;
-	float player_width = 96;
-	float player_height = 96;
-	float hitbox_x = 0;
-	float hitbox_y = 0;
-	int player_tile_row = 0;
-	int weak_reload_timer = 0;
-	int strong_reload_timer = 0;
+	int p1_tile_row = 0;
+	int p1_weak_reload_timer = 0;
+	int p1_strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
-	std::string bop_crouch = "content/bop-crouch.png";
 	Player1 player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
+
+	// Create player 2
+	float p2_x = 800;
+	float p2_y = 300;
+	// bool p2_weak_attack = false;
+	// bool p2_strong_attack = false;
+	// int p2_health = 5;
+	int p2_tile_row = 0;
+	// int p2_weak_reload_timer = 0;
+	// int p2_strong_reload_timer = 0;
+	std::string pob_tileset = "content/pob-tilesheet.png";
+	Player2 player_2(pob_tileset, player_height, player_width, p2_x, p2_y);
 
 	// Create player 1 projectile
 	bool proj_dead = false;
@@ -192,12 +206,16 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw player 1
 			player_1.drawTo(window);
-			player_1.movePlayer(player_speed, player_tile_collision, dt, player_tile_row, p1_health);
+			player_1.movePlayer(player_speed, player_tile_collision, dt, p1_tile_row, p1_health);
 			player_1.collision(screen_width, player_width, player_height, hitbox_x, hitbox_y);
-			player_1.attack(player_tile_row, weak_reload_timer, strong_reload_timer, p1_weak_attack, p1_strong_attack);
-			player_1.crouchAnimation(player_tile_row, player_tile_collision, hitbox_y, player_height);
-			player_1.knockoutAnimation(player_tile_row, p1_health);
-			player_1.animatePlayer(player_tile_row, dt);
+			player_1.attack(p1_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack);
+			player_1.crouchAnimation(p1_tile_row, player_tile_collision, hitbox_y, player_height);
+			player_1.knockoutAnimation(p1_tile_row, p1_health);
+			player_1.animatePlayer(p1_tile_row, dt);
+
+			// Draw player 2
+			player_2.drawTo(window);
+			player_2.animatePlayer(p2_tile_row, dt);
 
 			// Draw foreground
 			left_foreground.drawTo(window);
