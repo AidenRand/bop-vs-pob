@@ -10,6 +10,7 @@ public:
 	Player1(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y);
 	void drawTo(sf::RenderWindow& window);
 	void movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health);
+	void movePlayer2(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health);
 	void collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y);
 	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack);
 	void crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height);

@@ -67,6 +67,47 @@ void Player1::movePlayer(int player1_speed, bool& player1_tile_collision, float&
 	player1.move(velocity * dt);
 }
 
+void Player1::movePlayer2(int player1_speed, bool& player1_tile_collision, float& dt, int& player1_tile_row, int& player1_health)
+{
+	velocity.x = 0;
+	player1_tile_row = 0;
+
+	// If player1 is colliding with tile set y vel to zero
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && player1_health > 0)
+	{
+		if (player1_tile_collision)
+		{
+			velocity.y = 0;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::RAlt))
+			{
+				velocity.y -= jump_power;
+			}
+		}
+		else
+		{
+			velocity.y += gravity;
+		}
+
+		// If D is pressed move right
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Quote))
+		{
+			velocity.x = player1_speed;
+			player1_tile_row = 1;
+			player1.setScale(1, 1);
+		}
+
+		// If A is pressed move left
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+		{
+			velocity.x = -player1_speed;
+			player1_tile_row = 1;
+			player1.setScale(-1, 1);
+		}
+	}
+
+	player1.move(velocity * dt);
+}
+
 void Player1::collision(float screen_width, float player1_width, float player1_height, float& hitbox_x, float& hitbox_y)
 {
 	// Get sides of player1
