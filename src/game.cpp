@@ -94,7 +94,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int tile_height = 32;
 
 	World world_map;
-	World world_map_p2;
 	sf::String tile_map[map_height] =
 	{
 			"                                     ",
@@ -177,8 +176,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			bool p2_tile_collision = false;
 
 			// Draw tile map if game is running
-			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, p1_tile_collision, player_width);
-			world_map_p2.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_2, p2_tile_collision, player_width);
+			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player_width);
 
 			// Draw player 1 projectile
 			Projectile p1_proj(proj_texture_file);
@@ -215,7 +213,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw player 2
 			player_2.drawTo(window);
-			player_2.movePlayer2(player_speed, p1_tile_collision, dt, p2_tile_row, p2_health);
+			player_2.movePlayer2(player_speed, p2_tile_collision, dt, p2_tile_row, p2_health);
 			player_2.collision(screen_width, player_width, player_height, hitbox_x, hitbox_y);
 			player_2.animatePlayer(p2_tile_row, dt);
 

@@ -37,7 +37,7 @@ void Player1::movePlayer(int player1_speed, bool& player1_tile_collision, float&
 		if (player1_tile_collision)
 		{
 			velocity.y = 0;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			{
 				velocity.y -= jump_power;
 			}
@@ -78,7 +78,7 @@ void Player1::movePlayer2(int player1_speed, bool& player1_tile_collision, float
 		if (player1_tile_collision)
 		{
 			velocity.y = 0;
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::RAlt))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 			{
 				velocity.y -= jump_power;
 			}
