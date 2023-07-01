@@ -3,7 +3,7 @@
 #include "clouds.hpp"
 #include <SFML/Graphics.hpp>
 #include "world.hpp"
-#include "player.hpp"
+#include "player1.hpp"
 #include "foreground.hpp"
 #include "projectile.hpp"
 
@@ -64,23 +64,35 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p1_weak_attack = false;
 	bool p1_strong_attack = false;
 	int p1_health = 5;
-	int p1_tile_row = 0;
-	int p1_weak_reload_timer = 0;
-	int p1_strong_reload_timer = 0;
+	int player_tile_row = 0;
+	int weak_reload_timer = 0;
+	int strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
-	Player player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
 
-	// Create player 2
+	sf::Keyboard::Key p1_jump_key = sf::Keyboard::Key::W;
+	sf::Keyboard::Key p1_crouch_key = sf::Keyboard::Key::S;
+	sf::Keyboard::Key p1_move_left_key = sf::Keyboard::Key::A;
+	sf::Keyboard::Key p1_move_right_key = sf::Keyboard::Key::D;
+
+	Player1 player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
+
+	// Create player two
 	float p2_x = 800;
 	float p2_y = 300;
-	// bool p2_weak_attack = false;
-	// bool p2_strong_attack = false;
+	bool p2_weak_attack = false;
+	bool p2_strong_attack = false;
 	int p2_health = 5;
-	int p2_tile_row = 0;
-	// int p2_weak_reload_timer = 0;
-	// int p2_strong_reload_timer = 0;
+	int weak2_reload_timer = 0;
+	int strong2_reload_timer = 0;
 	std::string pob_tileset = "content/pob-tilesheet.png";
-	Player player_2(pob_tileset, player_height, player_width, p2_x, p2_y);
+
+	Player1 player_2(pob_tileset, player_height, player_width, p2_x, p2_y);
+
+
+	sf::Keyboard::Key p2_jump_key = sf::Keyboard::Key::P;
+	sf::Keyboard::Key p2_crouch_key = sf::Keyboard::Key::SemiColon;
+	sf::Keyboard::Key p2_move_left_key = sf::Keyboard::Key::L;
+	sf::Keyboard::Key p2_move_right_key = sf::Keyboard::Key::Quote;
 
 	// Create player 1 projectile
 	bool proj_dead = false;
@@ -172,11 +184,11 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.drawTitle(window);
 		}
 		else {
-			bool p1_tile_collision = false;
-			bool p2_tile_collision = false;
+			bool player_tile_collision = false;
+			bool player2_tile_collision = false;
 
 			// Draw tile map if game is running
-			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player_width);
+			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_1, player_tile_collision, player2_tile_collision, player_width);
 
 			// Draw player 1 projectile
 			Projectile p1_proj(proj_texture_file);
@@ -202,20 +214,25 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				}
 			}
 
+			std::cout << p1_proj_vector.size() << "\n";
+
 			// Draw player 1
 			player_1.drawTo(window);
-			player_1.movePlayer(player_speed, p1_tile_collision, dt, p1_tile_row, p1_health);
+			player_1.movePlayer(player_speed, player_tile_collision, dt, player_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
 			player_1.collision(screen_width, player_width, player_height, hitbox_x, hitbox_y);
-			player_1.attack(p1_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack);
-			player_1.crouchAnimation(p1_tile_row, p1_tile_collision, hitbox_y, player_height);
-			player_1.knockoutAnimation(p1_tile_row, p1_health);
-			player_1.animatePlayer(p1_tile_row, dt);
+			player_1.attack(player_tile_row, weak_reload_timer, strong_reload_timer, p1_weak_attack, p1_strong_attack);
+			player_1.crouchAnimation(player_tile_row, player_tile_collision, hitbox_y, player_height);
+			player_1.knockoutAnimation(player_tile_row, p1_health);
+			player_1.animatePlayer(player_tile_row, dt);
 
 			// Draw player 2
 			player_2.drawTo(window);
-			player_2.movePlayer2(player_speed, p2_tile_collision, dt, p2_tile_row, p2_health);
+			player_2.movePlayer(player_speed, player2_tile_collision, dt, player_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key, p2_crouch_key);
 			player_2.collision(screen_width, player_width, player_height, hitbox_x, hitbox_y);
-			player_2.animatePlayer(p2_tile_row, dt);
+			player_2.attack(player_tile_row, weak2_reload_timer, strong2_reload_timer, p2_weak_attack, p2_strong_attack);
+			player_2.crouchAnimation(player_tile_row, player2_tile_collision, hitbox_y, player_height);
+			player_2.knockoutAnimation(player_tile_row, p2_health);
+			player_2.animatePlayer(player_tile_row, dt);
 
 			// Draw foreground
 			left_foreground.drawTo(window);
