@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <iostream>
-#include "player1.hpp"
+#include "player.hpp"
 
 World::World()
 {
@@ -13,7 +13,7 @@ World::World()
 	tile.setTexture(tile_set);
 }
 
-void World::createMap(sf::String tile_map[], const int map_width, const int map_height, int tile_width, int tile_height, sf::RenderWindow& window, Player1& player_rect, Player1& p2_rect, bool& player_tile_collision, bool& p2_tile_collision, int player_width)
+void World::createMap(sf::String tile_map[], const int map_width, const int map_height, int tile_width, int tile_height, sf::RenderWindow& window, Player& p1_rect, Player& p2_rect, bool& player1_tile_collision, bool& player2_tile_collision, int player_width)
 {
 	// Loop through tile_map and assign tile texture to tile
 	// according to what string it is assigned to
@@ -38,35 +38,35 @@ void World::createMap(sf::String tile_map[], const int map_width, const int map_
 
 			// Set tile position
 			tile.setPosition(sf::Vector2f(j * tile_width, i * tile_height));
-			playerCollision(player_rect, player_tile_collision, player_width);
-			player2Collision(p2_rect, p2_tile_collision, player_width);
+			playerCollision(p1_rect, player1_tile_collision, player_width);
+			player2Collision(p2_rect, player2_tile_collision, player_width);
 			window.draw(tile);
 		}
 	}
 }
 
-void World::playerCollision(Player1& player_rect, bool& player_tile_collision, int player_width)
+void World::playerCollision(Player& p1_rect, bool& player1_tile_collision, int player_width)
 {
 	tile_top = tile.getPosition().y;
-	auto player1 = player_rect.player1;
+	auto player1 = p1_rect.player;
 
 	// Detect collision between player and tile
 	if (player1.getGlobalHitbox().intersects(tile.getGlobalBounds()))
 	{
-		player_tile_collision = true;
-		player_rect.player1.setPosition(sf::Vector2f(player_rect.player1.getPosition().x, tile.getPosition().y - player_width / 2));
+		player1_tile_collision = true;
+		p1_rect.player.setPosition(sf::Vector2f(p1_rect.player.getPosition().x, tile.getPosition().y - player_width / 2));
 	}
 }
 
-void World::player2Collision(Player1& player_rect, bool& player_tile_collision, int player_width)
+void World::player2Collision(Player& p2_rect, bool& player2_tile_collision, int player_width)
 {
 	tile_top = tile.getPosition().y;
-	auto player2 = player_rect.player1;
+	auto player2 = p2_rect.player;
 
 	// Detect collision between player and tile
 	if (player2.getGlobalHitbox().intersects(tile.getGlobalBounds()))
 	{
-		player_tile_collision = true;
+		player2_tile_collision = true;
 		player2.setPosition(sf::Vector2f(player2.getPosition().x, tile.getPosition().y - player_width / 2));
 	}
 }

@@ -1,8 +1,6 @@
 #ifndef PROJECTILE_HPP
 #define PROJECTILE_HPP
 
-#include "player1.hpp"
-
 class Projectile
 {
 public:

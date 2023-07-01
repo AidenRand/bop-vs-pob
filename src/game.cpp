@@ -3,7 +3,7 @@
 #include "clouds.hpp"
 #include <SFML/Graphics.hpp>
 #include "world.hpp"
-#include "player1.hpp"
+#include "player.hpp"
 #include "foreground.hpp"
 #include "projectile.hpp"
 
@@ -68,7 +68,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int p1_weak_reload_timer = 0;
 	int p1_strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
-	Player1 player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
+	Player player_1(bop_tileset, player_height, player_width, p1_x, p1_y);
 
 	// Create player 2
 	float p2_x = 800;
@@ -80,7 +80,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	// int p2_weak_reload_timer = 0;
 	// int p2_strong_reload_timer = 0;
 	std::string pob_tileset = "content/pob-tilesheet.png";
-	Player1 player_2(pob_tileset, player_height, player_width, p2_x, p2_y);
+	Player player_2(pob_tileset, player_height, player_width, p2_x, p2_y);
 
 	// Create player 1 projectile
 	bool proj_dead = false;
