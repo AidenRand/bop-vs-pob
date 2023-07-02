@@ -1,13 +1,13 @@
-#ifndef PLAYERS_HPP
-#define PLAYERS_HPP
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
 #include "hitbox.hpp"
 
-class Player1 : public sf::Sprite
+class Player : public sf::Sprite
 {
 public:
-	Player1(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y);
+	Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y);
 	void drawTo(sf::RenderWindow& window);
 	void movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key);
 	void collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y);
@@ -18,21 +18,21 @@ public:
 	float returnX();
 	float returnY();
 	int returnScale();
-	HitboxSprite player1;
+	HitboxSprite player;
 
-	float player1_top;
-	float player1_bottom;
-	float player1_left;
-	float player1_right;
+	float player_top;
+	float player_bottom;
+	float player_left;
+	float player_right;
 
-	sf::FloatRect player1_hitbox;
+	sf::FloatRect player_hitbox;
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 	float gravity = 50.0f;
 
 private:
-	sf::Texture player1_texture;
-	sf::IntRect player1_uv_rect;
+	sf::Texture player_texture;
+	sf::IntRect player_uv_rect;
 	float total_time;
 	float switch_time = 0.08f;
 	sf::Vector2u image_count = sf::Vector2u(8, 1);

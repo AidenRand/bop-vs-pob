@@ -3,7 +3,7 @@
 #include "clouds.hpp"
 #include <SFML/Graphics.hpp>
 #include "world.hpp"
-#include "player1.hpp"
+#include "player.hpp"
 #include "foreground.hpp"
 #include "projectile.hpp"
 
@@ -77,7 +77,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	sf::Keyboard::Key p1_weak_attack_key = sf::Keyboard::Key::F;
 	sf::Keyboard::Key p1_strong_attack_key = sf::Keyboard::Key::R;
 
-	Player1 player_1(bop_tileset, player1_height, player1_width, p1_x, p1_y);
+	Player player_1(bop_tileset, player1_height, player1_width, p1_x, p1_y);
 
 	// Create player two
 	float p2_x = 800;
@@ -93,7 +93,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float hitbox2_y = 0;
 	std::string pob_tileset = "content/pob-tilesheet.png";
 
-	Player1 player_2(pob_tileset, player2_height, player2_width, p2_x, p2_y);
+	Player player_2(pob_tileset, player2_height, player2_width, p2_x, p2_y);
 
 	// Player 2 movement keys
 	sf::Keyboard::Key p2_jump_key = sf::Keyboard::Key::P;
