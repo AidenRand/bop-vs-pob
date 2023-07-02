@@ -24,8 +24,6 @@ void Player1::drawTo(sf::RenderWindow& window)
 {
 	window.draw(player1);
 	player1.setTexture(player1_texture, true);
-
-	std::cout << player1.getPosition().y << "\n";
 }
 
 void Player1::movePlayer(int player1_speed, bool& player1_tile_collision, float& dt, int& player1_tile_row, int& player1_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key)
@@ -91,14 +89,14 @@ void Player1::collision(float screen_width, float player1_width, float player1_h
 	}
 }
 
-void Player1::attack(int& player1_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack)
+void Player1::attack(int& player1_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key)
 {
 	// If reload timer equals zero, allow attack
 	if (weak_reload_timer == 0)
 	{
 		if (strong_attack == false)
 		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+			if (sf::Keyboard::isKeyPressed(weak_attack_key))
 			{
 				weak_reload_timer += 30;
 				play_weak = 20;
@@ -121,7 +119,7 @@ void Player1::attack(int& player1_tile_row, int& weak_reload_timer, int& strong_
 	if (strong_reload_timer == 0)
 	{
 		if (weak_attack == false)
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+			if (sf::Keyboard::isKeyPressed(strong_attack_key))
 			{
 				strong_reload_timer += 100;
 				play_strong = 20;
@@ -140,12 +138,12 @@ void Player1::attack(int& player1_tile_row, int& weak_reload_timer, int& strong_
 
 }
 
-void Player1::crouchAnimation(int& player1_tile_row, bool& player1_tile_collision, float& hitbox_y, float& player1_height)
+void Player1::crouchAnimation(int& player1_tile_row, bool& player1_tile_collision, float& hitbox_y, float& player1_height, sf::Keyboard::Key crouch_key)
 {
 	player1_height = 96;
 	hitbox_y = 0;
 	// When left shift is pressed crouch and don't allow to jump
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(crouch_key))
 	{
 		player1_tile_row = 6;
 		velocity.y += gravity;
@@ -160,7 +158,6 @@ void Player1::crouchAnimation(int& player1_tile_row, bool& player1_tile_collisio
 			// Change hitbox size when crouching
 		}
 	}
-	std::cout << player1_height << "\n";
 }
 
 void Player1::knockoutAnimation(int& player1_tile_row, int& player1_health)
