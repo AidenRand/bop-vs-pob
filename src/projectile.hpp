@@ -1,6 +1,8 @@
 #ifndef PROJECTILE_HPP
 #define PROJECTILE_HPP
 
+#include <SFML/Graphics.hpp>
+
 class Projectile
 {
 public:

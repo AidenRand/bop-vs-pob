@@ -4,6 +4,8 @@
 #include <iostream>
 #include "player.hpp"
 
+#include <SFML/Graphics.hpp>
+
 World::World()
 {
 	if (!tile_set.loadFromFile("content/dirt-tiles.png"))

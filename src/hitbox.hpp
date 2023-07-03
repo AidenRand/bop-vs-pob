@@ -1,6 +1,8 @@
 #ifndef HITBOX_HPP
 #define HITBOX_HPP
 
+#include <SFML/Graphics.hpp>
+
 class HitboxSprite : public sf::Sprite
 {
 public:

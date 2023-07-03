@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include <SFML/Graphics.hpp>
 
 Player::Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, int player_number)
 {
