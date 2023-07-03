@@ -1,9 +1,14 @@
 #include "player.hpp"
 
-Player::Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y)
+Player::Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, int player_number)
 {
 	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
+
+	if (player_number == 2)
+	{
+		player.setScale(-1, 1);
+	}
 
 	// Load texture from file
 	if (!player_texture.loadFromFile(player_tileset))
@@ -47,7 +52,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 			velocity.y += gravity;
 		}
 
-		// If D is pressed move right
+		// If right key is pressed, move right
 		if (sf::Keyboard::isKeyPressed(move_right_key))
 		{
 			velocity.x = player_speed;
@@ -55,7 +60,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 			player.setScale(1, 1);
 		}
 
-		// If A is pressed move left
+		// If left key is pressed, move left
 		if (sf::Keyboard::isKeyPressed(move_left_key))
 		{
 			velocity.x = -player_speed;
@@ -122,7 +127,7 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 			if (sf::Keyboard::isKeyPressed(strong_attack_key))
 			{
 				strong_reload_timer += 100;
-				play_strong = 20;
+				play_strong = 30;
 				strong_attack = true;
 			}
 	}
@@ -134,6 +139,7 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	else
 	{
 		strong_reload_timer--;
+		strong_attack = false;
 	}
 
 }
