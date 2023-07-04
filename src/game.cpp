@@ -106,9 +106,14 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	sf::Keyboard::Key p2_strong_attack_key = sf::Keyboard::Key::O;
 
 	// Create player 1 projectile
-	bool proj_dead = false;
-	std::string proj_texture_file = "content/bop-poop.png";
+	bool p1_proj_dead = false;
+	std::string p1_proj_texture_file = "content/bop-poop.png";
 	std::vector<Projectile> p1_proj_vector;
+
+	// Create player 2 projectile
+	bool p2_proj_dead = false;
+	std::string p2_proj_texture_file = "content/pob-puke.png";
+	std::vector<Projectile> p2_proj_vector;
 
 	// Create map
 	const int map_height = 17;
@@ -202,7 +207,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, player_tile_collision, player2_tile_collision, player1_width, player1_width);
 
 			// Draw player 1 projectile
-			Projectile p1_proj(proj_texture_file);
+			Projectile p1_proj(p1_proj_texture_file);
 			if (p1_strong_attack)
 			{
 				p1_proj.spawnProj(player_1.returnScale());
@@ -215,13 +220,37 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			{
 				p1_proj_vector[i].fireProj();
 				p1_proj_vector[i].drawTo(window);
-				p1_proj_vector[i].killProj(proj_dead, screen_width);
+				p1_proj_vector[i].killProj(p1_proj_dead, screen_width);
 
 
-				if (proj_dead)
+				if (p1_proj_dead)
 				{
 					p1_proj_vector.erase(p1_proj_vector.begin() + i);
-					proj_dead = false;
+					p1_proj_dead = false;
+				}
+			}
+
+			// Draw player 2 projectile
+			Projectile p2_proj(p2_proj_texture_file);
+			if (p2_strong_attack)
+			{
+				p2_proj.spawnProj(player_2.returnScale());
+				p2_proj.setPos(player_2.returnX(), player_2.returnY());
+				p2_strong_attack = false;
+				p2_proj_vector.push_back(p2_proj);
+			}
+
+			for (long unsigned int i = 0; i < p2_proj_vector.size(); i++)
+			{
+				p2_proj_vector[i].fireProj();
+				p2_proj_vector[i].drawTo(window);
+				p2_proj_vector[i].killProj(p2_proj_dead, screen_width);
+
+
+				if (p2_proj_dead)
+				{
+					p2_proj_vector.erase(p2_proj_vector.begin() + i);
+					p2_proj_dead = false;
 				}
 			}
 
