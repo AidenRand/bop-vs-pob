@@ -75,7 +75,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	sf::Keyboard::Key p1_move_right_key = sf::Keyboard::Key::D;
 
 	sf::Keyboard::Key p1_weak_attack_key = sf::Keyboard::Key::F;
-	sf::Keyboard::Key p1_strong_attack_key = sf::Keyboard::Key::R;
+	sf::Keyboard::Key p1_strong_attack_key = sf::Keyboard::Key::E;
 
 	Player player_1(bop_tileset, player1_height, player1_width, p1_x, p1_y, 1);
 
@@ -103,7 +103,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	// Player 2 attack keys
 	sf::Keyboard::Key p2_weak_attack_key = sf::Keyboard::Key::K;
-	sf::Keyboard::Key p2_strong_attack_key = sf::Keyboard::Key::I;
+	sf::Keyboard::Key p2_strong_attack_key = sf::Keyboard::Key::O;
 
 	// Create player 1 projectile
 	bool proj_dead = false;

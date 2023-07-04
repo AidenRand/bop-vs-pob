@@ -105,7 +105,7 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 			if (sf::Keyboard::isKeyPressed(weak_attack_key))
 			{
 				weak_reload_timer += 30;
-				play_weak = 20;
+				play_weak = 30;
 				weak_attack = true;
 			}
 		}
