@@ -142,7 +142,30 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 		strong_reload_timer--;
 		strong_attack = false;
 	}
+}
 
+void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision)
+{
+	auto player2_left = player_rect.player.getGlobalHitbox().left;
+	auto player2_right = player_rect.player.getGlobalHitbox().left + 96;
+
+	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
+	{
+		if (player_right > player2_left)
+		{
+			std::cout << "collision";
+			player.setPosition(player2_left - 48, player.getPosition().y);
+
+		}
+		else
+		{
+			player.setPosition(player2_right + 96, player.getPosition().y);
+		}
+	}
+	if (weak_attack_key && strong_attack_key)
+	{
+		std::cout << "shot" << player_tile_collision << "\n";
+	}
 }
 
 void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height, sf::Keyboard::Key crouch_key)
