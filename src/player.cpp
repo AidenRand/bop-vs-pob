@@ -50,6 +50,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 		}
 		else
 		{
+			gravity = 50;
 			velocity.y += gravity;
 		}
 
@@ -151,17 +152,24 @@ void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attac
 
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
-		if (player_right > player2_left)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			std::cout << "collision";
-			player.setPosition(player2_left - 1, player.getPosition().y);
+			player.setPosition(player2_left - 96, player.getPosition().y);
 
 		}
-		if (player_left < player2_right)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			player.setPosition(player2_right + 1, player.getPosition().y);
 		}
+
+		if (gravity != 0)
+		{
+			player.setPosition(player.getPosition().x, player.getPosition().y - 96);
+		}
 	}
+	std::cout << gravity << "\n";
+
 	if (weak_attack_key && strong_attack_key)
 	{
 		std::cout << "shot" << player_tile_collision << "\n";
