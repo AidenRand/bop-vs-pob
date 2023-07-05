@@ -262,7 +262,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_1.crouchAnimation(player_tile_row, player_tile_collision, hitbox1_y, player1_height, p1_crouch_key);
 			player_1.knockoutAnimation(player_tile_row, p1_health);
 			player_1.animatePlayer(player_tile_row, dt);
-			player_1.attackCollision(player_2, p1_strong_attack_key, p1_weak_attack_key, player_tile_collision);
+			player_1.attackCollision(player_2, p1_strong_attack_key, p1_weak_attack_key, player_tile_collision, p1_move_left_key, p1_move_right_key);
 
 			// Draw player 2
 			player_2.drawTo(window);
@@ -272,6 +272,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_2.crouchAnimation(player_tile_row, player2_tile_collision, hitbox2_y, player2_height, p2_crouch_key);
 			player_2.knockoutAnimation(player_tile_row, p2_health);
 			player_2.animatePlayer(player_tile_row, dt);
+			player_2.attackCollision(player_1, p2_strong_attack_key, p2_weak_attack_key, player2_tile_collision, p2_move_left_key, p2_move_right_key);
 
 			// Draw foreground
 			left_foreground.drawTo(window);

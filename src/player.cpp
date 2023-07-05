@@ -145,30 +145,29 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision)
+void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key)
 {
 	auto player2_left = player_rect.player.getPosition().x;
 	auto player2_right = player_rect.player.getPosition().x + 96;
 
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		if (sf::Keyboard::isKeyPressed(move_right_key) && gravity == 0)
 		{
 			std::cout << "collision";
 			player.setPosition(player2_left - 96, player.getPosition().y);
 
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		if (sf::Keyboard::isKeyPressed(move_left_key) && gravity == 0)
 		{
 			player.setPosition(player2_right + 1, player.getPosition().y);
 		}
 
 		if (gravity != 0)
 		{
-			player.setPosition(player.getPosition().x, player.getPosition().y - 96);
+			player.setPosition(player_rect.player.getPosition().x, player.getPosition().y - 48);
 		}
 	}
-	std::cout << gravity << "\n";
 
 	if (weak_attack_key && strong_attack_key)
 	{
