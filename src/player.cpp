@@ -145,27 +145,43 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key)
+void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key_1, sf::Keyboard::Key move_right_key_1, sf::Keyboard::Key move_left_key_2, sf::Keyboard::Key move_right_key_2)
 {
 	auto player2_left = player_rect.player.getPosition().x;
 	auto player2_right = player_rect.player.getPosition().x + 96;
+	auto player2_top = player_rect.player.getPosition().y;
+	auto player_2 = player_rect.player;
 
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
-		if (sf::Keyboard::isKeyPressed(move_right_key) && gravity == 0)
+		if (sf::Keyboard::isKeyPressed(move_right_key_1) && gravity == 0)
 		{
 			std::cout << "collision";
 			player.setPosition(player2_left - 96, player.getPosition().y);
 
 		}
-		if (sf::Keyboard::isKeyPressed(move_left_key) && gravity == 0)
+		if (sf::Keyboard::isKeyPressed(move_left_key_1) && gravity == 0)
 		{
-			player.setPosition(player2_right + 1, player.getPosition().y);
+			std::cout << "collision";
+			player.setPosition(player2_right, player.getPosition().y);
 		}
 
-		if (gravity != 0)
+		if (sf::Keyboard::isKeyPressed(move_right_key_2) && gravity == 0)
 		{
-			player.setPosition(player_rect.player.getPosition().x, player.getPosition().y - 48);
+			std::cout << "2collision";
+			player_rect.player.setPosition(player_left - 97, player_2.getPosition().y);
+
+		}
+		if (sf::Keyboard::isKeyPressed(move_left_key_2) && gravity == 0)
+		{
+			std::cout << "2collision";
+			player_rect.player.setPosition(player_right + 49, player_2.getPosition().y);
+		}
+
+		if (gravity != 0 && player.getPosition().y <= player2_top - 48)
+		{
+			std::cout << "collision";
+			player.setPosition(player.getPosition().x, player_rect.player.getPosition().y - 97);
 		}
 	}
 
@@ -180,19 +196,21 @@ void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, 
 	player_height = 96;
 	hitbox_y = 0;
 	// When left shift is pressed crouch and don't allow to jump
-	if (sf::Keyboard::isKeyPressed(crouch_key))
+	if (player_tile_collision)
 	{
-		player_tile_row = 6;
-		velocity.y += gravity;
-
-		player_height = player_height / 2;
-		hitbox_y = player_height;
-
-		// When player collides with ground, set y vel to zero
-		if (player_tile_collision)
+		if (sf::Keyboard::isKeyPressed(crouch_key))
 		{
-			velocity.y = 0;
-			// Change hitbox size when crouching
+			player_tile_row = 6;
+
+			player_height = player_height / 2;
+			hitbox_y = player_height;
+
+			// When player collides with ground, set y vel to zero
+			if (player_tile_collision)
+			{
+				velocity.y = 0;
+				// Change hitbox size when crouching
+			}
 		}
 	}
 }
