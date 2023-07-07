@@ -149,39 +149,41 @@ void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attac
 {
 	auto player2_left = player_rect.player.getPosition().x;
 	auto player2_right = player_rect.player.getPosition().x + 96;
-	auto player2_top = player_rect.player.getPosition().y;
 	auto player_2 = player_rect.player;
 
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
-		if (sf::Keyboard::isKeyPressed(move_right_key_1) && gravity == 0)
+		// If player is moving and collides with other play,
+		// change player position
+		if (sf::Keyboard::isKeyPressed(move_right_key_1))
 		{
 			std::cout << "collision";
 			player.setPosition(player2_left - 96, player.getPosition().y);
-
 		}
-		if (sf::Keyboard::isKeyPressed(move_left_key_1) && gravity == 0)
+		else if (sf::Keyboard::isKeyPressed(move_left_key_1))
 		{
 			std::cout << "collision";
 			player.setPosition(player2_right, player.getPosition().y);
 		}
 
-		if (sf::Keyboard::isKeyPressed(move_right_key_2) && gravity == 0)
+		// The problem is pobs gravity is not changing to zero when
+		// she collides with the tile. Maybe the height of the hitbox
+		// for pob is messed up and she's getting positioned a little above
+		// the tile.
+
+		// Also fix the floating up when crouching mid air
+
+		// If player is moving and collides with other play,
+		// change player position
+		if (sf::Keyboard::isKeyPressed(move_right_key_2))
 		{
 			std::cout << "2collision";
-			player_rect.player.setPosition(player_left - 97, player_2.getPosition().y);
-
+			player_rect.player.setPosition(player_left - 96, player_2.getPosition().y);
 		}
-		if (sf::Keyboard::isKeyPressed(move_left_key_2) && gravity == 0)
+		else if (sf::Keyboard::isKeyPressed(move_left_key_2))
 		{
 			std::cout << "2collision";
-			player_rect.player.setPosition(player_right + 49, player_2.getPosition().y);
-		}
-
-		if (gravity != 0 && player.getPosition().y <= player2_top - 48)
-		{
-			std::cout << "collision";
-			player.setPosition(player.getPosition().x, player_rect.player.getPosition().y - 97);
+			player_rect.player.setPosition(player_right + 48, player_2.getPosition().y);
 		}
 	}
 

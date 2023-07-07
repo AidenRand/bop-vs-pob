@@ -64,6 +64,7 @@ void World::playerCollision(Player& player_rect, Player& player2_rect, bool& pla
 	if (player2.getGlobalHitbox().intersects(tile.getGlobalBounds()))
 	{
 		player2_tile_collision = true;
-		player2_rect.player.setPosition(sf::Vector2f(player2_rect.player.getPosition().x, tile.getPosition().y - player2_height / 2));
+		player2_rect.player.setPosition(sf::Vector2f(player2_rect.player.getPosition().x, tile.getPosition().y - player2_height / 2 + 1));
+		player_rect.gravity = 0;
 	}
 }

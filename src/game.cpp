@@ -204,7 +204,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			bool player2_tile_collision = false;
 
 			// Draw tile map if game is running
-			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, player_tile_collision, player2_tile_collision, player1_width, player1_width);
+			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, player_tile_collision, player2_tile_collision, player1_width, player2_width);
 
 			// Draw player 1 projectile
 			Projectile p1_proj(p1_proj_texture_file);
