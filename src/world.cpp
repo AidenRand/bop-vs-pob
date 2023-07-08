@@ -57,7 +57,6 @@ void World::playerCollision(Player& player_rect, Player& player2_rect, bool& pla
 	{
 		player_tile_collision = true;
 		player_rect.player.setPosition(sf::Vector2f(player_rect.player.getPosition().x, tile.getPosition().y - player1_height / 2 + 1));
-		player_rect.gravity = 0;
 	}
 
 	// Detect collision between player2 and tile
@@ -65,6 +64,5 @@ void World::playerCollision(Player& player_rect, Player& player2_rect, bool& pla
 	{
 		player2_tile_collision = true;
 		player2_rect.player.setPosition(sf::Vector2f(player2_rect.player.getPosition().x, tile.getPosition().y - player2_height / 2 + 1));
-		player_rect.gravity = 0;
 	}
 }

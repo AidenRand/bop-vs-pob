@@ -32,17 +32,19 @@ void Player::drawTo(sf::RenderWindow& window)
 	player.setTexture(player_texture, true);
 }
 
-void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key)
+void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key)
 {
 	velocity.x = 0;
 	player_tile_row = 0;
 
+	std::cout << gravity << "\n";
 	// If player is colliding with tile set y vel to zero
-	if (!sf::Keyboard::isKeyPressed(crouch_key) && player_health > 0)
+	if (player_health > 0)
 	{
 		if (player_tile_collision)
 		{
 			velocity.y = 0;
+			gravity = 0;
 			if (sf::Keyboard::isKeyPressed(jump_key))
 			{
 				velocity.y -= jump_power;

@@ -9,7 +9,7 @@ class Player : public sf::Sprite
 public:
 	Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, int player_number);
 	void drawTo(sf::RenderWindow& window);
-	void movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key);
+	void movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key);
 	void collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y);
 	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key);
 	void attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key move_left_key_2, sf::Keyboard::Key move_right_key_2);
