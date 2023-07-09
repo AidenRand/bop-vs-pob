@@ -37,7 +37,6 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 	velocity.x = 0;
 	player_tile_row = 0;
 
-	std::cout << gravity << "\n";
 	// If player is colliding with tile set y vel to zero
 	if (player_health > 0)
 	{
@@ -147,9 +146,9 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key_1, sf::Keyboard::Key move_right_key_1, sf::Keyboard::Key move_left_key_2, sf::Keyboard::Key move_right_key_2)
+void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key)
 {
-	auto player2_left = player_rect.player.getPosition().x;
+	auto player2_left = player_rect.player.getPosition().x - 96;
 	auto player2_right = player_rect.player.getPosition().x + 96;
 	auto player_2 = player_rect.player;
 
@@ -157,36 +156,17 @@ void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attac
 	{
 		// If player is moving and collides with other play,
 		// change player position
-		if (sf::Keyboard::isKeyPressed(move_right_key_1))
+		if (sf::Keyboard::isKeyPressed(move_right_key))
 		{
 			std::cout << "collision";
-			player.setPosition(player2_left - 96, player.getPosition().y);
+			player.setPosition(player2_left, player.getPosition().y);
 		}
-		else if (sf::Keyboard::isKeyPressed(move_left_key_1))
+		else if (sf::Keyboard::isKeyPressed(move_left_key))
 		{
 			std::cout << "collision";
 			player.setPosition(player2_right, player.getPosition().y);
 		}
 
-		// The problem is pobs gravity is not changing to zero when
-		// she collides with the tile. Maybe the height of the hitbox
-		// for pob is messed up and she's getting positioned a little above
-		// the tile.
-
-		// Also fix the floating up when crouching mid air
-
-		// If player is moving and collides with other play,
-		// change player position
-		if (sf::Keyboard::isKeyPressed(move_right_key_2))
-		{
-			std::cout << "2collision";
-			player_rect.player.setPosition(player_left - 96, player_2.getPosition().y);
-		}
-		else if (sf::Keyboard::isKeyPressed(move_left_key_2))
-		{
-			std::cout << "2collision";
-			player_rect.player.setPosition(player_right + 48, player_2.getPosition().y);
-		}
 	}
 
 	if (weak_attack_key && strong_attack_key)
