@@ -156,12 +156,12 @@ void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attac
 	{
 		// If player is moving and collides with other play,
 		// change player position
-		if (sf::Keyboard::isKeyPressed(move_right_key))
+		if (sf::Keyboard::isKeyPressed(move_right_key) && !sf::Keyboard::isKeyPressed(move_left_key))
 		{
 			std::cout << "collision";
 			player.setPosition(player2_left, player.getPosition().y);
 		}
-		else if (sf::Keyboard::isKeyPressed(move_left_key))
+		else if (sf::Keyboard::isKeyPressed(move_left_key) && !sf::Keyboard::isKeyPressed(move_right_key))
 		{
 			std::cout << "collision";
 			player.setPosition(player2_right, player.getPosition().y);
