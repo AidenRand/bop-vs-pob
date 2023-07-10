@@ -1,11 +1,11 @@
 #include "game.hpp"
-#include "menu.hpp"
 #include "clouds.hpp"
-#include <SFML/Graphics.hpp>
-#include "world.hpp"
-#include "player.hpp"
 #include "foreground.hpp"
+#include "menu.hpp"
+#include "player.hpp"
 #include "projectile.hpp"
+#include "world.hpp"
+#include <SFML/Graphics.hpp>
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
@@ -27,7 +27,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	sf::Texture background_texture;
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
 	{
-		std::cout << "ERROR::Could not load background from file" << "\n";
+		std::cout << "ERROR::Could not load background from file"
+				  << "\n";
 	}
 	background.setTexture(background_texture);
 
@@ -65,6 +66,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float player1_height = 96;
 	float hitbox1_x = 0;
 	float hitbox1_y = 0;
+	float hitbox1_width = 200;
 	int p1_weak_reload_timer = 0;
 	int p1_strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
@@ -91,6 +93,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float player2_height = 96;
 	float hitbox2_x = 0;
 	float hitbox2_y = 0;
+	float hitbox2_width = 200;
 	std::string pob_tileset = "content/pob-tilesheet.png";
 
 	Player player_2(pob_tileset, player2_height, player2_width, p2_x, p2_y, 2);
@@ -122,25 +125,24 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int tile_height = 32;
 
 	World world_map;
-	sf::String tile_map[map_height] =
-	{
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"                                     ",
-			"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
-			"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+	sf::String tile_map[map_height] = {
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"                                     ",
+		"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+		"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
 	};
 
 	// Make delta time
@@ -199,7 +201,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.animateTitle(0, dt);
 			menu.drawTitle(window);
 		}
-		else {
+		else
+		{
 			bool player_tile_collision = false;
 			bool player2_tile_collision = false;
 
@@ -221,7 +224,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				p1_proj_vector[i].fireProj();
 				p1_proj_vector[i].drawTo(window);
 				p1_proj_vector[i].killProj(p1_proj_dead, screen_width);
-
 
 				if (p1_proj_dead)
 				{
@@ -246,7 +248,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				p2_proj_vector[i].drawTo(window);
 				p2_proj_vector[i].killProj(p2_proj_dead, screen_width);
 
-
 				if (p2_proj_dead)
 				{
 					p2_proj_vector.erase(p2_proj_vector.begin() + i);
@@ -257,7 +258,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			// Draw player 1
 			player_1.drawTo(window);
 			player_1.movePlayer(player_speed, player_tile_collision, dt, player_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
-			player_1.collision(screen_width, player1_width, player1_height, hitbox1_x, hitbox1_y);
+			player_1.collision(screen_width, player1_width, player1_height, hitbox1_x, hitbox1_y, hitbox1_width);
 			player_1.attack(player_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack, p1_weak_attack_key, p1_strong_attack_key);
 			player_1.crouchAnimation(player_tile_row, player_tile_collision, hitbox1_y, player1_height, p1_crouch_key);
 			player_1.knockoutAnimation(player_tile_row, p1_health);
@@ -267,7 +268,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			// Draw player 2
 			player_2.drawTo(window);
 			player_2.movePlayer(player_speed, player2_tile_collision, dt, player_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key, p2_crouch_key);
-			player_2.collision(screen_width, player2_width, player2_height, hitbox2_x, hitbox2_y);
+			player_2.collision(screen_width, player2_width, player2_height, hitbox2_x, hitbox2_y, hitbox2_width);
 			player_2.attack(player_tile_row, p2_weak_reload_timer, p2_strong_reload_timer, p2_weak_attack, p2_strong_attack, p2_weak_attack_key, p2_strong_attack_key);
 			player_2.crouchAnimation(player_tile_row, player2_tile_collision, hitbox2_y, player2_height, p2_crouch_key);
 			player_2.knockoutAnimation(player_tile_row, p2_health);

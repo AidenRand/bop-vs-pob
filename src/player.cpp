@@ -79,7 +79,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 	player.move(velocity * dt);
 }
 
-void Player::collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y)
+void Player::collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y, float hitbox_width)
 {
 	// Get sides of player
 	player_top = player.getPosition().y;
@@ -87,7 +87,7 @@ void Player::collision(float screen_width, float player_width, float player_heig
 	player_left = player.getPosition().x;
 	player_right = player.getPosition().x + player_width / 2;
 
-	player.setHitbox({ hitbox_x, hitbox_y, player_width, player_height });
+	player.setHitbox({ hitbox_x, hitbox_y, hitbox_width, player_height });
 
 	//  If player goes beyond screen borders, set player position
 	// to just before screen border
@@ -157,7 +157,7 @@ void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& wea
 	auto player2_right = player_rect.player.getPosition().x + player_width;
 	auto player_2 = player_rect.player;
 
-	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
+	if (player_rect.player.getGlobalBounds().intersects(player.getGlobalBounds()))
 	{
 		// If player is moving and collides with other player,
 		// Set player position to just before collision with other player
@@ -173,15 +173,19 @@ void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& wea
 		}
 	}
 
-	if (weak_attack)
+	// If player hitboxes are intersecting, register attacks when attacks are true
+	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
-		std::cout << "weak"
-				  << "\n";
-	}
-	else if (strong_attack)
-	{
-		std::cout << "strong"
-				  << "\n";
+		if (weak_attack)
+		{
+			std::cout << "weak"
+					  << "\n";
+		}
+		if (strong_attack)
+		{
+			std::cout << "strong"
+					  << "\n";
+		}
 	}
 }
 
