@@ -115,7 +115,7 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 			}
 		}
 	}
-	else if (play_weak >= 0)
+	else if (play_weak > 0)
 	{
 		play_weak--;
 		player_tile_row = 3;
@@ -149,7 +149,7 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, float player_width)
+void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& weak_attack, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, float player_width)
 {
 	auto player2_left = player_rect.player.getPosition().x - player_width;
 	auto player2_right = player_rect.player.getPosition().x + player_width;
@@ -164,16 +164,20 @@ void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attac
 			std::cout << "collision";
 			player.setPosition(player2_left, player.getPosition().y);
 		}
-		else if (sf::Keyboard::isKeyPressed(move_left_key) && !sf::Keyboard::isKeyPressed(move_right_key))
+		if (sf::Keyboard::isKeyPressed(move_left_key) && !sf::Keyboard::isKeyPressed(move_right_key))
 		{
 			std::cout << "collision";
 			player.setPosition(player2_right, player.getPosition().y);
 		}
 	}
 
-	if (weak_attack_key && strong_attack_key)
+	if (weak_attack)
 	{
-		std::cout << "shot" << player_tile_collision << "\n";
+		std::cout << "weak" << "\n";
+	}
+	else if (strong_attack)
+	{
+		std::cout << "strong" << "\n";
 	}
 }
 
