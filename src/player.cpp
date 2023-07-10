@@ -14,7 +14,8 @@ Player::Player(std::string player_tileset, float player_width, float& player_hei
 	// Load texture from file
 	if (!player_texture.loadFromFile(player_tileset))
 	{
-		std::cout << "ERROR:: Cannot load player tileset from file" << "\n";
+		std::cout << "ERROR:: Cannot load player tileset from file"
+				  << "\n";
 	}
 
 	// Start at beginning of tileset
@@ -102,6 +103,9 @@ void Player::collision(float screen_width, float player_width, float player_heig
 
 void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key)
 {
+
+	weak_attack = false;
+	strong_attack = false;
 	// If reload timer equals zero, allow attack
 	if (weak_reload_timer == 0)
 	{
@@ -123,7 +127,6 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	else
 	{
 		weak_reload_timer--;
-		weak_attack = false;
 	}
 
 	// If strong attack reload timer equals zero, allow attack
@@ -145,7 +148,6 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	else
 	{
 		strong_reload_timer--;
-		strong_attack = false;
 	}
 }
 
@@ -173,11 +175,13 @@ void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& wea
 
 	if (weak_attack)
 	{
-		std::cout << "weak" << "\n";
+		std::cout << "weak"
+				  << "\n";
 	}
 	else if (strong_attack)
 	{
-		std::cout << "strong" << "\n";
+		std::cout << "strong"
+				  << "\n";
 	}
 }
 
