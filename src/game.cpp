@@ -256,23 +256,23 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw player 1
 			player_1.drawTo(window);
-			player_1.movePlayer(player_speed, player_tile_collision, dt, player_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key);
+			player_1.movePlayer(player_speed, player_tile_collision, dt, player_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
 			player_1.collision(screen_width, player1_width, player1_height, hitbox1_x, hitbox1_y);
 			player_1.attack(player_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack, p1_weak_attack_key, p1_strong_attack_key);
 			player_1.crouchAnimation(player_tile_row, player_tile_collision, hitbox1_y, player1_height, p1_crouch_key);
 			player_1.knockoutAnimation(player_tile_row, p1_health);
 			player_1.animatePlayer(player_tile_row, dt);
-			player_1.attackCollision(player_2, p1_strong_attack_key, p1_weak_attack_key, player_tile_collision, p1_move_left_key, p1_move_right_key);
+			player_1.attackCollision(player_2, p1_strong_attack_key, p1_weak_attack_key, player_tile_collision, p1_move_left_key, p1_move_right_key, player2_width);
 
 			// Draw player 2
 			player_2.drawTo(window);
-			player_2.movePlayer(player_speed, player2_tile_collision, dt, player_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key);
+			player_2.movePlayer(player_speed, player2_tile_collision, dt, player_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key, p2_crouch_key);
 			player_2.collision(screen_width, player2_width, player2_height, hitbox2_x, hitbox2_y);
 			player_2.attack(player_tile_row, p2_weak_reload_timer, p2_strong_reload_timer, p2_weak_attack, p2_strong_attack, p2_weak_attack_key, p2_strong_attack_key);
 			player_2.crouchAnimation(player_tile_row, player2_tile_collision, hitbox2_y, player2_height, p2_crouch_key);
 			player_2.knockoutAnimation(player_tile_row, p2_health);
 			player_2.animatePlayer(player_tile_row, dt);
-			player_2.attackCollision(player_1, p2_strong_attack_key, p2_weak_attack_key, player2_tile_collision, p2_move_left_key, p2_move_right_key);
+			player_2.attackCollision(player_1, p2_strong_attack_key, p2_weak_attack_key, player2_tile_collision, p2_move_left_key, p2_move_right_key, player1_width);
 
 			// Draw foreground
 			left_foreground.drawTo(window);

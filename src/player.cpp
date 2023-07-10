@@ -32,7 +32,7 @@ void Player::drawTo(sf::RenderWindow& window)
 	player.setTexture(player_texture, true);
 }
 
-void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key)
+void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key)
 {
 	velocity.x = 0;
 	player_tile_row = 0;
@@ -44,7 +44,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 		{
 			velocity.y = 0;
 			gravity = 0;
-			if (sf::Keyboard::isKeyPressed(jump_key))
+			if (sf::Keyboard::isKeyPressed(jump_key) && !sf::Keyboard::isKeyPressed(crouch_key))
 			{
 				velocity.y -= jump_power;
 			}
@@ -55,20 +55,23 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 			velocity.y += gravity;
 		}
 
-		// If right key is pressed, move right
-		if (sf::Keyboard::isKeyPressed(move_right_key))
+		if (!sf::Keyboard::isKeyPressed(crouch_key))
 		{
-			velocity.x = player_speed;
-			player_tile_row = 1;
-			player.setScale(1, 1);
-		}
+			// If right key is pressed, move right
+			if (sf::Keyboard::isKeyPressed(move_right_key))
+			{
+				velocity.x = player_speed;
+				player_tile_row = 1;
+				player.setScale(1, 1);
+			}
 
-		// If left key is pressed, move left
-		if (sf::Keyboard::isKeyPressed(move_left_key))
-		{
-			velocity.x = -player_speed;
-			player_tile_row = 1;
-			player.setScale(-1, 1);
+			// If left key is pressed, move left
+			if (sf::Keyboard::isKeyPressed(move_left_key))
+			{
+				velocity.x = -player_speed;
+				player_tile_row = 1;
+				player.setScale(-1, 1);
+			}
 		}
 	}
 
@@ -146,16 +149,16 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key)
+void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attack_key, sf::Keyboard::Key weak_attack_key, bool& player_tile_collision, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, float player_width)
 {
-	auto player2_left = player_rect.player.getPosition().x - 96;
-	auto player2_right = player_rect.player.getPosition().x + 96;
+	auto player2_left = player_rect.player.getPosition().x - player_width;
+	auto player2_right = player_rect.player.getPosition().x + player_width;
 	auto player_2 = player_rect.player;
 
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
-		// If player is moving and collides with other play,
-		// change player position
+		// If player is moving and collides with other player,
+		// Set player position to just before collision with other player
 		if (sf::Keyboard::isKeyPressed(move_right_key) && !sf::Keyboard::isKeyPressed(move_left_key))
 		{
 			std::cout << "collision";
@@ -166,7 +169,6 @@ void Player::attackCollision(Player& player_rect, sf::Keyboard::Key strong_attac
 			std::cout << "collision";
 			player.setPosition(player2_right, player.getPosition().y);
 		}
-
 	}
 
 	if (weak_attack_key && strong_attack_key)
