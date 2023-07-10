@@ -101,6 +101,27 @@ void Player::collision(float screen_width, float player_width, float player_heig
 	}
 }
 
+void Player::playerPlayerCollision(Player& player_rect, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, float player_width)
+{
+	auto player2_left = player_rect.player.getPosition().x - player_width;
+	auto player2_right = player_rect.player.getPosition().x + player_width;
+	auto player_2 = player_rect.player;
+
+	if (player_rect.player.getGlobalBounds().intersects(player.getGlobalBounds()))
+	{
+		// If player is moving and collides with other player,
+		// Set player position to just before collision with other player
+		if (sf::Keyboard::isKeyPressed(move_right_key) && !sf::Keyboard::isKeyPressed(move_left_key))
+		{
+			player.setPosition(player2_left, player.getPosition().y);
+		}
+		if (sf::Keyboard::isKeyPressed(move_left_key) && !sf::Keyboard::isKeyPressed(move_right_key))
+		{
+			player.setPosition(player2_right, player.getPosition().y);
+		}
+	}
+}
+
 void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key)
 {
 
@@ -151,41 +172,25 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& weak_attack, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, float player_width)
+void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& weak_attack, int& other_player_tile_row)
 {
-	auto player2_left = player_rect.player.getPosition().x - player_width;
-	auto player2_right = player_rect.player.getPosition().x + player_width;
-	auto player_2 = player_rect.player;
-
-	if (player_rect.player.getGlobalBounds().intersects(player.getGlobalBounds()))
-	{
-		// If player is moving and collides with other player,
-		// Set player position to just before collision with other player
-		if (sf::Keyboard::isKeyPressed(move_right_key) && !sf::Keyboard::isKeyPressed(move_left_key))
-		{
-			std::cout << "collision";
-			player.setPosition(player2_left, player.getPosition().y);
-		}
-		if (sf::Keyboard::isKeyPressed(move_left_key) && !sf::Keyboard::isKeyPressed(move_right_key))
-		{
-			std::cout << "collision";
-			player.setPosition(player2_right, player.getPosition().y);
-		}
-	}
-
 	// If player hitboxes are intersecting, register attacks when attacks are true
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
 		if (weak_attack)
 		{
-			std::cout << "weak"
-					  << "\n";
+			play_knockback = 30;
 		}
-		if (strong_attack)
+		else if (strong_attack)
 		{
-			std::cout << "strong"
-					  << "\n";
+			play_knockback = 50;
 		}
+	}
+
+	if (play_knockback > 0)
+	{
+		other_player_tile_row = 5;
+		play_knockback--;
 	}
 }
 
@@ -219,6 +224,10 @@ void Player::knockoutAnimation(int& player_tile_row, int& player_health)
 	{
 		player_tile_row = 4;
 	}
+
+	// Get the current frame of tileset
+	player_uv_rect.left = current_image.x * player_uv_rect.width;
+	player_uv_rect.top = current_image.y * player_uv_rect.height;
 }
 
 void Player::animatePlayer(int row, float& dt)
@@ -236,10 +245,6 @@ void Player::animatePlayer(int row, float& dt)
 			current_image.x = 0;
 		}
 	}
-
-	// Get the current frame of tileset
-	player_uv_rect.left = current_image.x * player_uv_rect.width;
-	player_uv_rect.top = current_image.y * player_uv_rect.height;
 
 	player.setTextureRect(player_uv_rect);
 }
