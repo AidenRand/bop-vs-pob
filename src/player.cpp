@@ -6,6 +6,7 @@ Player::Player(std::string player_tileset, float player_width, float& player_hei
 	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
 
+	// Set starting facing direction based on what player it is
 	if (player_number == 2)
 	{
 		player.setScale(-1, 1);
@@ -38,9 +39,9 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 	velocity.x = 0;
 	player_tile_row = 0;
 
-	// If player is colliding with tile set y vel to zero
 	if (player_health > 0)
 	{
+		// If player is colliding with tile set y vel to zero
 		if (player_tile_collision)
 		{
 			velocity.y = 0;
@@ -50,6 +51,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 				velocity.y -= jump_power;
 			}
 		}
+		// If player is not colliding with tile increase y vel until collision
 		else
 		{
 			gravity = 50;
@@ -103,6 +105,7 @@ void Player::collision(float screen_width, float player_width, float player_heig
 
 void Player::playerPlayerCollision(Player& player_rect, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, float player_width)
 {
+	// Get left and right of player 2
 	auto player2_left = player_rect.player.getPosition().x - player_width;
 	auto player2_right = player_rect.player.getPosition().x + player_width;
 	auto player_2 = player_rect.player;
@@ -140,6 +143,7 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 			}
 		}
 	}
+	// Play weak attack animation if play weak is greater than zero
 	else if (play_weak > 0)
 	{
 		play_weak--;
@@ -187,6 +191,7 @@ void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& wea
 		}
 	}
 
+	// Play the knockback animation if play_knockback is greater than zero
 	if (play_knockback > 0)
 	{
 		other_player_tile_row = 5;
