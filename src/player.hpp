@@ -40,9 +40,9 @@ private:
 	sf::Vector2u image_count = sf::Vector2u(8, 1);
 	sf::Vector2u current_image;
 	int jump_power = 650;
-	int play_weak;
-	int play_strong;
-	int play_knockback;
+	int play_weak = 0;
+	int play_strong = 0;
+	int play_knockback = 0;
 };
 
 #endif

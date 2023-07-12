@@ -1,5 +1,6 @@
 #include "player.hpp"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 Player::Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, int player_number)
 {
@@ -16,7 +17,7 @@ Player::Player(std::string player_tileset, float player_width, float& player_hei
 	if (!player_texture.loadFromFile(player_tileset))
 	{
 		std::cout << "ERROR:: Cannot load player tileset from file"
-				  << "\n";
+			<< "\n";
 	}
 
 	// Start at beginning of tileset
@@ -196,6 +197,7 @@ void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& wea
 	{
 		other_player_tile_row = 5;
 		play_knockback--;
+		std::cout << "sff" << "\n";
 	}
 }
 
