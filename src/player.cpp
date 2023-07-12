@@ -62,7 +62,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 		if (!sf::Keyboard::isKeyPressed(crouch_key))
 		{
 			// If right key is pressed, move right
-			if (sf::Keyboard::isKeyPressed(move_right_key))
+			if (sf::Keyboard::isKeyPressed(move_right_key) && !sf::Keyboard::isKeyPressed(move_left_key))
 			{
 				velocity.x = player_speed;
 				player_tile_row = 1;
@@ -70,7 +70,7 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 			}
 
 			// If left key is pressed, move left
-			if (sf::Keyboard::isKeyPressed(move_left_key))
+			if (sf::Keyboard::isKeyPressed(move_left_key) && !sf::Keyboard::isKeyPressed(move_right_key))
 			{
 				velocity.x = -player_speed;
 				player_tile_row = 1;
