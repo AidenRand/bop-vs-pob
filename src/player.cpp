@@ -236,6 +236,15 @@ void Player::knockoutAnimation(int& player_tile_row, int& player_health)
 	player_uv_rect.top = current_image.y * player_uv_rect.height;
 }
 
+void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row)
+{
+	if (player_hit_status)
+	{
+		player_tile_row = 5;
+		player_hit_status = false;
+	}
+}
+
 void Player::animatePlayer(int row, float& dt)
 {
 	current_image.y = row;
