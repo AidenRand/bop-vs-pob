@@ -236,12 +236,20 @@ void Player::knockoutAnimation(int& player_tile_row, int& player_health)
 	player_uv_rect.top = current_image.y * player_uv_rect.height;
 }
 
-void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row)
+void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction)
 {
 	if (player_hit_status)
 	{
 		player_tile_row = 5;
-		player.setPosition(player.getPosition().x, player.getPosition().y - 10);
+
+		if (player_direction == 1)
+		{
+			player.setPosition(player.getPosition().x + 5, player.getPosition().y - 10);
+		}
+		else
+		{
+			player.setPosition(player.getPosition().x - 5, player.getPosition().y - 10);
+		}
 		player_hit_status = false;
 	}
 }
