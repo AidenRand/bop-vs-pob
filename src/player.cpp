@@ -177,8 +177,10 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& weak_attack, bool& player_hit_status)
+void Player::attackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status, Projectile& proj_rect)
 {
+	auto player_proj = proj_rect.projectile;
+
 	// If player hitboxes are intersecting, register attacks when attacks are true
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
@@ -186,10 +188,14 @@ void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& wea
 		{
 			play_knockback = 25;
 		}
-		else if (strong_attack)
-		{
-			play_knockback = 50;
-		}
+	}
+
+	if (proj_rect.projectile.getGlobalBounds().intersects(player_rect.player.getGlobalBounds()))
+	{
+		std::cout << "collision"
+				  << "\n";
+		play_knockback = 50;
+		std::cout << play_knockback << "\n";
 	}
 
 	// Play the knockback animation if play_knockback is greater than zero

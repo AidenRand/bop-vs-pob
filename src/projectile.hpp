@@ -12,9 +12,9 @@ public:
 	void spawnProj(int player_direction);
 	void fireProj();
 	void killProj(bool& proj_dead, float& screen_width);
+	sf::Sprite projectile;
 
 private:
-	sf::Sprite projectile;
 	sf::Texture proj_texture;
 	sf::Vector2f direction;
 	float proj_speed = 10;
