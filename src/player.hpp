@@ -17,7 +17,6 @@ public:
 	void crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height, sf::Keyboard::Key crouch_key);
 	void knockoutAnimation(int& player_tile_row, int& player_health);
 	void knockbackAnimation(bool& player_hit_status, int& player_tile_row);
-	void knockback(bool& player_hit_status);
 	void animatePlayer(int row, float& dt);
 	float returnX();
 	float returnY();

@@ -184,11 +184,11 @@ void Player::attackCollision(Player& player_rect, bool& strong_attack, bool& wea
 	{
 		if (weak_attack)
 		{
-			play_knockback = 20;
+			play_knockback = 25;
 		}
 		else if (strong_attack)
 		{
-			play_knockback = 30;
+			play_knockback = 50;
 		}
 	}
 
@@ -241,18 +241,9 @@ void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row)
 	if (player_hit_status)
 	{
 		player_tile_row = 5;
+		player.setPosition(player.getPosition().x, player.getPosition().y - 10);
 		player_hit_status = false;
 	}
-}
-
-void Player::knockback(bool& player_hit_status)
-{
-	if (player_hit_status)
-	{
-		velocity.y -= jump_power;
-		player.move(velocity.y, velocity.x);
-	}
-	std::cout << velocity.y << "\n";
 }
 
 void Player::animatePlayer(int row, float& dt)
