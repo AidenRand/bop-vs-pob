@@ -17,7 +17,7 @@ Player::Player(std::string player_tileset, float player_width, float& player_hei
 	if (!player_texture.loadFromFile(player_tileset))
 	{
 		std::cout << "ERROR:: Cannot load player tileset from file"
-				  << "\n";
+			<< "\n";
 	}
 
 	// Start at beginning of tileset
@@ -177,23 +177,35 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::attackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status, Projectile& proj_rect)
+void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status)
 {
-	auto player_proj = proj_rect.projectile;
-
 	// If player hitboxes are intersecting, register attacks when attacks are true
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
+		std::cout << "hello" << "\n";
+
 		if (weak_attack)
 		{
 			play_knockback = 25;
 		}
 	}
 
+	// Play the knockback animation if play_knockback is greater than zero
+	if (play_knockback > 0)
+	{
+		player_hit_status = true;
+		play_knockback--;
+	}
+}
+
+void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status, Projectile& proj_rect)
+{
+	auto player_proj = proj_rect.projectile;
+
 	if (proj_rect.projectile.getGlobalBounds().intersects(player_rect.player.getGlobalBounds()))
 	{
 		std::cout << "collision"
-				  << "\n";
+			<< "\n";
 		play_knockback = 50;
 		std::cout << play_knockback << "\n";
 	}
