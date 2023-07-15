@@ -131,6 +131,7 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 
 	weak_attack = false;
 	strong_attack = false;
+
 	// If reload timer equals zero, allow attack
 	if (weak_reload_timer == 0)
 	{
@@ -177,16 +178,15 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 }
 
-void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status)
+void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status, int& player_health)
 {
 	// If player hitboxes are intersecting, register attacks when attacks are true
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
-		std::cout << "hello" << "\n";
-
 		if (weak_attack)
 		{
 			play_knockback = 25;
+			player_health--;
 		}
 	}
 
@@ -196,18 +196,18 @@ void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& p
 		player_hit_status = true;
 		play_knockback--;
 	}
+
 }
 
-void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status, Projectile& proj_rect)
+void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status, Projectile& proj_rect, bool& proj_dead, int& player_health)
 {
 	auto player_proj = proj_rect.projectile;
 
 	if (proj_rect.projectile.getGlobalBounds().intersects(player_rect.player.getGlobalBounds()))
 	{
-		std::cout << "collision"
-			<< "\n";
-		play_knockback = 50;
-		std::cout << play_knockback << "\n";
+		play_knockback = 45;
+		proj_dead = true;
+		player_health--;
 	}
 
 	// Play the knockback animation if play_knockback is greater than zero
@@ -244,7 +244,7 @@ void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, 
 
 void Player::knockoutAnimation(int& player_tile_row, int& player_health)
 {
-	if (player_health == 0)
+	if (player_health <= 0)
 	{
 		player_tile_row = 4;
 	}
