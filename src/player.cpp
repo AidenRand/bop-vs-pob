@@ -242,16 +242,19 @@ void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, 
 	}
 }
 
-void Player::knockoutAnimation(int& player_tile_row, int& player_health)
+void Player::knockoutAnimation(int& player_tile_row, int& player_health, bool& player_tile_collision)
 {
 	if (player_health <= 0)
 	{
 		player_tile_row = 4;
-	}
 
-	// Get the current frame of tileset
-	player_uv_rect.left = current_image.x * player_uv_rect.width;
-	player_uv_rect.top = current_image.y * player_uv_rect.height;
+		if (!player_tile_collision)
+		{
+			gravity = 50;
+			velocity.y += gravity;
+
+		}
+	}
 }
 
 void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction)
@@ -277,6 +280,10 @@ void Player::animatePlayer(int row, float& dt)
 	current_image.y = row;
 	total_time += dt;
 
+	// Get the current frame of tileset
+	player_uv_rect.left = current_image.x * player_uv_rect.width;
+	player_uv_rect.top = current_image.y * player_uv_rect.height;
+
 	// Loop through tileset row
 	if (total_time >= switch_time)
 	{
@@ -289,6 +296,7 @@ void Player::animatePlayer(int row, float& dt)
 	}
 
 	player.setTextureRect(player_uv_rect);
+
 }
 
 float Player::returnX()

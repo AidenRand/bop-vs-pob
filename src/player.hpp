@@ -17,7 +17,7 @@ public:
 	void weakAttackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status, int& player_health);
 	void strongAttackCollision(Player& player_rect, bool& player_hit_status, Projectile& proj_rect, bool& proj_dead, int& player_health);
 	void crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height, sf::Keyboard::Key crouch_key);
-	void knockoutAnimation(int& player_tile_row, int& player_health);
+	void knockoutAnimation(int& player_tile_row, int& player_health, bool& player_tile_collision);
 	void knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction);
 	void animatePlayer(int row, float& dt);
 	float returnX();
