@@ -126,23 +126,20 @@ void Player::playerPlayerCollision(Player& player_rect, sf::Keyboard::Key move_l
 	}
 }
 
-void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key)
+void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, int& player_health)
 {
 
 	weak_attack = false;
 	strong_attack = false;
 
 	// If reload timer equals zero, allow attack
-	if (weak_reload_timer == 0)
+	if (weak_reload_timer == 0 && strong_attack == false && player_health != 0)
 	{
-		if (strong_attack == false)
+		if (sf::Keyboard::isKeyPressed(weak_attack_key))
 		{
-			if (sf::Keyboard::isKeyPressed(weak_attack_key))
-			{
-				weak_reload_timer += 30;
-				play_weak = 30;
-				weak_attack = true;
-			}
+			weak_reload_timer += 30;
+			play_weak = 30;
+			weak_attack = true;
 		}
 	}
 	// Play weak attack animation if play weak is greater than zero
@@ -157,15 +154,14 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 	}
 
 	// If strong attack reload timer equals zero, allow attack
-	if (strong_reload_timer == 0)
+	if (strong_reload_timer == 0 && weak_attack == false && player_health != 0)
 	{
-		if (weak_attack == false)
-			if (sf::Keyboard::isKeyPressed(strong_attack_key))
-			{
-				strong_reload_timer += 100;
-				play_strong = 30;
-				strong_attack = true;
-			}
+		if (sf::Keyboard::isKeyPressed(strong_attack_key))
+		{
+			strong_reload_timer += 100;
+			play_strong = 30;
+			strong_attack = true;
+		}
 	}
 	else if (play_strong > 0)
 	{
