@@ -153,6 +153,8 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 		weak_reload_timer--;
 	}
 
+	std::cout << weak_attack << "\n";
+
 	// If strong attack reload timer equals zero, allow attack
 	if (strong_reload_timer == 0 && weak_attack == false && player_health != 0)
 	{
@@ -195,22 +197,24 @@ void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& p
 
 }
 
-void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status, Projectile& proj_rect, bool& proj_dead, int& player_health)
+void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status, std::vector<Projectile> proj_vector, bool& proj_dead, int& player_health)
 {
-	auto player_proj = proj_rect.projectile;
 
-	if (proj_rect.projectile.getGlobalBounds().intersects(player_rect.player.getGlobalBounds()))
+	for (long unsigned int i = 0; i < proj_vector.size(); i++)
 	{
-		play_knockback = 45;
-		proj_dead = true;
-		player_health--;
-	}
+		if (proj_vector[i].projectile.getGlobalBounds().intersects(player_rect.player.getGlobalBounds()))
+		{
+			play_knockback = 45;
+			proj_dead = true;
+			player_health--;
+		}
 
-	// Play the knockback animation if play_knockback is greater than zero
-	if (play_knockback > 0)
-	{
-		player_hit_status = true;
-		play_knockback--;
+		// Play the knockback animation if play_knockback is greater than zero
+		if (play_knockback > 0)
+		{
+			player_hit_status = true;
+			play_knockback--;
+		}
 	}
 }
 

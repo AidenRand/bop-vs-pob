@@ -212,6 +212,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
 
+
 			// Draw player 1 projectile
 			Projectile p1_proj(p1_proj_texture_file);
 			if (p1_strong_attack)
@@ -227,7 +228,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				p1_proj_vector[i].fireProj();
 				p1_proj_vector[i].drawTo(window);
 				p1_proj_vector[i].killProj(p1_proj_dead, screen_width);
-				player_1.strongAttackCollision(player_2, p1_weak_attack, p1_proj_vector[i], p1_proj_dead, p2_health);
 
 				if (p1_proj_dead)
 				{
@@ -251,7 +251,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				p2_proj_vector[i].fireProj();
 				p2_proj_vector[i].drawTo(window);
 				p2_proj_vector[i].killProj(p2_proj_dead, screen_width);
-				player_2.strongAttackCollision(player_1, p1_hit_status, p2_proj_vector[i], p2_proj_dead, p1_health);
 
 				if (p2_proj_dead)
 				{
@@ -264,6 +263,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_1.drawTo(window);
 			player_1.movePlayer(player_speed, p1_tile_collision, dt, p1_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
 			player_1.weakAttackCollision(player_2, p1_weak_attack, p2_hit_status, p2_health);
+			player_1.strongAttackCollision(player_2, p1_weak_attack, p1_proj_vector, p1_proj_dead, p2_health);
 			player_1.knockbackAnimation(p1_hit_status, p1_tile_row, player_2.returnScale());
 			player_1.collision(screen_width, player1_width, player1_height, hitbox1_x, hitbox1_y, hitbox1_width);
 			player_1.attack(p1_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack, p1_weak_attack_key, p1_strong_attack_key, p1_health);
@@ -276,6 +276,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_2.drawTo(window);
 			player_2.movePlayer(player_speed, p2_tile_collision, dt, p2_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key, p2_crouch_key);
 			player_2.weakAttackCollision(player_1, p2_weak_attack, p1_hit_status, p1_health);
+			player_2.strongAttackCollision(player_1, p1_hit_status, p2_proj_vector, p2_proj_dead, p1_health);
 			player_2.knockbackAnimation(p2_hit_status, p2_tile_row, player_1.returnScale());
 			player_2.collision(screen_width, player2_width, player2_height, hitbox2_x, hitbox2_y, hitbox2_width);
 			player_2.attack(p2_tile_row, p2_weak_reload_timer, p2_strong_reload_timer, p2_weak_attack, p2_strong_attack, p2_weak_attack_key, p2_strong_attack_key, p2_health);
@@ -284,7 +285,10 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_2.animatePlayer(p2_tile_row, dt);
 			player_2.playerPlayerCollision(player_1, p2_move_left_key, p2_move_right_key, player1_width);
 
-			std::cout << p1_health << "\n";
+			// Make sure that the projectile gets drawn behind the player.
+			// Just change the order of the function calls. Specifically
+			// draw projectile call
+
 
 			// Draw foreground
 			left_foreground.drawTo(window);
