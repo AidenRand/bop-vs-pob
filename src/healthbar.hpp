@@ -4,8 +4,10 @@
 class Healthbar
 {
 public:
-	Healthbar(std::string healthbar_texture_string, float healthbar_x, float healthbar_y);
+	Healthbar(std::string healthbar_texture_string);
+	void createHealthbar(float healthbar_x, float healthbar_y);
 	void changeHealthbarTexture(int row, int& player_health);
+	void drawTo(sf::RenderWindow& window);
 
 private:
 	sf::Sprite healthbar;

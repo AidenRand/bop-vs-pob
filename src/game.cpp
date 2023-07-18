@@ -1,6 +1,7 @@
 #include "game.hpp"
 #include "clouds.hpp"
 #include "foreground.hpp"
+#include "healthbar.hpp"
 #include "menu.hpp"
 #include "player.hpp"
 #include "projectile.hpp"
@@ -82,6 +83,12 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	sf::Keyboard::Key p1_strong_attack_key = sf::Keyboard::Key::E;
 
 	Player player_1(bop_tileset, player1_height, player1_width, p1_x, p1_y, 1);
+
+	// Create player 1 healthbar
+	float p1_healthbar_x = 100;
+	float p1_healthbar_y = 100;
+	std::string p1_healthbar_texture = "content/bop-tilesheet.png";
+	Healthbar p1_healthbar(p1_healthbar_texture);
 
 	// Create player two
 	float p2_x = 800;
@@ -210,6 +217,11 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		{
 			bool p1_tile_collision = false;
 			bool p2_tile_collision = false;
+
+			// Draw player 1 healthbar
+			p1_healthbar.createHealthbar(p1_healthbar_x, p1_healthbar_y);
+			p1_healthbar.drawTo(window);
+			p1_healthbar.changeHealthbarTexture(0, p1_health);
 
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
