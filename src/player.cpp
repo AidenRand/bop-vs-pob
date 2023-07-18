@@ -35,6 +35,21 @@ void Player::drawTo(sf::RenderWindow& window)
 	player.setTexture(player_texture, true);
 }
 
+void Player::killPlayer(bool& player_dead, int& player_health)
+{
+	// if player health is or below zero
+	// declare player dead
+
+	if (player_health <= 0)
+	{
+		player_dead = true;
+	}
+	else
+	{
+		player_dead = false;
+	}
+}
+
 void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key)
 {
 	velocity.x = 0;
@@ -126,14 +141,14 @@ void Player::playerPlayerCollision(Player& player_rect, sf::Keyboard::Key move_l
 	}
 }
 
-void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, int& player_health)
+void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, bool& player_dead)
 {
 
 	weak_attack = false;
 	strong_attack = false;
 
 	// If reload timer equals zero, allow attack
-	if (weak_reload_timer == 0 && strong_attack == false && player_health != 0)
+	if (weak_reload_timer == 0 && strong_attack == false && !player_dead)
 	{
 		if (sf::Keyboard::isKeyPressed(weak_attack_key))
 		{
@@ -154,8 +169,10 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 		weak_reload_timer--;
 	}
 
+	std::cout << player_dead << "\n";
+
 	// If strong attack reload timer equals zero, allow attack
-	if (strong_reload_timer == 0 && weak_attack == false && player_health != 0)
+	if (strong_reload_timer == 0 && weak_attack == false && !player_dead)
 	{
 		if (sf::Keyboard::isKeyPressed(strong_attack_key))
 		{
@@ -221,6 +238,7 @@ void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, 
 {
 	player_height = 96;
 	hitbox_y = 0;
+
 	// When left shift is pressed crouch and don't allow to jump
 	if (player_tile_collision)
 	{
@@ -252,12 +270,18 @@ void Player::knockoutAnimation(int& player_tile_row, int& player_health, bool& p
 			gravity = 50;
 			velocity.y += gravity;
 		}
+		else
+		{
+			velocity.y = 0;
+		}
 	}
+
+	std::cout << velocity.y << "\n";
 }
 
-void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction)
+void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction, bool& player_dead)
 {
-	if (player_hit_status)
+	if (player_hit_status && !player_dead)
 	{
 		player_tile_row = 5;
 
