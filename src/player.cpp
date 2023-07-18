@@ -17,7 +17,7 @@ Player::Player(std::string player_tileset, float player_width, float& player_hei
 	if (!player_texture.loadFromFile(player_tileset))
 	{
 		std::cout << "ERROR:: Cannot load player tileset from file"
-			<< "\n";
+				  << "\n";
 	}
 
 	// Start at beginning of tileset
@@ -148,12 +148,11 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 		play_weak--;
 		player_tile_row = 3;
 	}
-	else
+
+	if (weak_reload_timer > 0)
 	{
 		weak_reload_timer--;
 	}
-
-	std::cout << weak_attack << "\n";
 
 	// If strong attack reload timer equals zero, allow attack
 	if (strong_reload_timer == 0 && weak_attack == false && player_health != 0)
@@ -170,7 +169,8 @@ void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_re
 		play_strong--;
 		player_tile_row = 2;
 	}
-	else
+
+	if (strong_reload_timer > 0)
 	{
 		strong_reload_timer--;
 	}
@@ -194,7 +194,6 @@ void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& p
 		player_hit_status = true;
 		play_knockback--;
 	}
-
 }
 
 void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status, std::vector<Projectile> proj_vector, bool& proj_dead, int& player_health)
@@ -252,7 +251,6 @@ void Player::knockoutAnimation(int& player_tile_row, int& player_health, bool& p
 		{
 			gravity = 50;
 			velocity.y += gravity;
-
 		}
 	}
 }
@@ -296,7 +294,6 @@ void Player::animatePlayer(int row, float& dt)
 	}
 
 	player.setTextureRect(player_uv_rect);
-
 }
 
 float Player::returnX()

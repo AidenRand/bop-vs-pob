@@ -28,7 +28,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
 	{
 		std::cout << "ERROR::Could not load background from file"
-			<< "\n";
+				  << "\n";
 	}
 	background.setTexture(background_texture);
 
@@ -212,7 +212,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
 
-
 			// Draw player 1 projectile
 			Projectile p1_proj(p1_proj_texture_file);
 			if (p1_strong_attack)
@@ -259,6 +258,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				}
 			}
 
+			std::cout << p2_strong_reload_timer << "\n";
+
 			// Draw player 1
 			player_1.drawTo(window);
 			player_1.movePlayer(player_speed, p1_tile_collision, dt, p1_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
@@ -288,7 +289,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			// Make sure that the projectile gets drawn behind the player.
 			// Just change the order of the function calls. Specifically
 			// draw projectile call
-
 
 			// Draw foreground
 			left_foreground.drawTo(window);
