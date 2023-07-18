@@ -4,7 +4,16 @@
 class Healthbar
 {
 public:
-	Healthbar(sf::Texture healthbar, float healthbar_x, float healthbar_y);
+	Healthbar(std::string healthbar_texture_string, float healthbar_x, float healthbar_y);
+	void changeHealthbarTexture(int row, int& player_health);
+
+private:
+	sf::Sprite healthbar;
+	sf::Texture healthbar_texture;
+	sf::IntRect healthbar_uv_rect;
+	float total_time;
+	sf::Vector2u image_count = sf::Vector2u(8, 1);
+	sf::Vector2u current_image;
 };
 
 #endif

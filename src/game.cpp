@@ -270,7 +270,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_1.collision(screen_width, player1_width, player1_height, hitbox1_x, hitbox1_y, hitbox1_width);
 			player_1.attack(p1_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack, p1_weak_attack_key, p1_strong_attack_key, p2_dead);
 			player_1.crouchAnimation(p1_tile_row, p1_tile_collision, hitbox1_y, player1_height, p1_crouch_key);
-			player_1.knockoutAnimation(p1_tile_row, p1_health, p1_tile_collision);
+			player_1.knockoutAnimation(p1_tile_row, p1_dead, p1_tile_collision);
 			player_1.animatePlayer(p1_tile_row, dt);
 			player_1.playerPlayerCollision(player_2, p1_move_left_key, p1_move_right_key, player2_width);
 
@@ -284,7 +284,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			player_2.collision(screen_width, player2_width, player2_height, hitbox2_x, hitbox2_y, hitbox2_width);
 			player_2.attack(p2_tile_row, p2_weak_reload_timer, p2_strong_reload_timer, p2_weak_attack, p2_strong_attack, p2_weak_attack_key, p2_strong_attack_key, p1_dead);
 			player_2.crouchAnimation(p2_tile_row, p2_tile_collision, hitbox2_y, player2_height, p2_crouch_key);
-			player_2.knockoutAnimation(p2_tile_row, p2_health, p2_tile_collision);
+			player_2.knockoutAnimation(p2_tile_row, p2_dead, p2_tile_collision);
 			player_2.animatePlayer(p2_tile_row, dt);
 			player_2.playerPlayerCollision(player_1, p2_move_left_key, p2_move_right_key, player1_width);
 

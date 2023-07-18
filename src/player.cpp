@@ -259,9 +259,9 @@ void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, 
 	}
 }
 
-void Player::knockoutAnimation(int& player_tile_row, int& player_health, bool& player_tile_collision)
+void Player::knockoutAnimation(int& player_tile_row, bool& player_dead, bool& player_tile_collision)
 {
-	if (player_health <= 0)
+	if (player_dead)
 	{
 		player_tile_row = 4;
 
