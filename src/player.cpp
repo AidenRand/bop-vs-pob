@@ -222,7 +222,7 @@ void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status,
 		{
 			play_knockback = 45;
 			proj_dead = true;
-			player_health--;
+			player_health -= 2;
 		}
 
 		// Play the knockback animation if play_knockback is greater than zero

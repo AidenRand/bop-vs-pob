@@ -60,7 +60,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	Healthbar p1_healthbar(p1_healthbar_texture);
 
 	// Create player 2 healthbar
-	float p2_healthbar_x = 630;
+	float p2_healthbar_x = 620;
 	float p2_healthbar_y = 20;
 	std::string p2_healthbar_texture = "content/pob-healthbar-spritesheet.png";
 	Healthbar p2_healthbar(p2_healthbar_texture);
@@ -76,7 +76,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p1_weak_attack = false;
 	bool p1_strong_attack = false;
 	bool p1_hit_status = false;
-	int p1_health = 9;
+	int p1_health = 10;
 	float player1_width = 96;
 	float player1_height = 96;
 	float hitbox1_x = 0;
@@ -104,7 +104,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p2_weak_attack = false;
 	bool p2_strong_attack = false;
 	bool p2_hit_status = false;
-	int p2_health = 9;
+	int p2_health = 10;
 	int p2_weak_reload_timer = 0;
 	int p2_strong_reload_timer = 0;
 	float player2_width = 96;

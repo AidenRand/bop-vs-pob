@@ -22,7 +22,15 @@ void Healthbar::createHealthbar(float healthbar_x, float healthbar_y)
 void Healthbar::changeHealthbarTexture(int row, int& player_health)
 {
 	current_image.y = row;
-	current_image.x = player_health;
+	current_image.x = player_health - 1;
+
+	if (player_health <= 0)
+	{
+		player_health = 0;
+		current_image.x = player_health;
+	}
+
+	std::cout << player_health << "\n";
 
 	healthbar_uv_rect.left = current_image.x * healthbar_uv_rect.width;
 	healthbar_uv_rect.top = current_image.y * healthbar_uv_rect.height;
