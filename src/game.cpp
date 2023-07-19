@@ -29,7 +29,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
 	{
 		std::cout << "ERROR::Could not load background from file"
-				  << "\n";
+			<< "\n";
 	}
 	background.setTexture(background_texture);
 
@@ -52,6 +52,12 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float title_y = -130;
 	menu.createButtons(screen_width, screen_height, menu_font_size);
 	menu.createTitle(title_x, title_y);
+
+	// Create player 1 healthbar
+	float p1_healthbar_x = 100;
+	float p1_healthbar_y = 100;
+	std::string p1_healthbar_texture = "content/bop-healthbar-tileset.png";
+	Healthbar p1_healthbar(p1_healthbar_texture);
 
 	// Universal player variables
 	int player_speed = 400;
@@ -83,12 +89,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	sf::Keyboard::Key p1_strong_attack_key = sf::Keyboard::Key::E;
 
 	Player player_1(bop_tileset, player1_height, player1_width, p1_x, p1_y, 1);
-
-	// Create player 1 healthbar
-	float p1_healthbar_x = 100;
-	float p1_healthbar_y = 100;
-	std::string p1_healthbar_texture = "content/bop-tilesheet.png";
-	Healthbar p1_healthbar(p1_healthbar_texture);
 
 	// Create player two
 	float p2_x = 800;
