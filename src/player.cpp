@@ -275,8 +275,6 @@ void Player::knockoutAnimation(int& player_tile_row, bool& player_dead, bool& pl
 			velocity.y = 0;
 		}
 	}
-
-	std::cout << velocity.y << "\n";
 }
 
 void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction, bool& player_dead)

@@ -3,7 +3,7 @@
 
 Healthbar::Healthbar(std::string healthbar_texture_string)
 {
-	if (healthbar_texture.loadFromFile(healthbar_texture_string))
+	if (!healthbar_texture.loadFromFile(healthbar_texture_string))
 	{
 		std::cout << "ERROR:: cannot load healthbar texture from file"
 				  << "\n";

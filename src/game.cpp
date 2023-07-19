@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "clouds.hpp"
+#include "endgame.hpp"
 #include "foreground.hpp"
 #include "healthbar.hpp"
 #include "menu.hpp"
@@ -44,6 +45,10 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float right_foreground_x = 704;
 	float right_foreground_y = 412;
 	Foreground right_foreground(right_foreground_texture, right_foreground_x, right_foreground_y);
+
+	// Create endgame text
+	std::string endgame_text_file = "content/right-foreground.png";
+	Endgame endgame(endgame_text_file);
 
 	// Create menu
 	Menu menu;
