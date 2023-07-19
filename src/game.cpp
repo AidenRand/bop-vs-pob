@@ -70,7 +70,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p1_weak_attack = false;
 	bool p1_strong_attack = false;
 	bool p1_hit_status = false;
-	int p1_health = 5;
+	int p1_health = 10;
 	float player1_width = 96;
 	float player1_height = 96;
 	float hitbox1_x = 0;
@@ -98,7 +98,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p2_weak_attack = false;
 	bool p2_strong_attack = false;
 	bool p2_hit_status = false;
-	int p2_health = 5;
+	int p2_health = 10;
 	int p2_weak_reload_timer = 0;
 	int p2_strong_reload_timer = 0;
 	float player2_width = 96;
@@ -220,8 +220,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw player 1 healthbar
 			p1_healthbar.createHealthbar(p1_healthbar_x, p1_healthbar_y);
-			p1_healthbar.drawTo(window);
 			p1_healthbar.changeHealthbarTexture(0, p1_health);
+			p1_healthbar.drawTo(window);
 
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);

@@ -6,7 +6,7 @@ Healthbar::Healthbar(std::string healthbar_texture_string)
 	if (healthbar_texture.loadFromFile(healthbar_texture_string))
 	{
 		std::cout << "ERROR:: cannot load healthbar texture from file"
-				  << "\n";
+			<< "\n";
 	}
 }
 
@@ -22,7 +22,7 @@ void Healthbar::createHealthbar(float healthbar_x, float healthbar_y)
 void Healthbar::changeHealthbarTexture(int row, int& player_health)
 {
 	current_image.y = row;
-	current_image.x = player_health;
+	current_image.x = player_health - 1;
 
 	healthbar_uv_rect.left = current_image.x * healthbar_uv_rect.width;
 	healthbar_uv_rect.top = current_image.y * healthbar_uv_rect.height;

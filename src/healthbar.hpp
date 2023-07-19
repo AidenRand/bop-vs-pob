@@ -14,7 +14,7 @@ private:
 	sf::Texture healthbar_texture;
 	sf::IntRect healthbar_uv_rect;
 	float total_time;
-	sf::Vector2u image_count = sf::Vector2u(8, 1);
+	sf::Vector2u image_count = sf::Vector2u(10, 1);
 	sf::Vector2u current_image;
 };
 
