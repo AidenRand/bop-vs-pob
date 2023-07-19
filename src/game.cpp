@@ -29,7 +29,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
 	{
 		std::cout << "ERROR::Could not load background from file"
-			<< "\n";
+				  << "\n";
 	}
 	background.setTexture(background_texture);
 
@@ -54,10 +54,16 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	menu.createTitle(title_x, title_y);
 
 	// Create player 1 healthbar
-	float p1_healthbar_x = 100;
-	float p1_healthbar_y = 100;
+	float p1_healthbar_x = 30;
+	float p1_healthbar_y = 20;
 	std::string p1_healthbar_texture = "content/bop-healthbar-tileset.png";
 	Healthbar p1_healthbar(p1_healthbar_texture);
+
+	// Create player 2 healthbar
+	float p2_healthbar_x = 630;
+	float p2_healthbar_y = 20;
+	std::string p2_healthbar_texture = "content/pob-healthbar-spritesheet.png";
+	Healthbar p2_healthbar(p2_healthbar_texture);
 
 	// Universal player variables
 	int player_speed = 400;
@@ -70,7 +76,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p1_weak_attack = false;
 	bool p1_strong_attack = false;
 	bool p1_hit_status = false;
-	int p1_health = 10;
+	int p1_health = 9;
 	float player1_width = 96;
 	float player1_height = 96;
 	float hitbox1_x = 0;
@@ -98,7 +104,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	bool p2_weak_attack = false;
 	bool p2_strong_attack = false;
 	bool p2_hit_status = false;
-	int p2_health = 10;
+	int p2_health = 9;
 	int p2_weak_reload_timer = 0;
 	int p2_strong_reload_timer = 0;
 	float player2_width = 96;
@@ -218,10 +224,17 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			bool p1_tile_collision = false;
 			bool p2_tile_collision = false;
 
+			std::cout << p1_health << "\n";
+
 			// Draw player 1 healthbar
 			p1_healthbar.createHealthbar(p1_healthbar_x, p1_healthbar_y);
 			p1_healthbar.changeHealthbarTexture(0, p1_health);
 			p1_healthbar.drawTo(window);
+
+			// Draw player 2 healthbar
+			p2_healthbar.createHealthbar(p2_healthbar_x, p2_healthbar_y);
+			p2_healthbar.changeHealthbarTexture(0, p2_health);
+			p2_healthbar.drawTo(window);
 
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
