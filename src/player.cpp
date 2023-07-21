@@ -17,7 +17,7 @@ Player::Player(std::string player_tileset, float player_width, float& player_hei
 	if (!player_texture.loadFromFile(player_tileset))
 	{
 		std::cout << "ERROR:: Cannot load player tileset from file"
-				  << "\n";
+			<< "\n";
 	}
 
 	// Start at beginning of tileset
@@ -141,61 +141,63 @@ void Player::playerPlayerCollision(Player& player_rect, sf::Keyboard::Key move_l
 	}
 }
 
-void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, bool& player_dead)
+void Player::attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, int& other_player_health, int& this_player_health)
 {
 
 	weak_attack = false;
 	strong_attack = false;
 
 	// If reload timer equals zero, allow attack
-	if (weak_reload_timer == 0 && strong_attack == false && !player_dead)
+	if (other_player_health != 0 && this_player_health != 0)
 	{
-		if (sf::Keyboard::isKeyPressed(weak_attack_key))
+		if (weak_reload_timer == 0 && strong_attack == false)
 		{
-			weak_reload_timer += 30;
-			play_weak = 30;
-			weak_attack = true;
+			if (sf::Keyboard::isKeyPressed(weak_attack_key))
+			{
+				weak_reload_timer += 30;
+				play_weak = 30;
+				weak_attack = true;
+			}
 		}
-	}
-	// Play weak attack animation if play weak is greater than zero
-	else if (play_weak > 0)
-	{
-		play_weak--;
-		player_tile_row = 3;
-	}
-
-	if (weak_reload_timer > 0)
-	{
-		weak_reload_timer--;
-	}
-
-	std::cout << player_dead << "\n";
-
-	// If strong attack reload timer equals zero, allow attack
-	if (strong_reload_timer == 0 && weak_attack == false && !player_dead)
-	{
-		if (sf::Keyboard::isKeyPressed(strong_attack_key))
+		// Play weak attack animation if play weak is greater than zero
+		else if (play_weak > 0)
 		{
-			strong_reload_timer += 100;
-			play_strong = 30;
-			strong_attack = true;
+			play_weak--;
+			player_tile_row = 3;
 		}
-	}
-	else if (play_strong > 0)
-	{
-		play_strong--;
-		player_tile_row = 2;
-	}
 
-	if (strong_reload_timer > 0)
-	{
-		strong_reload_timer--;
+		if (weak_reload_timer > 0)
+		{
+			weak_reload_timer--;
+		}
+
+		// If strong attack reload timer equals zero, allow attack
+		if (strong_reload_timer == 0 && weak_attack == false)
+		{
+			if (sf::Keyboard::isKeyPressed(strong_attack_key))
+			{
+				strong_reload_timer += 100;
+				play_strong = 30;
+				strong_attack = true;
+			}
+		}
+		else if (play_strong > 0)
+		{
+			play_strong--;
+			player_tile_row = 2;
+		}
+
+		if (strong_reload_timer > 0)
+		{
+			strong_reload_timer--;
+		}
 	}
 }
 
 void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status, int& player_health)
 {
 	// If player hitboxes are intersecting, register attacks when attacks are true
+
 	if (player_rect.player.getGlobalHitbox().intersects(player.getGlobalHitbox()))
 	{
 		if (weak_attack)
@@ -233,6 +235,7 @@ void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status,
 		}
 	}
 }
+
 
 void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height, sf::Keyboard::Key crouch_key)
 {
@@ -277,9 +280,9 @@ void Player::knockoutAnimation(int& player_tile_row, bool& player_dead, bool& pl
 	}
 }
 
-void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction, bool& player_dead)
+void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction, int& player_health)
 {
-	if (player_hit_status && !player_dead)
+	if (player_hit_status && player_health > 0)
 	{
 		player_tile_row = 5;
 

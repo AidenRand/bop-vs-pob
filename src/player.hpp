@@ -13,13 +13,13 @@ public:
 	void killPlayer(bool& player_dead, int& player_health);
 	void movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key);
 	void collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y, float hitbox_width);
-	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, bool& player_dead);
+	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, int& other_player_health, int& this_player_health);
 	void playerPlayerCollision(Player& player_rect, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, float player_width);
 	void weakAttackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status, int& player_health);
 	void strongAttackCollision(Player& player_rect, bool& player_hit_status, std::vector<Projectile> proj_vector, bool& proj_dead, int& player_health);
 	void crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height, sf::Keyboard::Key crouch_key);
 	void knockoutAnimation(int& player_tile_row, bool& player_dead, bool& player_tile_collision);
-	void knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction, bool& player_dead);
+	void knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction, int& player_health);
 	void animatePlayer(int row, float& dt);
 	float returnX();
 	float returnY();
