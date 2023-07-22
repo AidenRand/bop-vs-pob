@@ -8,6 +8,7 @@ class Endgame
 {
 public:
 	Endgame(std::string endgame_text_file);
+	void drawTo(sf::RenderWindow& window);
 
 private:
 	sf::Sprite endgame_text;
