@@ -21,20 +21,11 @@ void Endgame::drawTo(sf::RenderWindow& window, int& player_health)
 	}
 }
 
-void Endgame::resetGame(sf::Keyboard::Key reset_game_button, Player& player_1, Player& player_2, int& player1_health, int& player2_health, float& player1_x, float& player1_y, float& player2_x, float& player2_y)
+void Endgame::resetGame(sf::Keyboard::Key reset_game_button, Player& player_sprite, int& player_health, float& player_x, float& player_y)
 {
-	if (player1_health == 0 || player2_health == 0)
+	if (sf::Keyboard::isKeyPressed(reset_game_button))
 	{
-		if (sf::Keyboard::isKeyPressed(reset_game_button))
-		{
-			player1_x = 100;
-			player1_y = 300;
-			player2_x = 800;
-			player2_y = 300;
-			player_1.player.setPosition(sf::Vector2f(player1_x, player1_y));
-			player_2.player.setPosition(sf::Vector2f(player2_x, player2_y));
-			player1_health = 10;
-			player2_health = 10;
-		}
+		player_sprite.player.setPosition(sf::Vector2f(player_x, player_y));
+		player_health = 10;
 	}
 }

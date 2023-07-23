@@ -250,10 +250,16 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw player 1 wins endgame text
 			p1_endgame.drawTo(window, p2_health);
-			p1_endgame.resetGame(reset_game_button, player_1, player_2, p1_health, p2_health, p1_x, p1_y, p2_x, p2_y);
 
 			// Draw player 2 wins endame text
 			p2_endgame.drawTo(window, p1_health);
+
+			// If p1 or p2 health equals zero, allow game to be reset
+			if (p1_health == 0 || p2_health == 0)
+			{
+				p1_endgame.resetGame(reset_game_button, player_1, p1_health, p1_x, p1_y);
+				p2_endgame.resetGame(reset_game_button, player_2, p2_health, p2_x, p2_y);
+			}
 
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
