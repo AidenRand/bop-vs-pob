@@ -66,7 +66,9 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	std::string p2_healthbar_texture = "content/pob-healthbar-spritesheet.png";
 	Healthbar p2_healthbar(p2_healthbar_texture);
 
-	float endgame_text_x = 200;
+	// Endgame text variables
+	sf::Keyboard::Key reset_game_button = sf::Keyboard::Key::Space;
+	float endgame_text_x = 240;
 	float endgame_text_y = 150;
 
 	// Player 1 won endgame text
@@ -248,6 +250,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 			// Draw player 1 wins endgame text
 			p1_endgame.drawTo(window, p2_health);
+			p1_endgame.resetGame(reset_game_button, player_1, player_2, p1_health, p2_health, p1_x, p1_y, p2_x, p2_y);
 
 			// Draw player 2 wins endame text
 			p2_endgame.drawTo(window, p1_health);
