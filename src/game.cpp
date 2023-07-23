@@ -46,10 +46,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float right_foreground_y = 412;
 	Foreground right_foreground(right_foreground_texture, right_foreground_x, right_foreground_y);
 
-	// Create endgame text
-	std::string endgame_text_file = "content/right-foreground.png";
-	Endgame endgame(endgame_text_file);
-
 	// Create menu
 	Menu menu;
 	int menu_font_size = 30;
@@ -69,6 +65,17 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float p2_healthbar_y = 20;
 	std::string p2_healthbar_texture = "content/pob-healthbar-spritesheet.png";
 	Healthbar p2_healthbar(p2_healthbar_texture);
+
+	float endgame_text_x = 200;
+	float endgame_text_y = 150;
+
+	// Player 1 won endgame text
+	std::string p1_endgame_text_file = "content/bop-endgame-text.png";
+	Endgame p1_endgame(p1_endgame_text_file, endgame_text_x, endgame_text_y);
+
+	// Player 2 won endgame text
+	std::string p2_endgame_text_file = "content/pob-endgame-text.png";
+	Endgame p2_endgame(p2_endgame_text_file, endgame_text_x, endgame_text_y);
 
 	// Universal player variables
 	int player_speed = 400;
@@ -238,6 +245,12 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			p2_healthbar.createHealthbar(p2_healthbar_x, p2_healthbar_y);
 			p2_healthbar.changeHealthbarTexture(0, p2_health);
 			p2_healthbar.drawTo(window);
+
+			// Draw player 1 wins endgame text
+			p1_endgame.drawTo(window, p2_health);
+
+			// Draw player 2 wins endame text
+			p2_endgame.drawTo(window, p1_health);
 
 			// Draw tile map if game is running
 			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
