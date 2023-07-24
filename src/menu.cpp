@@ -31,6 +31,10 @@ void Menu::createButtons(float screen_width, float screen_height, int font_size)
 	menu_text[1].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 2) * 3));
 	menu_text[1].setFillColor(sf::Color(250, 0, 0));
 
+	menu_text[2].setString("CONTROLS");
+	menu_text[2].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 1) * 3));
+	menu_text[2].setFillColor(sf::Color(250, 0, 0));
+
 	selectedItemIndex = 1;
 
 }

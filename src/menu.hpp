@@ -2,7 +2,7 @@
 #define MENU_HPP
 
 #include <SFML/Graphics.hpp>
-#define MAX_NUMBER_OF_ITEMS 2
+#define MAX_NUMBER_OF_ITEMS 3
 
 class Menu
 {
