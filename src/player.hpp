@@ -43,7 +43,7 @@ private:
 	float switch_time = 0.08f;
 	sf::Vector2u image_count = sf::Vector2u(8, 1);
 	sf::Vector2u current_image;
-	int jump_power = 650;
+	int jump_power = 620;
 	int play_weak = 0;
 	int play_strong = 0;
 	int play_knockback = 0;
