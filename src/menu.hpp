@@ -12,8 +12,7 @@ public:
 
 	void createButtons(float screen_width, float screen_height, int font_size);
 	void drawButtons(sf::RenderWindow& window);
-	void moveUp();
-	void moveDown();
+	void selectMenu();
 	void closeGame(sf::RenderWindow& window);
 	void playGame(bool& game_running);
 	void createTitle(float title_x, float title_y);

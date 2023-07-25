@@ -35,7 +35,7 @@ void Menu::createButtons(float screen_width, float screen_height, int font_size)
 	menu_text[2].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 1) * 3));
 	menu_text[2].setFillColor(sf::Color(250, 0, 0));
 
-	selectedItemIndex = 1;
+	selectedItemIndex = 2;
 
 }
 
@@ -47,32 +47,29 @@ void Menu::drawButtons(sf::RenderWindow& window)
 	}
 }
 
-void Menu::moveUp()
+void Menu::selectMenu()
 {
-	// Move menu select down if item index is less than max index size
-	if (selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
-			selectedItemIndex++;
-			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
-		}
-	}
-}
+	menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
 
-void Menu::moveDown()
-{
 	// Move menu select up if item index is greater than zero
-	if (selectedItemIndex - 1 >= 0)
+	if (selectedItemIndex - 1 != 0)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
 			menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
 			selectedItemIndex--;
-			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
 		}
 	}
+	else if (selectedItemIndex + 1 < MAX_NUMBER_OF_ITEMS)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
+			selectedItemIndex++;
+		}
+	}
+
+	std::cout << selectedItemIndex << "\n";
 }
 
 void Menu::closeGame(sf::RenderWindow& window)
