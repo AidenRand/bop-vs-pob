@@ -2,7 +2,7 @@
 #define MENU_HPP
 
 #include <SFML/Graphics.hpp>
-#define MAX_NUMBER_OF_ITEMS 3
+#define MAX_NUMBER_OF_ITEMS 4
 
 class Menu
 {
@@ -21,7 +21,7 @@ public:
 	void backToMenu(bool& game_running);
 
 private:
-	int selectedItemIndex;
+	int selectedItemIndex = 0;
 	sf::Text menu_text[MAX_NUMBER_OF_ITEMS];
 	sf::Font font;
 
