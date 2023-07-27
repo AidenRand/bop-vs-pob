@@ -2,7 +2,7 @@
 #define MENU_HPP
 
 #include <SFML/Graphics.hpp>
-#define MAX_NUMBER_OF_ITEMS 4
+#define MAX_NUMBER_OF_ITEMS 3
 
 class Menu
 {
@@ -12,7 +12,7 @@ public:
 
 	void createButtons(float screen_width, float screen_height, int font_size);
 	void drawButtons(sf::RenderWindow& window);
-	void selectMenu();
+	void navigateMenu();
 	void closeGame(sf::RenderWindow& window);
 	void playGame(bool& game_running);
 	void createTitle(float title_x, float title_y);

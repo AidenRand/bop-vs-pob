@@ -34,6 +34,8 @@ void Menu::createButtons(float screen_width, float screen_height, int font_size)
 	menu_text[2].setString("CONTROLS");
 	menu_text[2].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 1) * 3));
 	menu_text[2].setFillColor(sf::Color(250, 0, 0));
+
+	selectedItemIndex = 0;
 }
 
 void Menu::drawButtons(sf::RenderWindow& window)
@@ -44,29 +46,28 @@ void Menu::drawButtons(sf::RenderWindow& window)
 	}
 }
 
-void Menu::selectMenu()
+void Menu::navigateMenu()
 {
 	std::cout << selectedItemIndex << "\n";
+	menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
 	// Instead of directly moving down when the button is pressed
 	// Make two bool values and set them to true if the button is pressed
 	// and false otherwise. when it is true move but don't move when it is false
 	// Move menu select up if item index is greater than zero
-	if (selectedItemIndex < MAX_NUMBER_OF_ITEMS)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (selectedItemIndex + 1 != MAX_NUMBER_OF_ITEMS)
 		{
 			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
-			selectedItemIndex++;
-			menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
+			selectedItemIndex += 1;
 		}
 	}
-	if (selectedItemIndex > 0)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		if (selectedItemIndex > 0)
 		{
 			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
-			selectedItemIndex--;
-			menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
+			selectedItemIndex -= 1;
 		}
 	}
 }
@@ -74,7 +75,7 @@ void Menu::selectMenu()
 void Menu::closeGame(sf::RenderWindow& window)
 {
 	// If Quit is being hovered and enter is pressed, close window
-	if (selectedItemIndex == 0)
+	if (selectedItemIndex == 1)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
@@ -85,7 +86,7 @@ void Menu::closeGame(sf::RenderWindow& window)
 
 void Menu::playGame(bool& game_running)
 {
-	if (selectedItemIndex == 1)
+	if (selectedItemIndex == 0)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{

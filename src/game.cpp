@@ -226,7 +226,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		if (!game_running)
 		{
 			menu.drawButtons(window);
-			menu.selectMenu();
+			menu.navigateMenu();
 			menu.closeGame(window);
 			menu.playGame(game_running);
 			menu.animateTitle(0, dt);
