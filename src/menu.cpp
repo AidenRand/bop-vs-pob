@@ -25,15 +25,15 @@ void Menu::createButtons(float screen_width, float screen_height, int font_size)
 
 	menu_text[0].setString("PLAY");
 	menu_text[0].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 1.5) * 2));
-	menu_text[0].setFillColor(sf::Color(255, 243, 0));
+	menu_text[0].setFillColor(sf::Color(235, 0, 0));
 
 	menu_text[1].setString("QUIT");
 	menu_text[1].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 2) * 3));
-	menu_text[1].setFillColor(sf::Color(250, 0, 0));
+	menu_text[1].setFillColor(sf::Color(255, 243, 0));
 
 	menu_text[2].setString("CONTROLS");
-	menu_text[2].setPosition(sf::Vector2f(screen_width / 2.25, screen_height / (MAX_NUMBER_OF_ITEMS + 1) * 3));
-	menu_text[2].setFillColor(sf::Color(250, 0, 0));
+	menu_text[2].setPosition(sf::Vector2f(screen_width / 2.6, screen_height / (MAX_NUMBER_OF_ITEMS + 1) * 3));
+	menu_text[2].setFillColor(sf::Color(255, 243, 0));
 
 	selectedItemIndex = 0;
 }
@@ -46,28 +46,32 @@ void Menu::drawButtons(sf::RenderWindow& window)
 	}
 }
 
-void Menu::navigateMenu()
+void Menu::navigateMenu(sf::Keyboard::Key key, bool checkpressed)
 {
 	std::cout << selectedItemIndex << "\n";
-	menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
 	// Instead of directly moving down when the button is pressed
 	// Make two bool values and set them to true if the button is pressed
 	// and false otherwise. when it is true move but don't move when it is false
 	// Move menu select up if item index is greater than zero
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (checkpressed)
 	{
-		if (selectedItemIndex + 1 != MAX_NUMBER_OF_ITEMS)
+		if (key == sf::Keyboard::Down)
 		{
-			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
-			selectedItemIndex += 1;
+			if (selectedItemIndex + 1 != MAX_NUMBER_OF_ITEMS)
+			{
+				menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
+				selectedItemIndex += 1;
+				menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
+			}
 		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		if (selectedItemIndex > 0)
+		if (key == sf::Keyboard::Up)
 		{
-			menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
-			selectedItemIndex -= 1;
+			if (selectedItemIndex > 0)
+			{
+				menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
+				selectedItemIndex -= 1;
+				menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
+			}
 		}
 	}
 }

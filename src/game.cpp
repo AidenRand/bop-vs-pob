@@ -193,6 +193,19 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			{
 				window.close();
 			}
+
+			if (!game_running)
+			{
+				if (event.type == sf::Event::KeyPressed)
+				{
+					menu.navigateMenu(event.key.code, true);
+				}
+
+				if (event.type == sf::Event::KeyReleased)
+				{
+					menu.navigateMenu(event.key.code, false);
+				}
+			}
 		}
 
 		window.clear();
@@ -226,7 +239,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		if (!game_running)
 		{
 			menu.drawButtons(window);
-			menu.navigateMenu();
 			menu.closeGame(window);
 			menu.playGame(game_running);
 			menu.animateTitle(0, dt);
