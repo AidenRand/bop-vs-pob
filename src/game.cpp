@@ -12,6 +12,7 @@
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 {
 	bool game_running = false;
+	bool controls_showing = false;
 
 	// Create clouds texture
 	Clouds cloud_tile;
@@ -53,6 +54,11 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float title_y = -130;
 	menu.createButtons(screen_width, screen_height, menu_font_size);
 	menu.createTitle(title_x, title_y);
+
+	// Controls screen variables
+	std::string controls_texture_file = "content/bop-vs-pob-controlls.png";
+	float controls_screen_x = 0;
+	float controls_screen_y = 0;
 
 	// Create player 1 healthbar
 	float p1_healthbar_x = 30;
@@ -241,6 +247,9 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			menu.drawButtons(window);
 			menu.closeGame(window);
 			menu.playGame(game_running);
+			menu.createControls(controls_texture_file, controls_screen_x, controls_screen_y, controls_showing);
+			menu.drawControls(window, controls_showing);
+			menu.createTitle(title_x, title_y);
 			menu.animateTitle(0, dt);
 			menu.drawTitle(window);
 		}

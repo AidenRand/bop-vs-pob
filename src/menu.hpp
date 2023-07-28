@@ -13,8 +13,10 @@ public:
 	void createButtons(float screen_width, float screen_height, int font_size);
 	void drawButtons(sf::RenderWindow& window);
 	void navigateMenu(sf::Keyboard::Key key, bool checkpressed);
-	void closeGame(sf::RenderWindow& window);
 	void playGame(bool& game_running);
+	void closeGame(sf::RenderWindow& window);
+	void createControls(std::string controls_screen_file, float controls_screen_x, float controls_screen_y, bool& controls_showing);
+	void drawControls(sf::RenderWindow& window, bool& controls_showing);
 	void createTitle(float title_x, float title_y);
 	void animateTitle(int row, float dt);
 	void drawTitle(sf::RenderWindow& window);
@@ -35,6 +37,9 @@ private:
 	float switch_time = 0.1f;
 	sf::Vector2u image_count = sf::Vector2u(8, 1);
 	sf::Vector2u current_image;
+
+	sf::Sprite controls_screen;
+	sf::Texture controls_screen_texture;
 };
 
 #endif

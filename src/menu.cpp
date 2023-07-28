@@ -48,11 +48,6 @@ void Menu::drawButtons(sf::RenderWindow& window)
 
 void Menu::navigateMenu(sf::Keyboard::Key key, bool checkpressed)
 {
-	std::cout << selectedItemIndex << "\n";
-	// Instead of directly moving down when the button is pressed
-	// Make two bool values and set them to true if the button is pressed
-	// and false otherwise. when it is true move but don't move when it is false
-	// Move menu select up if item index is greater than zero
 	if (checkpressed)
 	{
 		if (key == sf::Keyboard::Down)
@@ -96,6 +91,29 @@ void Menu::playGame(bool& game_running)
 		{
 			game_running = true;
 		}
+	}
+}
+
+void Menu::createControls(std::string controls_screen_file, float controls_screen_x, float controls_screen_y, bool& controls_showing)
+{
+	controls_screen.setPosition(sf::Vector2f(controls_screen_x, controls_screen_y));
+
+	if (!controls_screen_texture.loadFromFile(controls_screen_file))
+	{
+		std::cout << "ERROR:: Could not load controls screen texture from file" << "\n";
+	}
+
+	if (selectedItemIndex == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	{
+		controls_showing = true;
+	}
+}
+
+void Menu::drawControls(sf::RenderWindow& window, bool& controls_showing)
+{
+	if (controls_showing)
+	{
+		window.draw(controls_screen);
 	}
 }
 
