@@ -56,7 +56,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	menu.createTitle(title_x, title_y);
 
 	// Controls screen variables
-	std::string controls_texture_file = "content/bop-vs-pob-controlls.png";
+	std::string controls_texture_file = "content/bop-vs-pob-controls.png";
 	float controls_screen_x = 0;
 	float controls_screen_y = 0;
 
@@ -241,126 +241,129 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		cloud_tile2.drawTo(window);
 
 		// Draw game menu
-		menu.backToMenu(game_running);
-		if (!game_running)
+		menu.drawControls(window, controls_showing);
+		menu.backToMenu(game_running, controls_showing);
+		if (!controls_showing)
 		{
-			menu.drawButtons(window);
-			menu.closeGame(window);
-			menu.playGame(game_running);
-			menu.createControls(controls_texture_file, controls_screen_x, controls_screen_y, controls_showing);
-			menu.drawControls(window, controls_showing);
-			menu.createTitle(title_x, title_y);
-			menu.animateTitle(0, dt);
-			menu.drawTitle(window);
-		}
-		else
-		{
-			bool p1_tile_collision = false;
-			bool p2_tile_collision = false;
-
-			// Draw player 1 healthbar
-			p1_healthbar.createHealthbar(p1_healthbar_x, p1_healthbar_y);
-			p1_healthbar.changeHealthbarTexture(0, p1_health);
-			p1_healthbar.drawTo(window);
-
-			// Draw player 2 healthbar
-			p2_healthbar.createHealthbar(p2_healthbar_x, p2_healthbar_y);
-			p2_healthbar.changeHealthbarTexture(0, p2_health);
-			p2_healthbar.drawTo(window);
-
-			// Draw player 1 wins endgame text
-			p1_endgame.drawTo(window, p2_health);
-
-			// Draw player 2 wins endame text
-			p2_endgame.drawTo(window, p1_health);
-
-			// If p1 or p2 health equals zero, allow game to be reset
-			if (p1_health == 0 || p2_health == 0)
+			if (!game_running)
 			{
-				p1_endgame.resetGame(reset_game_button, player_1, p1_health, p1_x, p1_y);
-				p2_endgame.resetGame(reset_game_button, player_2, p2_health, p2_x, p2_y);
+				menu.drawButtons(window);
+				menu.closeGame(window);
+				menu.playGame(game_running);
+				menu.createControls(controls_texture_file, controls_screen_x, controls_screen_y, controls_showing);
+				menu.createTitle(title_x, title_y);
+				menu.animateTitle(0, dt);
+				menu.drawTitle(window);
 			}
-
-			// Draw tile map if game is running
-			world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
-
-			// Draw player 1 projectile
-			Projectile p1_proj(p1_proj_texture_file);
-			if (p1_strong_attack)
+			else
 			{
-				p1_proj.spawnProj(player_1.returnScale());
-				p1_proj.setPos(player_1.returnX(), player_1.returnY());
-				p1_strong_attack = false;
-				p1_proj_vector.push_back(p1_proj);
-			}
+				bool p1_tile_collision = false;
+				bool p2_tile_collision = false;
 
-			for (long unsigned int i = 0; i < p1_proj_vector.size(); i++)
-			{
-				p1_proj_vector[i].fireProj();
-				p1_proj_vector[i].drawTo(window);
-				p1_proj_vector[i].killProj(p1_proj_dead, screen_width);
+				// Draw player 1 healthbar
+				p1_healthbar.createHealthbar(p1_healthbar_x, p1_healthbar_y);
+				p1_healthbar.changeHealthbarTexture(0, p1_health);
+				p1_healthbar.drawTo(window);
 
-				if (p1_proj_dead)
+				// Draw player 2 healthbar
+				p2_healthbar.createHealthbar(p2_healthbar_x, p2_healthbar_y);
+				p2_healthbar.changeHealthbarTexture(0, p2_health);
+				p2_healthbar.drawTo(window);
+
+				// Draw player 1 wins endgame text
+				p1_endgame.drawTo(window, p2_health);
+
+				// Draw player 2 wins endame text
+				p2_endgame.drawTo(window, p1_health);
+
+				// If p1 or p2 health equals zero, allow game to be reset
+				if (p1_health == 0 || p2_health == 0)
 				{
-					p1_proj_vector.erase(p1_proj_vector.begin() + i);
-					p1_proj_dead = false;
+					p1_endgame.resetGame(reset_game_button, player_1, p1_health, p1_x, p1_y);
+					p2_endgame.resetGame(reset_game_button, player_2, p2_health, p2_x, p2_y);
 				}
-			}
 
-			// Draw player 2 projectile
-			Projectile p2_proj(p2_proj_texture_file);
-			if (p2_strong_attack)
-			{
-				p2_proj.spawnProj(player_2.returnScale());
-				p2_proj.setPos(player_2.returnX(), player_2.returnY());
-				p2_strong_attack = false;
-				p2_proj_vector.push_back(p2_proj);
-			}
+				// Draw tile map if game is running
+				world_map.createMap(tile_map, map_width, map_height, tile_width, tile_height, window, player_1, player_2, p1_tile_collision, p2_tile_collision, player1_width, player2_width);
 
-			for (long unsigned int i = 0; i < p2_proj_vector.size(); i++)
-			{
-				p2_proj_vector[i].fireProj();
-				p2_proj_vector[i].drawTo(window);
-				p2_proj_vector[i].killProj(p2_proj_dead, screen_width);
-
-				if (p2_proj_dead)
+				// Draw player 1 projectile
+				Projectile p1_proj(p1_proj_texture_file);
+				if (p1_strong_attack)
 				{
-					p2_proj_vector.erase(p2_proj_vector.begin() + i);
-					p2_proj_dead = false;
+					p1_proj.spawnProj(player_1.returnScale());
+					p1_proj.setPos(player_1.returnX(), player_1.returnY());
+					p1_strong_attack = false;
+					p1_proj_vector.push_back(p1_proj);
 				}
+
+				for (long unsigned int i = 0; i < p1_proj_vector.size(); i++)
+				{
+					p1_proj_vector[i].fireProj();
+					p1_proj_vector[i].drawTo(window);
+					p1_proj_vector[i].killProj(p1_proj_dead, screen_width);
+
+					if (p1_proj_dead)
+					{
+						p1_proj_vector.erase(p1_proj_vector.begin() + i);
+						p1_proj_dead = false;
+					}
+				}
+
+				// Draw player 2 projectile
+				Projectile p2_proj(p2_proj_texture_file);
+				if (p2_strong_attack)
+				{
+					p2_proj.spawnProj(player_2.returnScale());
+					p2_proj.setPos(player_2.returnX(), player_2.returnY());
+					p2_strong_attack = false;
+					p2_proj_vector.push_back(p2_proj);
+				}
+
+				for (long unsigned int i = 0; i < p2_proj_vector.size(); i++)
+				{
+					p2_proj_vector[i].fireProj();
+					p2_proj_vector[i].drawTo(window);
+					p2_proj_vector[i].killProj(p2_proj_dead, screen_width);
+
+					if (p2_proj_dead)
+					{
+						p2_proj_vector.erase(p2_proj_vector.begin() + i);
+						p2_proj_dead = false;
+					}
+				}
+
+				// Draw player 1
+				player_1.drawTo(window);
+				player_1.killPlayer(p1_dead, p1_health);
+				player_1.movePlayer(player_speed, p1_tile_collision, dt, p1_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
+				player_1.weakAttackCollision(player_2, p1_weak_attack, p2_hit_status, p2_health);
+				player_1.strongAttackCollision(player_2, p1_weak_attack, p1_proj_vector, p1_proj_dead, p2_health);
+				player_1.knockbackAnimation(p1_hit_status, p1_tile_row, player_2.returnScale(), p2_health);
+				player_1.collision(screen_width, player1_width, player1_height, hitbox1_x, hitbox1_y, hitbox1_width);
+				player_1.attack(p1_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack, p1_weak_attack_key, p1_strong_attack_key, p1_health, p2_health);
+				player_1.crouchAnimation(p1_tile_row, p1_tile_collision, hitbox1_y, player1_height, p1_crouch_key);
+				player_1.knockoutAnimation(p1_tile_row, p1_dead, p1_tile_collision);
+				player_1.animatePlayer(p1_tile_row, dt);
+				player_1.playerPlayerCollision(player_2, p1_move_left_key, p1_move_right_key, player2_width);
+
+				// Draw player 2
+				player_2.drawTo(window);
+				player_2.killPlayer(p2_dead, p2_health);
+				player_2.movePlayer(player_speed, p2_tile_collision, dt, p2_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key, p2_crouch_key);
+				player_2.weakAttackCollision(player_1, p2_weak_attack, p1_hit_status, p1_health);
+				player_2.strongAttackCollision(player_1, p1_hit_status, p2_proj_vector, p2_proj_dead, p1_health);
+				player_2.knockbackAnimation(p2_hit_status, p2_tile_row, player_1.returnScale(), p1_health);
+				player_2.collision(screen_width, player2_width, player2_height, hitbox2_x, hitbox2_y, hitbox2_width);
+				player_2.attack(p2_tile_row, p2_weak_reload_timer, p2_strong_reload_timer, p2_weak_attack, p2_strong_attack, p2_weak_attack_key, p2_strong_attack_key, p2_health, p1_health);
+				player_2.crouchAnimation(p2_tile_row, p2_tile_collision, hitbox2_y, player2_height, p2_crouch_key);
+				player_2.knockoutAnimation(p2_tile_row, p2_dead, p2_tile_collision);
+				player_2.animatePlayer(p2_tile_row, dt);
+				player_2.playerPlayerCollision(player_1, p2_move_left_key, p2_move_right_key, player1_width);
+
+				// Draw foreground
+				left_foreground.drawTo(window);
+				right_foreground.drawTo(window);
 			}
-
-			// Draw player 1
-			player_1.drawTo(window);
-			player_1.killPlayer(p1_dead, p1_health);
-			player_1.movePlayer(player_speed, p1_tile_collision, dt, p1_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
-			player_1.weakAttackCollision(player_2, p1_weak_attack, p2_hit_status, p2_health);
-			player_1.strongAttackCollision(player_2, p1_weak_attack, p1_proj_vector, p1_proj_dead, p2_health);
-			player_1.knockbackAnimation(p1_hit_status, p1_tile_row, player_2.returnScale(), p2_health);
-			player_1.collision(screen_width, player1_width, player1_height, hitbox1_x, hitbox1_y, hitbox1_width);
-			player_1.attack(p1_tile_row, p1_weak_reload_timer, p1_strong_reload_timer, p1_weak_attack, p1_strong_attack, p1_weak_attack_key, p1_strong_attack_key, p1_health, p2_health);
-			player_1.crouchAnimation(p1_tile_row, p1_tile_collision, hitbox1_y, player1_height, p1_crouch_key);
-			player_1.knockoutAnimation(p1_tile_row, p1_dead, p1_tile_collision);
-			player_1.animatePlayer(p1_tile_row, dt);
-			player_1.playerPlayerCollision(player_2, p1_move_left_key, p1_move_right_key, player2_width);
-
-			// Draw player 2
-			player_2.drawTo(window);
-			player_2.killPlayer(p2_dead, p2_health);
-			player_2.movePlayer(player_speed, p2_tile_collision, dt, p2_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key, p2_crouch_key);
-			player_2.weakAttackCollision(player_1, p2_weak_attack, p1_hit_status, p1_health);
-			player_2.strongAttackCollision(player_1, p1_hit_status, p2_proj_vector, p2_proj_dead, p1_health);
-			player_2.knockbackAnimation(p2_hit_status, p2_tile_row, player_1.returnScale(), p1_health);
-			player_2.collision(screen_width, player2_width, player2_height, hitbox2_x, hitbox2_y, hitbox2_width);
-			player_2.attack(p2_tile_row, p2_weak_reload_timer, p2_strong_reload_timer, p2_weak_attack, p2_strong_attack, p2_weak_attack_key, p2_strong_attack_key, p2_health, p1_health);
-			player_2.crouchAnimation(p2_tile_row, p2_tile_collision, hitbox2_y, player2_height, p2_crouch_key);
-			player_2.knockoutAnimation(p2_tile_row, p2_dead, p2_tile_collision);
-			player_2.animatePlayer(p2_tile_row, dt);
-			player_2.playerPlayerCollision(player_1, p2_move_left_key, p2_move_right_key, player1_width);
-
-			// Draw foreground
-			left_foreground.drawTo(window);
-			right_foreground.drawTo(window);
 		}
 
 		window.display();

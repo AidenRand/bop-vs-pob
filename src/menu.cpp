@@ -96,12 +96,13 @@ void Menu::playGame(bool& game_running)
 
 void Menu::createControls(std::string controls_screen_file, float controls_screen_x, float controls_screen_y, bool& controls_showing)
 {
-	controls_screen.setPosition(sf::Vector2f(controls_screen_x, controls_screen_y));
-
 	if (!controls_screen_texture.loadFromFile(controls_screen_file))
 	{
 		std::cout << "ERROR:: Could not load controls screen texture from file" << "\n";
 	}
+
+	controls_screen.setTexture(controls_screen_texture);
+	controls_screen.setPosition(sf::Vector2f(controls_screen_x, controls_screen_y));
 
 	if (selectedItemIndex == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
@@ -161,11 +162,11 @@ void Menu::drawTitle(sf::RenderWindow& window)
 	window.draw(title);
 }
 
-void Menu::backToMenu(bool& game_running)
+void Menu::backToMenu(bool& game_running, bool& controls_showing)
 {
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		game_running = false;
+		controls_showing = false;
 	}
 }

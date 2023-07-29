@@ -20,7 +20,7 @@ public:
 	void createTitle(float title_x, float title_y);
 	void animateTitle(int row, float dt);
 	void drawTitle(sf::RenderWindow& window);
-	void backToMenu(bool& game_running);
+	void backToMenu(bool& game_running, bool& controls_showing);
 
 private:
 	int selectedItemIndex = 0;
