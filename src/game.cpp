@@ -55,6 +55,13 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	menu.createButtons(screen_width, screen_height, menu_font_size);
 	menu.createTitle(title_x, title_y);
 
+	// Menu sounds
+	std::string nav_menu_sound_file = "sounds/Menu Selection Click.wav";
+	std::string sel_menu_sound_file = "sounds/vgmenuhighlight.wav";
+	std::string main_theme_file = "sounds/3HR.MT_.3.wav";
+	int main_theme_volume = 50;
+	menu.fetchMenuSounds(nav_menu_sound_file, sel_menu_sound_file, main_theme_file, main_theme_volume);
+
 	// Controls screen variables
 	std::string controls_texture_file = "content/bop-vs-pob-controls.png";
 	float controls_screen_x = 0;
@@ -217,6 +224,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		window.clear();
 		window.draw(background);
 
+		// menu.playMainTheme();
+
 		// Draw moving clouds
 		if (cloud_vector.size() < max_cloud_tiles)
 		{
@@ -257,6 +266,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			}
 			else
 			{
+				main_theme_volume = 20;
+
 				bool p1_tile_collision = false;
 				bool p2_tile_collision = false;
 

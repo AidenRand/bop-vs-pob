@@ -46,6 +46,41 @@ void Menu::drawButtons(sf::RenderWindow& window)
 	}
 }
 
+void Menu::fetchMenuSounds(std::string nav_menu_sound_file, std::string sel_menu_sound_file, std::string main_theme_file, int& main_theme_volume)
+{
+	if (!nav_menu_sound_buffer.loadFromFile(nav_menu_sound_file))
+	{
+		std::cout << "ERROR:: Cannot load nav menu sound from file" << "\n";
+	}
+
+	if (!sel_menu_sound_buffer.loadFromFile(sel_menu_sound_file))
+	{
+		std::cout << "ERROR:: Cannot load select menu sound from file" << "\n";
+	}
+
+	if (!main_theme_buffer.loadFromFile(main_theme_file))
+	{
+		std::cout << "ERROR:: Cannot load main theme music from file" << "\n";
+	}
+
+	main_theme.setBuffer(main_theme_buffer);
+	main_theme.setVolume(20);
+	std::cout << main_theme_volume;
+
+	nav_menu_sound.setBuffer(nav_menu_sound_buffer);
+	sel_menu_sound.setBuffer(sel_menu_sound_buffer);
+
+	nav_menu_sound.setVolume(20);
+	sel_menu_sound.setVolume(20);
+
+	nav_menu_sound.setPitch(2);
+}
+
+void Menu::playMainTheme()
+{
+	main_theme.play();
+}
+
 void Menu::navigateMenu(sf::Keyboard::Key key, bool checkpressed)
 {
 	if (checkpressed)
@@ -56,6 +91,7 @@ void Menu::navigateMenu(sf::Keyboard::Key key, bool checkpressed)
 			{
 				menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
 				selectedItemIndex += 1;
+				nav_menu_sound.play();
 				menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
 			}
 		}
@@ -65,6 +101,7 @@ void Menu::navigateMenu(sf::Keyboard::Key key, bool checkpressed)
 			{
 				menu_text[selectedItemIndex].setFillColor(sf::Color(255, 243, 0));
 				selectedItemIndex -= 1;
+				nav_menu_sound.play();
 				menu_text[selectedItemIndex].setFillColor(sf::Color(235, 0, 0));
 			}
 		}
@@ -76,6 +113,8 @@ void Menu::closeGame(sf::RenderWindow& window)
 	// If Quit is being hovered and enter is pressed, close window
 	if (selectedItemIndex == 1)
 	{
+		main_theme.play();
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
 			window.close();
@@ -90,6 +129,7 @@ void Menu::playGame(bool& game_running)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
 			game_running = true;
+			sel_menu_sound.play();
 		}
 	}
 }
@@ -107,6 +147,7 @@ void Menu::createControls(std::string controls_screen_file, float controls_scree
 	if (selectedItemIndex == 2 && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 	{
 		controls_showing = true;
+		sel_menu_sound.play();
 	}
 }
 
@@ -132,6 +173,8 @@ void Menu::createTitle(float title_x, float title_y)
 	title_uv_rect.height = title_texture.getSize().y / float(image_count.y);
 	title.setPosition(sf::Vector2f(title_x, title_y));
 	title.setTexture(title_texture, true);
+
+
 }
 
 void Menu::animateTitle(int row, float dt)

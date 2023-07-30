@@ -12,6 +12,8 @@ public:
 
 	void createButtons(float screen_width, float screen_height, int font_size);
 	void drawButtons(sf::RenderWindow& window);
+	void fetchMenuSounds(std::string nav_menu_sound_file, std::string sel_menu_sound_file, std::string main_theme_file, int& main_theme_volume);
+	void playMainTheme();
 	void navigateMenu(sf::Keyboard::Key key, bool checkpressed);
 	void playGame(bool& game_running);
 	void closeGame(sf::RenderWindow& window);
@@ -40,6 +42,15 @@ private:
 
 	sf::Sprite controls_screen;
 	sf::Texture controls_screen_texture;
+
+	sf::SoundBuffer nav_menu_sound_buffer;
+	sf::Sound nav_menu_sound;
+
+	sf::SoundBuffer sel_menu_sound_buffer;
+	sf::Sound sel_menu_sound;
+
+	sf::SoundBuffer main_theme_buffer;
+	sf::Sound main_theme;
 };
 
 #endif
