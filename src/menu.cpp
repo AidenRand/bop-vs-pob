@@ -64,8 +64,7 @@ void Menu::fetchMenuSounds(std::string nav_menu_sound_file, std::string sel_menu
 	}
 
 	main_theme.setBuffer(main_theme_buffer);
-	main_theme.setVolume(20);
-	std::cout << main_theme_volume;
+	main_theme.setVolume(main_theme_volume);
 
 	nav_menu_sound.setBuffer(nav_menu_sound_buffer);
 	sel_menu_sound.setBuffer(sel_menu_sound_buffer);
