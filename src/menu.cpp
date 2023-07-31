@@ -46,7 +46,7 @@ void Menu::drawButtons(sf::RenderWindow& window)
 	}
 }
 
-void Menu::fetchMenuSounds(std::string nav_menu_sound_file, std::string sel_menu_sound_file, std::string main_theme_file, int& main_theme_volume)
+void Menu::fetchMenuSounds(std::string& nav_menu_sound_file, std::string& sel_menu_sound_file, std::string& main_theme_file, int& main_theme_volume)
 {
 	if (!nav_menu_sound_buffer.loadFromFile(nav_menu_sound_file))
 	{
@@ -69,7 +69,7 @@ void Menu::fetchMenuSounds(std::string nav_menu_sound_file, std::string sel_menu
 	nav_menu_sound.setBuffer(nav_menu_sound_buffer);
 	sel_menu_sound.setBuffer(sel_menu_sound_buffer);
 
-	nav_menu_sound.setVolume(20);
+	nav_menu_sound.setVolume(2);
 	sel_menu_sound.setVolume(20);
 
 	nav_menu_sound.setPitch(2);
@@ -112,8 +112,6 @@ void Menu::closeGame(sf::RenderWindow& window)
 	// If Quit is being hovered and enter is pressed, close window
 	if (selectedItemIndex == 1)
 	{
-		main_theme.play();
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
 			window.close();

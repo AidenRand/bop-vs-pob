@@ -58,8 +58,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	// Menu sounds
 	std::string nav_menu_sound_file = "sounds/Menu Selection Click.wav";
 	std::string sel_menu_sound_file = "sounds/vgmenuhighlight.wav";
-	std::string main_theme_file = "sounds/3HR.MT_.3.wav";
-	int main_theme_volume = 50;
+	std::string main_theme_file = "sounds/main_theme.wav";
+	int main_theme_volume = 1;
 	menu.fetchMenuSounds(nav_menu_sound_file, sel_menu_sound_file, main_theme_file, main_theme_volume);
 
 	// Controls screen variables
@@ -224,8 +224,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		window.clear();
 		window.draw(background);
 
-		// menu.playMainTheme();
-
 		// Draw moving clouds
 		if (cloud_vector.size() < max_cloud_tiles)
 		{
@@ -263,6 +261,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				menu.createTitle(title_x, title_y);
 				menu.animateTitle(0, dt);
 				menu.drawTitle(window);
+				// menu.playMainTheme();
 			}
 			else
 			{

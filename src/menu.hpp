@@ -12,7 +12,7 @@ public:
 
 	void createButtons(float screen_width, float screen_height, int font_size);
 	void drawButtons(sf::RenderWindow& window);
-	void fetchMenuSounds(std::string nav_menu_sound_file, std::string sel_menu_sound_file, std::string main_theme_file, int& main_theme_volume);
+	void fetchMenuSounds(std::string& nav_menu_sound_file, std::string& sel_menu_sound_file, std::string& main_theme_file, int& main_theme_volume);
 	void playMainTheme();
 	void navigateMenu(sf::Keyboard::Key key, bool checkpressed);
 	void playGame(bool& game_running);
