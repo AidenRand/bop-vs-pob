@@ -18,6 +18,8 @@ private:
 	sf::Texture proj_texture;
 	sf::Vector2f direction;
 	float proj_speed = 10;
+	int facing_left = -1;
+	int facing_right = 1;
 };
 
 #endif

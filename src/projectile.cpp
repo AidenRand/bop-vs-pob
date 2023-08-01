@@ -1,11 +1,12 @@
-#include <SFML/Graphics.hpp>
 #include "projectile.hpp"
+#include <SFML/Graphics.hpp>
 
 Projectile::Projectile(std::string proj_texture_file)
 {
 	if (!proj_texture.loadFromFile(proj_texture_file))
 	{
-		std::cout << "ERROR:: Cannot load projectile texture from file" << "\n";
+		std::cout << "ERROR:: Cannot load projectile texture from file"
+				  << "\n";
 	}
 	projectile.setTexture(proj_texture);
 }
@@ -18,12 +19,12 @@ void Projectile::drawTo(sf::RenderWindow& window)
 void Projectile::spawnProj(int player_direction)
 {
 	// Shoot the projectile in the direction the player is facing
-	if (player_direction == -1)
+	if (player_direction == facing_left)
 	{
 		direction.x -= proj_speed;
 	}
 
-	if (player_direction == 1)
+	if (player_direction == facing_right)
 	{
 		direction.x += proj_speed;
 	}
