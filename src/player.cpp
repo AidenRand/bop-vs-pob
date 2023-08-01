@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-Player::Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, int player_number)
+Player::Player(float player_width, float& player_height, float player_x, float player_y, int player_number)
 {
 	player.setOrigin(player_width / 2, player_height / 2);
 	player.setPosition(sf::Vector2f(player_x, player_y));
@@ -12,12 +12,15 @@ Player::Player(std::string player_tileset, float player_width, float& player_hei
 	{
 		player.setScale(-1, 1);
 	}
+}
 
+void Player::fetchTexture(std::string player_tileset, float player_height)
+{
 	// Load texture from file
 	if (!player_texture.loadFromFile(player_tileset))
 	{
 		std::cout << "ERROR:: Cannot load player tileset from file"
-			<< "\n";
+				  << "\n";
 	}
 
 	// Start at beginning of tileset
@@ -100,15 +103,13 @@ void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt
 void Player::collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y, float hitbox_width)
 {
 	// Get sides of player
-	player_top = player.getPosition().y;
 	player_bottom = player.getPosition().y + player_height / 2;
 	player_left = player.getPosition().x;
 	player_right = player.getPosition().x + player_width / 2;
 
 	player.setHitbox({ hitbox_x, hitbox_y, hitbox_width, player_height });
 
-	//  If player goes beyond screen borders, set player position
-	// to just before screen border
+	//  If player goes beyond screen borders, set player position to just before screen border
 	if (player_right > screen_width)
 	{
 		player.setPosition(screen_width - player_width / 2, player.getPosition().y);
@@ -129,7 +130,7 @@ void Player::playerPlayerCollision(Player& player_rect, sf::Keyboard::Key move_l
 	if (player_rect.player.getGlobalBounds().intersects(player.getGlobalBounds()))
 	{
 		// If player is moving and collides with other player,
-		// Set player position to just before collision with other player
+		// set player position to just before collision with other player
 		if (sf::Keyboard::isKeyPressed(move_right_key) && !sf::Keyboard::isKeyPressed(move_left_key))
 		{
 			player.setPosition(player2_left, player.getPosition().y);
@@ -236,7 +237,6 @@ void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status,
 	}
 }
 
-
 void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height, sf::Keyboard::Key crouch_key)
 {
 	player_height = 96;
@@ -262,9 +262,9 @@ void Player::crouchAnimation(int& player_tile_row, bool& player_tile_collision, 
 	}
 }
 
-void Player::knockoutAnimation(int& player_tile_row, bool& player_dead, bool& player_tile_collision)
+void Player::knockoutAnimation(int& player_tile_row, int& player_health, bool& player_tile_collision)
 {
-	if (player_dead)
+	if (player_health == 0)
 	{
 		player_tile_row = 4;
 
@@ -288,11 +288,11 @@ void Player::knockbackAnimation(bool& player_hit_status, int& player_tile_row, i
 
 		if (player_direction == 1)
 		{
-			player.setPosition(player.getPosition().x + 5, player.getPosition().y - 10);
+			player.setPosition(player.getPosition().x + knockback_distance, player.getPosition().y - knockback_height);
 		}
 		else
 		{
-			player.setPosition(player.getPosition().x - 5, player.getPosition().y - 10);
+			player.setPosition(player.getPosition().x - knockback_distance, player.getPosition().y - knockback_height);
 		}
 		player_hit_status = false;
 	}

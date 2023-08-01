@@ -8,7 +8,8 @@
 class Player : public sf::Sprite
 {
 public:
-	Player(std::string player_tileset, float player_width, float& player_height, float player_x, float player_y, int player_number);
+	Player(float player_width, float& player_height, float player_x, float player_y, int player_number);
+	void fetchTexture(std::string player_tileset, float player_height);
 	void drawTo(sf::RenderWindow& window);
 	void killPlayer(bool& player_dead, int& player_health);
 	void movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key);
@@ -18,7 +19,7 @@ public:
 	void weakAttackCollision(Player& player_rect, bool& weak_attack, bool& player_hit_status, int& player_health);
 	void strongAttackCollision(Player& player_rect, bool& player_hit_status, std::vector<Projectile> proj_vector, bool& proj_dead, int& player_health);
 	void crouchAnimation(int& player_tile_row, bool& player_tile_collision, float& hitbox_y, float& player_height, sf::Keyboard::Key crouch_key);
-	void knockoutAnimation(int& player_tile_row, bool& player_dead, bool& player_tile_collision);
+	void knockoutAnimation(int& player_tile_row, int& player_health, bool& player_tile_collision);
 	void knockbackAnimation(bool& player_hit_status, int& player_tile_row, int player_direction, int& player_health);
 	void animatePlayer(int row, float& dt);
 	float returnX();
@@ -47,6 +48,8 @@ private:
 	int play_weak = 0;
 	int play_strong = 0;
 	int play_knockback = 0;
+	int knockback_height = 10;
+	int knockback_distance = 5;
 };
 
 #endif

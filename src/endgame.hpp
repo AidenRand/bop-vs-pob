@@ -1,9 +1,9 @@
 #ifndef ENDGAME_HPP
 #define ENDGAME_HPP
 
+#include "player.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "player.hpp"
 
 class Endgame
 {
