@@ -40,8 +40,7 @@ void Player::drawTo(sf::RenderWindow& window)
 
 void Player::killPlayer(bool& player_dead, int& player_health)
 {
-	// if player health is or below zero
-	// declare player dead
+	// if player health is or below zero, declare player dead
 
 	if (player_health <= 0)
 	{

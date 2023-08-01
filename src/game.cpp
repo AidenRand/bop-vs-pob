@@ -263,7 +263,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 				menu.createTitle(title_x, title_y);
 				menu.animateTitle(0, dt);
 				menu.drawTitle(window);
-				// menu.playMainTheme();
 			}
 			else
 			{
