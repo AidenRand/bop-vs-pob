@@ -6,7 +6,8 @@ Menu::Menu()
 	// Load font
 	if (!font.loadFromFile("content/pixelfaceonfire.ttf"))
 	{
-		std::cout << "ERROR:: Cannot load menu font from file" << "\n";
+		std::cout << "ERROR:: Cannot load menu font from file"
+				  << "\n";
 	}
 }
 
@@ -50,17 +51,20 @@ void Menu::fetchMenuSounds(std::string& nav_menu_sound_file, std::string& sel_me
 {
 	if (!nav_menu_sound_buffer.loadFromFile(nav_menu_sound_file))
 	{
-		std::cout << "ERROR:: Cannot load nav menu sound from file" << "\n";
+		std::cout << "ERROR:: Cannot load nav menu sound from file"
+				  << "\n";
 	}
 
 	if (!sel_menu_sound_buffer.loadFromFile(sel_menu_sound_file))
 	{
-		std::cout << "ERROR:: Cannot load select menu sound from file" << "\n";
+		std::cout << "ERROR:: Cannot load select menu sound from file"
+				  << "\n";
 	}
 
 	if (!main_theme_buffer.loadFromFile(main_theme_file))
 	{
-		std::cout << "ERROR:: Cannot load main theme music from file" << "\n";
+		std::cout << "ERROR:: Cannot load main theme music from file"
+				  << "\n";
 	}
 
 	main_theme.setBuffer(main_theme_buffer);
@@ -75,9 +79,12 @@ void Menu::fetchMenuSounds(std::string& nav_menu_sound_file, std::string& sel_me
 	nav_menu_sound.setPitch(2);
 }
 
-void Menu::playMainTheme()
+void Menu::playMainTheme(sf::RenderWindow& window)
 {
-	main_theme.play();
+	if (window.isOpen())
+	{
+		main_theme.play();
+	}
 }
 
 void Menu::navigateMenu(sf::Keyboard::Key key, bool checkpressed)
@@ -135,7 +142,8 @@ void Menu::createControls(std::string controls_screen_file, float controls_scree
 {
 	if (!controls_screen_texture.loadFromFile(controls_screen_file))
 	{
-		std::cout << "ERROR:: Could not load controls screen texture from file" << "\n";
+		std::cout << "ERROR:: Could not load controls screen texture from file"
+				  << "\n";
 	}
 
 	controls_screen.setTexture(controls_screen_texture);
@@ -161,7 +169,8 @@ void Menu::createTitle(float title_x, float title_y)
 	// Load title texture
 	if (!title_texture.loadFromFile("content/bop-vs-pob-title.png"))
 	{
-		std::cout << "ERROR::Cannot load title texture from file" << "\n";
+		std::cout << "ERROR::Cannot load title texture from file"
+				  << "\n";
 	}
 	// Create title texture variables
 	total_time = 0.0f;
@@ -170,8 +179,6 @@ void Menu::createTitle(float title_x, float title_y)
 	title_uv_rect.height = title_texture.getSize().y / float(image_count.y);
 	title.setPosition(sf::Vector2f(title_x, title_y));
 	title.setTexture(title_texture, true);
-
-
 }
 
 void Menu::animateTitle(int row, float dt)

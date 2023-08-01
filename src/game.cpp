@@ -254,8 +254,9 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		menu.backToMenu(game_running, controls_showing);
 		if (!controls_showing)
 		{
-			if (!game_running)
+			if (game_running)
 			{
+				menu.playMainTheme(window);
 				menu.drawButtons(window);
 				menu.closeGame(window);
 				menu.playGame(game_running);
