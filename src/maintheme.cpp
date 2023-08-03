@@ -1,9 +1,6 @@
 #include "maintheme.hpp"
 
-sf::SoundBuffer main_theme_song_buffer;
-sf::Sound main_theme_song;
-
-void playMainTheme(std::string main_theme_song_file)
+Maintheme::Maintheme(std::string main_theme_song_file)
 {
 	if (!main_theme_song_buffer.loadFromFile(main_theme_song_file))
 	{
@@ -12,3 +9,12 @@ void playMainTheme(std::string main_theme_song_file)
 
 	main_theme_song.setBuffer(main_theme_song_buffer);
 }
+
+void Maintheme::playMainTheme(int& main_theme_volume)
+{
+	main_theme_song.setVolume(main_theme_volume);
+	main_theme_song.setLoop(true);
+	main_theme_song.play();
+}
+
+
