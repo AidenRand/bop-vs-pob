@@ -31,7 +31,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
 	{
 		std::cout << "ERROR::Could not load background from file"
-				  << "\n";
+			<< "\n";
 	}
 	background.setTexture(background_texture);
 
@@ -254,7 +254,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		menu.backToMenu(game_running, controls_showing);
 		if (!controls_showing)
 		{
-			if (game_running)
+			if (!game_running)
 			{
 				menu.playMainTheme(window);
 				menu.drawButtons(window);
