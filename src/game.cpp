@@ -7,6 +7,7 @@
 #include "player.hpp"
 #include "projectile.hpp"
 #include "world.hpp"
+#include "maintheme.hpp"
 #include <SFML/Graphics.hpp>
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
@@ -47,6 +48,12 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	float right_foreground_y = 412;
 	Foreground right_foreground(right_foreground_texture, right_foreground_x, right_foreground_y);
 
+	// Main theme song variables
+	std::string main_theme_song_file = "sounds/main_theme.wav";
+	int main_theme_volume = 2;
+	Maintheme main_theme(main_theme_song_file);
+	main_theme.playMainTheme(main_theme_volume);
+
 	// Create menu
 	Menu menu;
 	int menu_font_size = 30;
@@ -58,9 +65,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	// Menu sounds
 	std::string nav_menu_sound_file = "sounds/Menu Selection Click.wav";
 	std::string sel_menu_sound_file = "sounds/vgmenuhighlight.wav";
-	std::string main_theme_file = "sounds/main_theme.wav";
-	int main_theme_volume = 1;
-	menu.fetchMenuSounds(nav_menu_sound_file, sel_menu_sound_file, main_theme_file, main_theme_volume);
+	menu.fetchMenuSounds(nav_menu_sound_file, sel_menu_sound_file);
 
 	// Controls screen variables
 	std::string controls_texture_file = "content/bop-vs-pob-controls.png";
@@ -256,7 +261,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		{
 			if (!game_running)
 			{
-				menu.playMainTheme(window);
 				menu.drawButtons(window);
 				menu.closeGame(window);
 				menu.playGame(game_running);
@@ -267,8 +271,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			}
 			else
 			{
-				main_theme_volume = 20;
-
 				bool p1_tile_collision = false;
 				bool p2_tile_collision = false;
 
