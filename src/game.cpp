@@ -52,7 +52,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	std::string main_theme_song_file = "sounds/main_theme.wav";
 	int main_theme_volume = 2;
 	Maintheme main_theme(main_theme_song_file);
-	main_theme.playMainTheme(main_theme_volume);
+	main_theme.playMainTheme();
 
 	// Create menu
 	Menu menu;
@@ -231,6 +231,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		window.clear();
 		window.draw(background);
 
+		main_theme.setMainThemeVolume(main_theme_volume);
+
 		// Draw moving clouds
 		if (cloud_vector.size() < max_cloud_tiles)
 		{
@@ -261,6 +263,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 		{
 			if (!game_running)
 			{
+				main_theme_volume = 5;
+
 				menu.drawButtons(window);
 				menu.closeGame(window);
 				menu.playGame(game_running);
@@ -271,6 +275,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			}
 			else
 			{
+				main_theme_volume = 2;
+
 				bool p1_tile_collision = false;
 				bool p2_tile_collision = false;
 

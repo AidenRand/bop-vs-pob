@@ -8,12 +8,14 @@ Maintheme::Maintheme(std::string main_theme_song_file)
 	}
 }
 
-void Maintheme::playMainTheme(int& main_theme_volume)
+void Maintheme::playMainTheme()
 {
-	main_theme_song.setVolume(main_theme_volume);
 	main_theme_song.setBuffer(main_theme_song_buffer);
 	main_theme_song.play();
 	main_theme_song.setLoop(true);
 }
 
-
+void Maintheme::setMainThemeVolume(int& main_theme_volume)
+{
+	main_theme_song.setVolume(main_theme_volume);
+}
