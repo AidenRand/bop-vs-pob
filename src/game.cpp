@@ -99,6 +99,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	// Universal player variables
 	int player_speed = 400;
+	std::string strong_attack_collision_sound = "sounds/strong-attack.wav";
+	std::string weak_attack_collision_sound = "sounds/weak-attack.wav";
 
 	// Create player one
 	float p1_x = 150;
@@ -117,6 +119,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int p1_weak_reload_timer = 0;
 	int p1_strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
+	std::string bop_strong_attack_collision_sound = "sounds/strong-attack.wav";
+	std::string bop_weak_attack_collision_sound = "sounds/weak-attack.wav";
 
 	sf::Keyboard::Key p1_jump_key = sf::Keyboard::Key::W;
 	sf::Keyboard::Key p1_crouch_key = sf::Keyboard::Key::S;
@@ -126,8 +130,14 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	sf::Keyboard::Key p1_weak_attack_key = sf::Keyboard::Key::F;
 	sf::Keyboard::Key p1_strong_attack_key = sf::Keyboard::Key::E;
 
+	// Create player 1 projectile
+	bool p1_proj_dead = false;
+	std::string p1_proj_texture_file = "content/bop-poop.png";
+	std::vector<Projectile> p1_proj_vector;
+
 	Player player_1(player1_height, player1_width, p1_x, p1_y, 1);
 	player_1.fetchTexture(bop_tileset, player1_height);
+	player_1.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound);
 
 	// Create player two
 	float p2_x = 800;
@@ -149,6 +159,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	Player player_2(player2_height, player2_width, p2_x, p2_y, 2);
 	player_2.fetchTexture(pob_tileset, player2_height);
+	player_2.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound);
+
 
 	// Player 2 movement keys
 	sf::Keyboard::Key p2_jump_key = sf::Keyboard::Key::P;
@@ -159,11 +171,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	// Player 2 attack keys
 	sf::Keyboard::Key p2_weak_attack_key = sf::Keyboard::Key::K;
 	sf::Keyboard::Key p2_strong_attack_key = sf::Keyboard::Key::O;
-
-	// Create player 1 projectile
-	bool p1_proj_dead = false;
-	std::string p1_proj_texture_file = "content/bop-poop.png";
-	std::vector<Projectile> p1_proj_vector;
 
 	// Create player 2 projectile
 	bool p2_proj_dead = false;
@@ -275,7 +282,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 			}
 			else
 			{
-				main_theme_volume = 2;
+				main_theme_volume = 1;
 
 				bool p1_tile_collision = false;
 				bool p2_tile_collision = false;

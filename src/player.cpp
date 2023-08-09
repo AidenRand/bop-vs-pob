@@ -20,7 +20,7 @@ void Player::fetchTexture(std::string player_tileset, float player_height)
 	if (!player_texture.loadFromFile(player_tileset))
 	{
 		std::cout << "ERROR:: Cannot load player tileset from file"
-				  << "\n";
+			<< "\n";
 	}
 
 	// Start at beginning of tileset
@@ -30,6 +30,25 @@ void Player::fetchTexture(std::string player_tileset, float player_height)
 	// Get size of individual tile
 	player_uv_rect.width = player_texture.getSize().x / float(image_count.x);
 	player_uv_rect.height = (player_height) / float(image_count.y);
+}
+
+void Player::fetchSounds(std::string strong_attack_collision_sound_file, std::string weak_attack_collision_sound_file)
+{
+	if (!strong_attack_collision_sound_buffer.loadFromFile(strong_attack_collision_sound_file))
+	{
+		std::cout << "ERROR:: Cannot load strong attack collision sound from file" << "\n";
+	}
+
+	if (!weak_attack_collision_sound_buffer.loadFromFile(weak_attack_collision_sound_file))
+	{
+		std::cout << "ERROR:: Cannot load weak attack collision sound from file" << "\n";
+	}
+
+	strong_attack_collision_sound.setBuffer(strong_attack_collision_sound_buffer);
+	strong_attack_collision_sound.setVolume(2);
+
+	weak_attack_collision_sound.setBuffer(weak_attack_collision_sound_buffer);
+	weak_attack_collision_sound.setVolume(2);
 }
 
 void Player::drawTo(sf::RenderWindow& window)
@@ -202,6 +221,7 @@ void Player::weakAttackCollision(Player& player_rect, bool& weak_attack, bool& p
 	{
 		if (weak_attack)
 		{
+			weak_attack_collision_sound.play();
 			play_knockback = 25;
 			player_health--;
 		}
@@ -222,6 +242,7 @@ void Player::strongAttackCollision(Player& player_rect, bool& player_hit_status,
 	{
 		if (proj_vector[i].projectile.getGlobalBounds().intersects(player_rect.player.getGlobalBounds()))
 		{
+			strong_attack_collision_sound.play();
 			play_knockback = 45;
 			proj_dead = true;
 			player_health -= 2;
