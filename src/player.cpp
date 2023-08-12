@@ -32,7 +32,7 @@ void Player::fetchTexture(std::string player_tileset, float player_height)
 	player_uv_rect.height = (player_height) / float(image_count.y);
 }
 
-void Player::fetchSounds(std::string strong_attack_collision_sound_file, std::string weak_attack_collision_sound_file)
+void Player::fetchSounds(std::string strong_attack_collision_sound_file, std::string weak_attack_collision_sound_file, int& strong_attack_volume, int& weak_attack_volume)
 {
 	if (!strong_attack_collision_sound_buffer.loadFromFile(strong_attack_collision_sound_file))
 	{
@@ -45,10 +45,10 @@ void Player::fetchSounds(std::string strong_attack_collision_sound_file, std::st
 	}
 
 	strong_attack_collision_sound.setBuffer(strong_attack_collision_sound_buffer);
-	strong_attack_collision_sound.setVolume(2);
+	strong_attack_collision_sound.setVolume(strong_attack_volume);
 
 	weak_attack_collision_sound.setBuffer(weak_attack_collision_sound_buffer);
-	weak_attack_collision_sound.setVolume(2);
+	weak_attack_collision_sound.setVolume(weak_attack_volume);
 }
 
 void Player::drawTo(sf::RenderWindow& window)

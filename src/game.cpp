@@ -101,6 +101,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int player_speed = 400;
 	std::string strong_attack_collision_sound = "sounds/strong-attack.wav";
 	std::string weak_attack_collision_sound = "sounds/weak-attack.wav";
+	int strong_attack_volume = 2;
+	int weak_attack_volume = 2;
 
 	// Create player one
 	float p1_x = 150;
@@ -137,7 +139,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	Player player_1(player1_height, player1_width, p1_x, p1_y, 1);
 	player_1.fetchTexture(bop_tileset, player1_height);
-	player_1.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound);
+	player_1.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound, strong_attack_volume, weak_attack_volume);
 
 	// Create player two
 	float p2_x = 800;
@@ -159,7 +161,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	Player player_2(player2_height, player2_width, p2_x, p2_y, 2);
 	player_2.fetchTexture(pob_tileset, player2_height);
-	player_2.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound);
+	player_2.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound, strong_attack_volume, weak_attack_volume);
 
 
 	// Player 2 movement keys
