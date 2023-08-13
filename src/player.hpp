@@ -10,9 +10,9 @@ class Player : public sf::Sprite
 public:
 	Player(float player_width, float& player_height, float player_x, float player_y, int player_number);
 	void fetchTexture(std::string player_tileset, float player_height);
-	void fetchSounds(std::string strong_attack_collision_sound_file, std::string weak_attack_collision_sound_file, int& strong_attack_volume, int& weak_attack_volume);
+	void fetchSounds(std::string strong_attack_collision_sound_file, std::string weak_attack_collision_sound_file, std::string knockout_sound_file);
+	void setSoundVolume(int& strong_attack_volume, int& weak_attack_volume, int& knockout_sound_volume);
 	void drawTo(sf::RenderWindow& window);
-	void killPlayer(bool& player_dead, int& player_health);
 	void movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key);
 	void collision(float screen_width, float player_width, float player_height, float& hitbox_x, float& hitbox_y, float hitbox_width);
 	void attack(int& player_tile_row, int& weak_reload_timer, int& strong_reload_timer, bool& weak_attack, bool& strong_attack, sf::Keyboard::Key weak_attack_key, sf::Keyboard::Key strong_attack_key, int& other_player_health, int& this_player_health);
@@ -57,6 +57,9 @@ private:
 
 	sf::SoundBuffer weak_attack_collision_sound_buffer;
 	sf::Sound weak_attack_collision_sound;
+
+	sf::SoundBuffer knockout_sound_buffer;
+	sf::Sound knockout_sound;
 };
 
 #endif

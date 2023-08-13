@@ -20,7 +20,7 @@ void Player::fetchTexture(std::string player_tileset, float player_height)
 	if (!player_texture.loadFromFile(player_tileset))
 	{
 		std::cout << "ERROR:: Cannot load player tileset from file"
-			<< "\n";
+				  << "\n";
 	}
 
 	// Start at beginning of tileset
@@ -32,43 +32,42 @@ void Player::fetchTexture(std::string player_tileset, float player_height)
 	player_uv_rect.height = (player_height) / float(image_count.y);
 }
 
-void Player::fetchSounds(std::string strong_attack_collision_sound_file, std::string weak_attack_collision_sound_file, int& strong_attack_volume, int& weak_attack_volume)
+void Player::fetchSounds(std::string strong_attack_collision_sound_file, std::string weak_attack_collision_sound_file, std::string knockout_sound_file)
 {
 	if (!strong_attack_collision_sound_buffer.loadFromFile(strong_attack_collision_sound_file))
 	{
-		std::cout << "ERROR:: Cannot load strong attack collision sound from file" << "\n";
+		std::cout << "ERROR:: Cannot load strong attack collision sound from file"
+				  << "\n";
 	}
 
 	if (!weak_attack_collision_sound_buffer.loadFromFile(weak_attack_collision_sound_file))
 	{
-		std::cout << "ERROR:: Cannot load weak attack collision sound from file" << "\n";
+		std::cout << "ERROR:: Cannot load weak attack collision sound from file"
+				  << "\n";
+	}
+
+	if (!knockout_sound_buffer.loadFromFile(knockout_sound_file))
+	{
+		std::cout << "ERROR:: Cannot load knockout sound from file"
+				  << "\n";
 	}
 
 	strong_attack_collision_sound.setBuffer(strong_attack_collision_sound_buffer);
-	strong_attack_collision_sound.setVolume(strong_attack_volume);
-
 	weak_attack_collision_sound.setBuffer(weak_attack_collision_sound_buffer);
+	knockout_sound.setBuffer(knockout_sound_buffer);
+}
+
+void Player::setSoundVolume(int& strong_attack_volume, int& weak_attack_volume, int& knockout_sound_volume)
+{
+	strong_attack_collision_sound.setVolume(strong_attack_volume);
 	weak_attack_collision_sound.setVolume(weak_attack_volume);
+	knockout_sound.setVolume(knockout_sound_volume);
 }
 
 void Player::drawTo(sf::RenderWindow& window)
 {
 	window.draw(player);
 	player.setTexture(player_texture, true);
-}
-
-void Player::killPlayer(bool& player_dead, int& player_health)
-{
-	// if player health is or below zero, declare player dead
-
-	if (player_health <= 0)
-	{
-		player_dead = true;
-	}
-	else
-	{
-		player_dead = false;
-	}
 }
 
 void Player::movePlayer(int player_speed, bool& player_tile_collision, float& dt, int& player_tile_row, int& player_health, sf::Keyboard::Key move_left_key, sf::Keyboard::Key move_right_key, sf::Keyboard::Key jump_key, sf::Keyboard::Key crouch_key)
@@ -292,6 +291,7 @@ void Player::knockoutAnimation(int& player_tile_row, int& player_health, bool& p
 		{
 			gravity = 50;
 			velocity.y += gravity;
+			knockout_sound.play();
 		}
 		else
 		{

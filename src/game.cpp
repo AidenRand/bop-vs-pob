@@ -3,11 +3,11 @@
 #include "endgame.hpp"
 #include "foreground.hpp"
 #include "healthbar.hpp"
+#include "maintheme.hpp"
 #include "menu.hpp"
 #include "player.hpp"
 #include "projectile.hpp"
 #include "world.hpp"
-#include "maintheme.hpp"
 #include <SFML/Graphics.hpp>
 
 void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
@@ -32,7 +32,7 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	if (!background_texture.loadFromFile("content/bop-vs-pob-bckgr.png"))
 	{
 		std::cout << "ERROR::Could not load background from file"
-			<< "\n";
+				  << "\n";
 	}
 	background.setTexture(background_texture);
 
@@ -99,16 +99,17 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	// Universal player variables
 	int player_speed = 400;
-	std::string strong_attack_collision_sound = "sounds/strong-attack.wav";
+	std::string strong_attack_collision_sound = "sounds/Meow.wav";
 	std::string weak_attack_collision_sound = "sounds/weak-attack.wav";
+	std::string knockout_sound = "sounds/cat_purrsleepy_loop.wav";
 	int strong_attack_volume = 2;
 	int weak_attack_volume = 2;
+	int knockout_sound_volume = 10;
 
 	// Create player one
 	float p1_x = 150;
 	float p1_y = 300;
 	int p1_tile_row = 0;
-	bool p1_dead = false;
 	bool p1_weak_attack = false;
 	bool p1_strong_attack = false;
 	bool p1_hit_status = false;
@@ -121,8 +122,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 	int p1_weak_reload_timer = 0;
 	int p1_strong_reload_timer = 0;
 	std::string bop_tileset = "content/bop-tilesheet.png";
-	std::string bop_strong_attack_collision_sound = "sounds/strong-attack.wav";
-	std::string bop_weak_attack_collision_sound = "sounds/weak-attack.wav";
 
 	sf::Keyboard::Key p1_jump_key = sf::Keyboard::Key::W;
 	sf::Keyboard::Key p1_crouch_key = sf::Keyboard::Key::S;
@@ -139,13 +138,13 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	Player player_1(player1_height, player1_width, p1_x, p1_y, 1);
 	player_1.fetchTexture(bop_tileset, player1_height);
-	player_1.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound, strong_attack_volume, weak_attack_volume);
+	player_1.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound, knockout_sound);
+	player_1.setSoundVolume(strong_attack_volume, weak_attack_volume, knockout_sound_volume);
 
 	// Create player two
 	float p2_x = 800;
 	float p2_y = 300;
 	int p2_tile_row = 0;
-	bool p2_dead = false;
 	bool p2_weak_attack = false;
 	bool p2_strong_attack = false;
 	bool p2_hit_status = false;
@@ -161,8 +160,8 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 	Player player_2(player2_height, player2_width, p2_x, p2_y, 2);
 	player_2.fetchTexture(pob_tileset, player2_height);
-	player_2.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound, strong_attack_volume, weak_attack_volume);
-
+	player_2.fetchSounds(strong_attack_collision_sound, weak_attack_collision_sound, knockout_sound);
+	player_2.setSoundVolume(strong_attack_volume, weak_attack_volume, knockout_sound_volume);
 
 	// Player 2 movement keys
 	sf::Keyboard::Key p2_jump_key = sf::Keyboard::Key::P;
@@ -363,7 +362,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 				// Draw player 1
 				player_1.drawTo(window);
-				player_1.killPlayer(p1_dead, p1_health);
 				player_1.movePlayer(player_speed, p1_tile_collision, dt, p1_tile_row, p1_health, p1_move_left_key, p1_move_right_key, p1_jump_key, p1_crouch_key);
 				player_1.weakAttackCollision(player_2, p1_weak_attack, p2_hit_status, p2_health);
 				player_1.strongAttackCollision(player_2, p1_weak_attack, p1_proj_vector, p1_proj_dead, p2_health);
@@ -377,7 +375,6 @@ void game(sf::RenderWindow& window, float& screen_width, float& screen_height)
 
 				// Draw player 2
 				player_2.drawTo(window);
-				player_2.killPlayer(p2_dead, p2_health);
 				player_2.movePlayer(player_speed, p2_tile_collision, dt, p2_tile_row, p2_health, p2_move_left_key, p2_move_right_key, p2_jump_key, p2_crouch_key);
 				player_2.weakAttackCollision(player_1, p2_weak_attack, p1_hit_status, p1_health);
 				player_2.strongAttackCollision(player_1, p1_hit_status, p2_proj_vector, p2_proj_dead, p1_health);
