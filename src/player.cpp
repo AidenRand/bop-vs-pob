@@ -51,14 +51,14 @@ void Player::fetchSounds(std::string strong_attack_collision_sound_file, std::st
 		std::cout << "ERROR:: Cannot load knockout sound from file"
 				  << "\n";
 	}
-
-	strong_attack_collision_sound.setBuffer(strong_attack_collision_sound_buffer);
-	weak_attack_collision_sound.setBuffer(weak_attack_collision_sound_buffer);
-	knockout_sound.setBuffer(knockout_sound_buffer);
 }
 
 void Player::setSoundVolume(int& strong_attack_volume, int& weak_attack_volume, int& knockout_sound_volume)
 {
+	strong_attack_collision_sound.setBuffer(strong_attack_collision_sound_buffer);
+	weak_attack_collision_sound.setBuffer(weak_attack_collision_sound_buffer);
+	knockout_sound.setBuffer(knockout_sound_buffer);
+
 	strong_attack_collision_sound.setVolume(strong_attack_volume);
 	weak_attack_collision_sound.setVolume(weak_attack_volume);
 	knockout_sound.setVolume(knockout_sound_volume);
